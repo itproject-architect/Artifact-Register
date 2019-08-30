@@ -1,0 +1,26 @@
+{
+  "name": "it-project",
+  "version": "1.0.0",
+  "description": "COMP30022  IT PROJECT",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itproject-artchitect/Artifact-Register.git"
+  },
+  "author": "Internet Architects",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/itproject-artchitect/Artifact-Register/issues"
+  },
+  "homepage": "https://github.com/itproject-artchitect/Artifact-Register#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jade": "^1.11.0",
+    "mongoose": "^5.6.11",
+    "pug": "^2.0.4"
+  }
+}
