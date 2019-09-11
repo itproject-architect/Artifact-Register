@@ -83,6 +83,7 @@ app.use(blogpostRoutes);
 app.use(commentRoutes);
 
 //--------------------LISTENER--------------------
-app.listen("3000", process.env.IP, function() {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, function() {
     console.log("Server started");
 });
