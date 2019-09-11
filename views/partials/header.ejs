@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Family Artifact Registry App</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/main.css" type="text/css" />
+    <!--Favicon tab icon-->
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <nav class="navbar navbar-toggleable-md fixed-top navbarcolored">
+        <button
+          class="navbar-toggler navbar-toggler-right"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+        </button>
+        <a class="navbar-brand" href="/"
+          ><i class="fas fa-code-branch logostyle"></i
+        ></a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav navbarmargin">
+
+            <li class="nav-item">
+              <a class="nav-link" href="/artifactposts">Artifacts</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav" id="navbarSupportedContent">
+            <% if(!currentUser){ %>
+            <li class="nav-item">
+              <a class="nav-link" href="/login"
+                ><i class="fa fa-user"></i>Login</a
+              >
+            </li>
+
+           <!-- Registering disabled for invite only purposes-->
+           <!-- <li class="nav-item">
+              <a class="nav-link" href="/register"
+                ><i class="fa fa-user-plus"></i>Sign Up</a
+              >
+            </li>-->
+
+
+            <% } else { %>
+
+            <li class="nav-item" id="welcomemessage">
+              <a class="nav-link" href="#profile"> Welcome <%= currentUser.name %></a>
+            </li>
+
+
+            <li class="nav-item">
+              <a class="nav-link" href="/logout"
+                ><i class="fa fa-sign-out"></i>Sign out</a
+              >
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <br />
+    <br />
+    <div class="container">
+      <div class="row">
+        <% if(error && error.length > 0){ %>
+        <div class="container flashmessagestyle">
+          <div class="alert alert-danger" role="alert">
+            <%= error %>
+          </div>
+          <% }%>
+        </div>
+        <% if(success && success.length > 0){ %>
+        <div class="container flashmessagestyle">
+          <div class="alert alert-success" role="alert">
+            <%= success %>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

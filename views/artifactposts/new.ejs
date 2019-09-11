@@ -1,0 +1,44 @@
+<!--BLOGPOST NEW-->
+
+<% include ../partials/header %>
+
+<section class="newblogpostpage">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h1>Create a new artifact post</h1>
+            </div>
+        </div>
+        <form action="/artifactposts" method="POST">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <input class="form-control" type="text" name="name" placeholder="Artifact post title">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <input class="form-control" type="number" name="year", min="1850" max="2019" step="1" value="2019" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <input class="form-control" type="text" name="image" placeholder="Image URL (should be replaced with upload)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <textarea rows="10" col="50" class="form-control" type="text" name="description" placeholder="Enter Description"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 newblogpostbuttons">
+                    <button class="btn btn-md btn-primary">Submit!</button>
+                    <a class="btn btn-outline-primary btn-md" href="/artifactposts">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<% include ../partials/footer %>

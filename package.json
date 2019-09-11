@@ -1,26 +1,28 @@
 {
-  "name": "it-project",
+  "name": "v2",
   "version": "1.0.0",
-  "description": "COMP30022  IT PROJECT",
+  "description": "Artifact Registry",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/itproject-artchitect/Artifact-Register.git"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "Internet Architects",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/itproject-artchitect/Artifact-Register/issues"
-  },
-  "homepage": "https://github.com/itproject-artchitect/Artifact-Register#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "jade": "^1.11.0",
-    "mongoose": "^5.6.11",
-    "pug": "^2.0.4"
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^7.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "method-override": "^2.3.10",
+    "mongoose": "^5.2.0",
+    "nodejs-simple-uuid": "^1.0.0",
+    "nodemailer": "^4.4.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.2.1",
+    "react-scripts": "^2.1.8"
   }
 }
