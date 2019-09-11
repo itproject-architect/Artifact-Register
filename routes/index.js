@@ -140,7 +140,7 @@ router.post("/send", function(req, res) {
             <p>${message}</p>
             <h4><u>Email Invite from App signup</u></h4>
             <p><b>Please click below link for signup<br>
-            <b><a href="localhost:3000/invite/${guid}"> Signup</a>
+            <b><a href="/invite/${guid}"> Signup</a>
             <b>Thanks By </b> Internet Architects
             </p>
         `;
