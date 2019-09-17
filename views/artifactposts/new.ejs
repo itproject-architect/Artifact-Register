@@ -9,7 +9,7 @@
                 <h1>Create a new artifact post</h1>
             </div>
         </div>
-        <form action="/artifactposts" method="POST">
+        <form action="/artifactposts" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <input class="form-control" type="text" name="name" placeholder="Artifact post title">
@@ -23,9 +23,14 @@
 
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input class="form-control" type="text" name="image" placeholder="Image URL (should be replaced with upload)">
+                    <input type="file" id="image" name="image" accept="image/*" required>
                 </div>
             </div>
+
+            <label class="switch"><input type="checkbox" id="togBtn"><div class="slider round"><!--ADDED HTML -->
+                    <span class="private">PRIVATE</span><span class="public">PUBLIC</span><!--END--></div>
+            </label>
+
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <textarea rows="10" col="50" class="form-control" type="text" name="description" placeholder="Enter Description"></textarea>

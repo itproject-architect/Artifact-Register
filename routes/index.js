@@ -11,6 +11,8 @@ var nodemailer = require("nodemailer");
 //API key storage
 var config = require("../config.js");
 
+var serverdomain = "https://it-project.herokuapp.com";
+
 //".router" is used isntead of "app." as our routes are now in a seperate file that links back to the "app.js" file
 
 //ROOT ROUTE
@@ -130,28 +132,30 @@ router.post("/send", function(req, res) {
   res.redirect("contact"); */
   var contactname = req.body.name,
     email = req.body.username,
-    company = " COmpany",
+    company = "Company",
     title = "Subject",
-    message = "Hi " + contactname;
+    message = "Hi";
   var guid = uuidGenerate();
 
   // Content that is delivered to my email
   var output = `
-            <p>${message}</p>
-            <h4><u>Email Invite from App signup</u></h4>
-            <p><b>Please click below link for signup<br>
-            <b><a href="/invite/${guid}"> Signup</a>
-            <b>Thanks By </b> Internet Architects
-            </p>
+            <p> -------------------- Please don't reply to this mail -------------------- </p>
+            <p>${message} ${contactname},</p>
+            <p>Here's an e-mail invitation for Family Artifact Registry App signup.</p>
+            <p><b>Please click the link below to sign up for a new account: </b></p>
+            <p><b><a href="${serverdomain}/invite/${guid}">Signup</a></b></p>
+            <p>Regards,</p>
+            <p>Team Internet Architects</p>
         `;
+
+  let account = nodemailer.createTestAccount();
 
   // Account connection and authorization
   let transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
+    service: "gmail", 
     auth: {
-      user: "4ff25891c59ba1",
-      pass: "877bd09e408811"
+      user: "artifactinvite@gmail.com", 
+      pass: "ITProj123"
     }
   });
 
@@ -165,23 +169,24 @@ router.post("/send", function(req, res) {
 
   // Sending information
   let mailOptions = {
-    from: `${contactname} <suhmingee@gmail.com>`, // sender address
-    to: `${email}`, //list of receivers
-    subject: "Invitation Email", //Subject line
-    text: "No message entered.", //  text if nothing is filled out
+    from: `<artifactinvite@gmail.com>`, // sender address
+    to: `${email}`, // list of receivers
+    subject: "Invitation Email", // subject
+    text: "No message entered.", // text if nothing is filled out
     html: output // html body
   };
-  console.log("request body", mailOptions);
+
+  console.log("request body: \n", mailOptions);
+
   // Send mail
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
       req.flash("error", "Message failed to send.");
-      res.redirect("contact");
+      res.redirect("/invitefamily");
     } else {
       console.log("Message sent: %s", info.messageId);
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-
       var newUserInvite = {
         name: contactname,
         username: email,
@@ -191,7 +196,7 @@ router.post("/send", function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          console.log("user invite inserted successfully", newlyCreated);
+          console.log("user invitation inserted successfully", newlyCreated);
         }
       });
       req.flash("success", "Invitation Email sent successfully!");
