@@ -1,4 +1,3 @@
-
 /*------ ADDED CSS ---------*/
 .private
 {
@@ -32,13 +31,16 @@ input:checked + .slider .public
 .slider.round:before {
     border-radius: 50%
 }
-=======
+
+
 body, html {height: 100%}
 
 body {
-    background-color: #f9ccac;
-    background-image: -webkit-linear-gradient(30deg, #fff2df 50%, #f9ccac 50%);
+    background-color: #fff2df;
+    /*background-image: -webkit-linear-gradient(30deg, #fff2df 50%, #f9ccac 50%);*/
     min-height: 500px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 footer {
@@ -58,4 +60,4 @@ footer {
 .w3-large{font-size:18px!important}
 .w3-center{text-align:center!important}
 .w3-border-grey{border-color:#9e9e9e!important}
-
+.display-lower-middle{position: absolute;top:30%;left:50%;transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%)}
