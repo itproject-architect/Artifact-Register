@@ -5,7 +5,7 @@
     <div class="w3-display-container w3-animate-opacity w3-text-white">
         <h1 class="w3-jumbo w3-animate-top">Artifact Time Line</h1>
         <hr class="w3-border-grey" style="margin:auto;width:40%">
-        <p class="w3-large w3-center" style="element;">some small words</p>
+        <p class="w3-large w3-center">some small words</p>
     </div>
   </div>
 
@@ -52,20 +52,22 @@
 
                 <div class="cd-timeline__content js-cd-content">
 
-
-                  <div class="row">
-
-                    <a href="/artifactposts/<%=artipost._id %>"
-                    ><img class="img-fluid" src="<%= artipost.image %>"
-                      /></a>
-                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
-                      <p><%=artipost.year%></p>
-                      <h2><%=artipost.name%></h2>
-                      <p><%- artipost.description.substring(0, 200) %>...</p>
-                      <a class="btn btn-outline-primary" href="/artifactposts/<%=artipost._id %>"
-                      >Read More</a
-                      >
+                  <div>
+                    <div class="image-frame">
+                      <a href="/artifactposts/<%=artipost._id %>"
+                      ><img class="img-fluid image-border" src="<%= artipost.image %>"
+                        /></a>
                     </div>
+
+                      <div class="text-frame">
+                        <h2><%=artipost.name%></h2>
+                        <p style="font-size: medium; padding-top: 1.5em;"><%=artipost.year%></p>
+                        <div style="position: absolute; right: 1em; bottom: 0;">
+                          <a class="btn btn-outline-primary" href="/artifactposts/<%=artipost._id %>"
+                          >Read More</a>
+                        </div>
+                      </div>
+                      <!--<p><%- artipost.description.substring(0, 200) %>...</p>-->
                   </div>
                   <div class="row">
                     <hr width="96%" />
