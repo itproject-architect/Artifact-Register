@@ -10,9 +10,12 @@
                 <hr>
             </div>
         </div>
-        <div class="row">
+        <div class="row image-display">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <img class="mx-auto d-block" src ="<%=artipost.image%>">
+
+                <% for (index in artipost.image) { %>
+                    <img class="mx-auto d-block" src ="<%=artipost.image[index]%>">
+                <% } %>
             </div>
         </div>
         <div class="row">
