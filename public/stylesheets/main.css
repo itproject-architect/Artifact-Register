@@ -45,6 +45,7 @@ body {
     min-height: 500px;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    padding-top: 2%;
 }
 
 footer {
