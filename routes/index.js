@@ -47,7 +47,7 @@ router.get("/invite/:id", function(req, res) {
       if (foundInvite) {
         res.render("invitereg", { userinvite: foundInvite });
       } else {
-        req.flash("error", "Wrong code invitation ");
+        req.flash("error", "Wrong code invitation");
         console.log("Not Found invite ", foundInvite);
         res.render("invalidinvite");
       }
