@@ -84,7 +84,7 @@ router.get ("/artifactposts/search", function (req, res) {
         "name" : {$regex : params.name, $options : "$i"}    // RegExp matching, ignores case
     }).populate("comments").exec(function (err, results) {
         results.forEach(function (item) {
-            console.log(item.imageId + "\t" + item.name)
+            console.log(item.id + "\t" + item.name)
         });
         res.render("artifactposts/search", {results : results});
     });
