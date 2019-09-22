@@ -3,7 +3,11 @@ var router = express.Router();
 var Artifactpost = require("../models/artifactpost");
 var middleware = require("../middleware");
 var config = require("../config.js");
-const asyncHandler = require("express-async-handler");
+var asyncHandler = require("express-async-handler");
+var http = require('http');
+var url = require('url');
+var util = require('util');
+
 
 //--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
 // adapted from https://github.com/nax3t/image_upload_example/tree/edit-delete --------------------
@@ -140,6 +144,19 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
 //NEW ARTIFACT POST ROUTE (displays form)
 router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
     res.render("artifactposts/new");
+});
+
+// Search artifact by name
+router.get ("/artifactposts/search", function (req, res) {
+    var params = url.parse(req.url, true).query;
+    Artifactpost.find({
+        "name" : {$regex : params.name, $options : "$i"}    // RegExp matching, ignores case
+    }).populate("comments").exec(function (err, results) {
+        results.forEach(function (item) {
+            console.log(item.imageId + "\t" + item.name)
+        });
+        res.render("artifactposts/search", {results : results});
+    });
 });
 
 //SHOW ARTIFACT POST ROUTE
