@@ -29,31 +29,78 @@
                 <% } %>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <a class = "btn btn-md btn-success" href="/artifactposts/<%= artipost._id %>/comments/new">Add Comment</a>
-                <a class="btn btn-md btn-primary" href="/artifactposts">Back</a>
+
+        <form
+                class="newcommentform"
+                action="/artifactposts/<%= artipost._id %>/comments"
+                method="POST"
+        >
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <textarea
+                    rows="5"
+                    class="form-control"
+                    type="text"
+                    name="comment[text]"
+
+            ></textarea>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <% artipost.comments.forEach(function(comment){ %>
-                    <hr>
-                    <p><%= comment.text %></p>
-                    <span class="commentbuttons">Posted by <strong><%= comment.author.username %></strong> on: <strong><%= comment.created.toDateString() %></span></strong>
+            <div class="row newcommentbuttons">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <button class="btn btn-md btn-primary">Submit!</button>
+                    <a
+                            class="btn btn-md btn-outline-primary"
+                            href="/artifactposts/<%= artipost._id %>"
+                    >Back</a
+                    >
+                </div>
             </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <% artipost.comments.forEach(function(comment){ %>
+                <hr />
+                <p><%= comment.text %></p>
+                <% if(JSON.stringify(comment.author) === '{}') { %>
+                    <span class="commentbuttons"
+                    >Posted by <strong> Guest</strong> on:
+          <strong><%= comment.created.toDateString() %></strong></span
+                    >
+
+                <% } else{ %>
+                    <span class="commentbuttons"
+                    >Posted by <strong> <%= comment.author.username %></strong> on:
+          <strong><%= comment.created.toDateString() %></strong></span
+                    >
+                <% } %>
         </div>
-        <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 commentbuttons">
-                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                    <a class="btn btn-xs btn-warning" href="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>/edit">Edit</a>
-                    <form class="delete-form" action="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST   ">
-                        <button role="button"  class="btn btn-xs btn-danger" value="Delete">Delete</button>
-                    </form>
-                    <% } %>
-                <% }) %> 
-            </div>
+    </div>
+    <div class="row">
+        <div
+                class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 commentbuttons"
+        >
+            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                <a
+                        class="btn btn-xs btn-warning"
+                        href="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>/edit"
+                >Edit</a
+                >
+                <form
+                        class="delete-form"
+                        action="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>?_method=DELETE"
+                        method="POST   "
+                >
+                    <button role="button" class="btn btn-xs btn-danger" value="Delete">
+                        Delete
+                    </button>
+                </form>
+            <% } %> <% }) %>
         </div>
+    </div>
     </div>
 </section>
 

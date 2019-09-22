@@ -3,6 +3,7 @@ var router = express.Router();
 var Artifactpost = require("../models/artifactpost");
 var middleware = require("../middleware");
 var config = require("../config.js");
+const asyncHandler = require("express-async-handler");
 
 //--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
 // adapted from https://github.com/nax3t/image_upload_example/tree/edit-delete --------------------
@@ -31,16 +32,60 @@ cloudinary.config({
 
 //--------------------ROUTES--------------------
 //INDEX ROUTE
-router.get("/artifactposts", function (req, res) {
-    var admin = config.admin;
-    Artifactpost.find({}, function (err, allArtiposts) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("artifactposts/index", {artipost: allArtiposts, admin: admin});
+router.get(
+    "/artifactposts",
+    asyncHandler(async (req, res, next) => {
+        var admin = config.admin;
+        await Artifactpost.find({}, function(err, allArtiposts) {
+            if (err) {
+                console.log(err);
+            } else {
+                let newposts;
+                if (req.user) {
+                    newposts = getPrivatePosts(allArtiposts, req.user.username);
+                } else {
+                    newposts = getPublicPosts(allArtiposts);
+                }
+                res.render("artifactposts/index", {
+                    artipost: newposts,
+                    admin: admin
+                });
+            }
+        });
+    })
+);
+
+function getPrivatePosts(allArtiposts, email) {
+    let newPosts = [];
+    console.log("iteration ", email);
+
+    for (var prop in allArtiposts) {
+        let post = allArtiposts[prop];
+        console.log("iteration author ", post.author.username);
+        console.log("iteration name ", post.name);
+
+        if (post.option == "1" || post.option == "2") {
+            console.log("post name public family ", post.name);
+            newPosts.push(post);
+        } else if (post.option == "3" && post.author.username == email) {
+            console.log("post name private ", post.name);
+
+            newPosts.push(post);
         }
-    });
-});
+    }
+    return newPosts;
+}
+
+function getPublicPosts(allArtiposts) {
+    let newPosts = [];
+    for (var prop in allArtiposts) {
+        let post = allArtiposts[prop];
+        if (post.option == "1") {
+            newPosts.push(post);
+        }
+    }
+    return newPosts;
+}
 
 //CREATE ARTIFACT POST ROUTE
 router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), function (req, res) {
@@ -104,7 +149,6 @@ router.get("/artifactposts/:id", function (req, res) {
             req.flash("error", "Artifact not found.");
             res.redirect("back");
         } else {
-            console.log(foundArtipost);
             res.render("artifactposts/show", {artipost: foundArtipost});
         }
     });
@@ -132,12 +176,21 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
             req.flash("error", err.message);
             res.redirect("back");
         } else {
-            if (req.file) {
+            if (req.files.length > 0) {
+                let {files} = req;
+                let {image, imageId} = updatedArtipost;
+                let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value))
+                let uploadPromises = files.map((value) => cloudinary.uploader.upload(value.path));
+
                 try {
-                    await cloudinary.v2.uploader.destroy(updatedArtipost.imageId);
-                    var result = await cloudinary.uploader.upload(req.file.path);
-                    updatedArtipost.imageId = result.public_id;
-                    updatedArtipost.image = result.secure_url;
+                    await Promise.all(destroyPromises);
+                    let uploads = await Promise.all(uploadPromises);
+
+                    let images_ids = uploads.map(value => value.public_id);
+                    let images_secure_urls = uploads.map(value => value.secure_url);
+
+                    updatedArtipost.imageId = images_ids;
+                    updatedArtipost.image = images_secure_urls;
                 } catch (err) {
                     req.flash('error', err.message);
                     return res.redirect('back');
@@ -146,6 +199,7 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
 
             updatedArtipost.name = req.body.name;
             updatedArtipost.year = req.body.year;
+            updatedArtipost.option = req.body.option;
             updatedArtipost.description = req.body.description;
             updatedArtipost.save();
 
@@ -163,8 +217,13 @@ router.delete("/artifactposts/:id", middleware.checkBlogpostOwnership, function 
             req.flash("error", err.message);
             return res.redirect('back');
         }
+
+        let {imageId} = post;
+        let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value))
+
         try {
-            await cloudinary.v2.uploader.destroy(post.imageId);
+
+            await Promise.all(destroyPromises);
             post.remove();
             req.flash('success', 'Successfuly deleted')
             res.redirect('/artifactposts');
