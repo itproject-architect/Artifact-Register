@@ -22,8 +22,14 @@
             </div>
 
             <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <input type="file" id="image" name="image" accept="image/*" multiple>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input type="file" id="image" name="image" accept="image/*">
+                    <input class="form-control" type="text" name="location" value= <%=artipost.location%> required />
                 </div>
             </div>
 
@@ -32,6 +38,20 @@
                     <textarea  rows="10" col="50" class="form-control" type="text" name="description"><%= artipost.description %></textarea>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <select class="selectpicker" data-style="btn-info" name="option">
+                        <optgroup label="Select Table">
+                            <option name="" value="0">Select Post Options</option>
+                            <option <%= artipost.option == '1' ? "selected" : ""  %> name="public" value="1">Public</option>
+                            <option <%= artipost.option == '2' ? "selected" : ""  %> name="friends" value="2">Friends</option>
+                            <option <%= artipost.option == '3' ? "selected" : ""  %> name="private" value="3">Private</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 editblogpostbuttons">
                     <button class="btn btn-md btn-primary">Submit!</button>
