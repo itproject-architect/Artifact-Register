@@ -40,6 +40,7 @@ router.get("/artifactposts", function(req, res){
         if(err){
             console.log(err);
         }else{
+            console.log(allArtiposts);
             res.render("artifactposts/index",{artipost:allArtiposts, admin:admin});
         }
     });
@@ -81,7 +82,9 @@ router.get("/artifactposts/new", middleware.isLoggedIn, function(req, res){
 router.get("/artifactposts/search", function (req, res) {
     var params = url.parse(req.url, true).query;
     Artifactpost.find({
-        "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"}    // RegExp matching, case insensitive
+        "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
+        "author.username" : {$regex : params.author, $options : "$i"},
+        "year" : Number(params.date)
     }).populate("comments").exec(function (err, results) {
         results.forEach(function (item) {
             console.log(item.id + "\t" + item.name)
