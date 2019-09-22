@@ -89,7 +89,7 @@ router.get("/artifactposts/search", function (req, res) {
         results.forEach(function (item) {
             console.log(item.id + "\t" + item.name)
         });
-        res.render("artifactposts/search", {name: params.name, results : results});
+        res.render("artifactposts/index", {artipost : results, admin : config.admin});
     });
 });
 
