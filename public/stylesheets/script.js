@@ -67,4 +67,26 @@
         });
         scrolling = false;
     };
+
+
 })();
+
+
+
+$(function(){
+
+    var btnLoader = document.querySelector('.btnLoader');
+
+    btnLoader.addEventListener("click", function() {
+        /*btnLoader.innerHTML = "Signing In";*/
+        btnLoader.classList.add('spinning');
+
+        setTimeout(
+            function  (){
+                btnLoader.classList.remove('spinning');
+                /*btnLoader.innerHTML = "Sign In";*/
+
+            }, 6000);
+    }, false);
+
+});
