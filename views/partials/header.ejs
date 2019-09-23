@@ -20,6 +20,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
     />
     <link rel="stylesheet" href="/stylesheets/main.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/timeline.css" type="text/css" />
+    <!--<script src="/stylesheets/script.js"></script>-->
     <!--Favicon tab icon-->
 
   </head>
@@ -47,20 +49,20 @@
               <a class="nav-link" href="/artifactposts">Artifacts</a>
             </li>
           </ul>
+
+          <ul class="navbar-nav navbarmargin">
+
+            <li class="nav-item">
+              <a class="nav-link" href="/timeline">TimeLine</a>
+            </li>
+          </ul>
+
           <ul class="navbar-nav" id="navbarSupportedContent">
             <% if(!currentUser){ %>
             <li class="nav-item">
-              <a class="nav-link" href="/login"
-                ><i class="fa fa-user"></i>Login</a
-              >
+              <a class="nav-link" href="/login"><i class="fa fa-user"></i>Login</a>
             </li>
 
-           <!-- Registering disabled for invite only purposes-->
-           <!-- <li class="nav-item">
-              <a class="nav-link" href="/register"
-                ><i class="fa fa-user-plus"></i>Sign Up</a
-              >
-            </li>-->
 
 
             <% } else { %>

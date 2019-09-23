@@ -9,7 +9,7 @@
                 <h1>Create a new artifact post</h1>
             </div>
         </div>
-        <form action="/artifactposts" method="POST" enctype="multipart/form-data">
+        <form action="/artifactposts" method="POST">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <input class="form-control" type="text" name="name" placeholder="Artifact post title">
@@ -22,40 +22,17 @@
             </div>
 
             <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <input type="file" id="image" name="image" accept="image/*" required multiple>
-                </div>
-            </div>
-
-
-
-            <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input class="form-control" type="text" name="location" placeholder="Stored in" required/>
+                    <input class="form-control" type="text" name="image" placeholder="Image URL (should be replaced with upload)">
                 </div>
             </div>
-
-
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <textarea rows="10" col="50" class="form-control" type="text" name="description" placeholder="Enter Description"></textarea>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <select class="selectpicker" data-style="btn-info" name="option">
-                        <optgroup label="Select Table">
-                            <option name="" value="0">Select Post Options</option>
-                            <option name="public" value="1">Public</option>
-                            <option name="friends" value="2">Family</option>
-                            <option name="private" value="3">Private</option>
-                        </optgroup>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 newblogpostbuttons">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 newblogpostbuttons">
                     <button class="btn btn-md btn-primary">Submit!</button>
                     <a class="btn btn-outline-primary btn-md" href="/artifactposts">Back</a>
                 </div>

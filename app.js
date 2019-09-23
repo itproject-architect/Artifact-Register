@@ -19,7 +19,8 @@ var express = require("express"),
 
 var commentRoutes = require("./routes/comments"),
     blogpostRoutes = require("./routes/artifactposts"),
-    indexRoutes = require("./routes/index");
+    indexRoutes = require("./routes/index"),
+    timelineRoutes = require("./routes/timeline");
 
 //----------------DATABASE CONNECTION-------------------
 
@@ -81,9 +82,10 @@ app.use(function(req, res, next) {
 app.use(indexRoutes);
 app.use(blogpostRoutes);
 app.use(commentRoutes);
+app.use(timelineRoutes);
 
 //--------------------LISTENER--------------------
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function() {
-    console.log("Server started");
+    console.log(`Server started at port ${PORT}`);
 });
