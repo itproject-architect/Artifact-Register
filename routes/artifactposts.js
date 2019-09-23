@@ -147,15 +147,17 @@ router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
 });
 
 // Search artifact by name
-router.get ("/artifactposts/search", function (req, res) {
+router.get("/artifactposts/search", function (req, res) {
     var params = url.parse(req.url, true).query;
     Artifactpost.find({
-        "name" : {$regex : params.name, $options : "$i"}    // RegExp matching, ignores case
+        "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
+        "author.username" : {$regex : params.author, $options : "$i"},
+        "year" : Number(params.date)
     }).populate("comments").exec(function (err, results) {
         results.forEach(function (item) {
-            console.log(item.imageId + "\t" + item.name)
+            console.log(item.id + "\t" + item.name)
         });
-        res.render("artifactposts/search", {results : results});
+        res.render("artifactposts/index", {artipost : results, admin : config.admin});
     });
 });
 
