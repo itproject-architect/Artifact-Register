@@ -37,26 +37,29 @@ cloudinary.config({
 //--------------------ROUTES--------------------
 //INDEX ROUTE
 router.get(
-    "/artifactposts",
-    asyncHandler(async (req, res, next) => {
+    "/artifactposts", function (req, res) {
         var admin = config.admin;
-        await Artifactpost.find({}, function(err, allArtiposts) {
+        Artifactpost.find({}).exec(function (err, allArtiposts) {
             if (err) {
                 console.log(err);
             } else {
-                let newposts;
+                var artipost;
                 if (req.user) {
-                    newposts = getPrivatePosts(allArtiposts, req.user.username);
+                    artipost = getPrivatePosts(allArtiposts, req.user.username);
                 } else {
-                    newposts = getPublicPosts(allArtiposts);
+                    artipost = getPublicPosts(allArtiposts);
                 }
+                artipost.sort(function (a,b) {
+                    return b.year - a.year;
+                });
+                console.log(artipost);
                 res.render("artifactposts/index", {
-                    artipost: newposts,
+                    artipost: artipost,
                     admin: admin
                 });
             }
         });
-    })
+    }
 );
 
 function getPrivatePosts(allArtiposts, email) {
@@ -68,10 +71,10 @@ function getPrivatePosts(allArtiposts, email) {
         console.log("iteration author ", post.author.username);
         console.log("iteration name ", post.name);
 
-        if (post.option == "1" || post.option == "2") {
+        if (post.option === "1" || post.option === "2") {
             console.log("post name public family ", post.name);
             newPosts.push(post);
-        } else if (post.option == "3" && post.author.username == email) {
+        } else if (post.option === "3" && post.author.username === email) {
             console.log("post name private ", post.name);
 
             newPosts.push(post);
@@ -84,7 +87,7 @@ function getPublicPosts(allArtiposts) {
     let newPosts = [];
     for (var prop in allArtiposts) {
         let post = allArtiposts[prop];
-        if (post.option == "1") {
+        if (post.option === "1") {
             newPosts.push(post);
         }
     }
@@ -146,18 +149,39 @@ router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
     res.render("artifactposts/new");
 });
 
-// Search artifact by name
+function filterByYear(artiposts, year) {
+    var newArtiposts = [];
+    for (var i in artiposts) {
+        if (artiposts[i].year === year) {
+            newArtiposts.push(artiposts[i]);
+        }
+    }
+    return newArtiposts;
+}
+
+// Search artifact by name, don't need to log in
 router.get("/artifactposts/search", function (req, res) {
     var params = url.parse(req.url, true).query;
     Artifactpost.find({
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
-        "author.username" : {$regex : params.author, $options : "$i"},
-        "year" : Number(params.date)
+        "author.username" : {$regex : params.author, $options : "$i"}
     }).populate("comments").exec(function (err, results) {
-        results.forEach(function (item) {
-            console.log(item.id + "\t" + item.name)
-        });
-        res.render("artifactposts/index", {artipost : results, admin : config.admin});
+        if (err) {
+            console.log(err);
+        } else {
+            if (req.user) {
+                results = getPrivatePosts(results, req.user.username);
+            } else {
+                results = getPublicPosts(results);
+            }
+            if (params.date !== "") {
+                results = filterByYear(results, Number(params.date));
+            }
+            results.forEach(function (item) {
+                console.log(item.id + "\t" + item.name)
+            });
+            res.render("artifactposts/index", {artipost : results, admin : config.admin});
+        }
     });
 });
 
