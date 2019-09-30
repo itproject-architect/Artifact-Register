@@ -20,7 +20,7 @@ var storage = multer.diskStorage({
 });
 var imageFilter = function (req, file, cb) {
     // accept image files only
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|tif)$/i)) {
         return cb(new Error('Only image files are supported'), false);
     }
     cb(null, true);
@@ -149,6 +149,7 @@ router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
     res.render("artifactposts/new");
 });
 
+/*filtering post list by year*/
 function filterByYear(artiposts, year) {
     var newArtiposts = [];
     for (var i in artiposts) {
@@ -173,9 +174,6 @@ router.get("/artifactposts/search", function (req, res) {
                 results = getPrivatePosts(results, req.user.username);
             } else {
                 results = getPublicPosts(results);
-            }
-            if (params.date !== "") {
-                results = filterByYear(results, Number(params.date));
             }
             results.forEach(function (item) {
                 console.log(item.id + "\t" + item.name)

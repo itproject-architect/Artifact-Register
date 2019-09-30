@@ -8,7 +8,7 @@ var config = require("../config.js");
 //INDEX ROUTE
 router.get("/timeline", function(req, res){
     var admin = config.admin;
-    Artifactpost.find({}, null, {sort: {year: -1}}, function(err, allArtiposts) {
+    Artifactpost.find({}, null, {sort: {year: 1}}, function(err, allArtiposts) {
         if (err) {
             console.log(err);
         } else {

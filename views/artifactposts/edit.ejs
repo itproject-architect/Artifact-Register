@@ -3,62 +3,71 @@
 
 <section class="editblogpostpage">
     <div class="container">
+
+            <div class="heading text-center mb-5">
+                <h3>Edit post: <%= artipost.name %></h3>
+            </div>
         <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <h1>Edit post: <%= artipost.name %></h1>
+            <div class="col-12 col-lg-6 col-md-12 col-sm-12">
+                <form action="/artifactposts" method="POST" enctype="multipart/form-data">
+
+
+                    <div class="form-group">
+                        <label class="bmd-label-floating" for="name">Artifact Post Title</label>
+                        <input class="form-control" type="text" name="name" value=<%= artipost.name%> required>
+                        <span class="bmd-help">Enter the name of the artwork</span>
+                    </div>
+
+                    <label class="bmd-label-floating" for="year">Year</label>
+                    <input class="form-control" type="number" name="year", min="1850" max="2019" step="1" value="<%= artipost.year%>" required/>
+
+                    <div class="form-group">
+                        <label class="bmd-label-floating" for="location">Location</label>
+                        <input class="form-control" type="text" name="location" value=<%= artipost.location%> required/>
+                        <span class="bmd-help">Enter the name of the artwork</span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="descArea" class="bmd-label-floating">Description</label>
+                        <textarea rows="10" col="50" type="text" class="form-control" id="descArea" name="description"><%= artipost.description%></textarea>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="select-option" class="bmd-label-floating">Post View Privileges</label>
+                        <select name="option" class="form-control" id="select-option">
+                            <option <%= artipost.option == '1' ? "selected" : ""  %> name="public" value="1">Public</option>
+                            <option <%= artipost.option == '1' ? "selected" : ""  %> name="public" value="1">Public</option>
+                            <option <%= artipost.option == '3' ? "selected" : ""  %> name="private" value="3">Private</option>
+                        </select>
+                        <span class="bmd-help">Only post marked as public will be displayed on timeline</span>
+                    </div>
+
+            </div>
+
+
+            <div class="fileupload col-12 col-lg-6 col-md-12 col-sm-12">
+                <label class="bmd-label-floating" for="image">Artworks (Max 5 files)</label>
+                <input type="file" name="image" accept="image/*" data-max-files="5" data-fileuploader-limit="5" required multiple>
+            </div>
+
+        </div>
+
+
+
+        <div class="row">
+            <div class="text-center mt-5 col-12 col-lg-12 col-md-12 col-sm-12">
+                <button class="black-btn btn btn-raised btn-success">Submit</button>
+                <a class="black-btn btn btn-raised btn-danger" href="/artifactposts/">Back</a>
             </div>
         </div>
-        <form action="/artifactposts/<%= artipost._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input class="form-control" type="text" name="name" value="<%= artipost.name %>">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input class="form-control" type="number" name="year", min="1850" max="2019" step="1" value="<%= artipost.year %>" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <input type="file" id="image" name="image" accept="image/*" multiple>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input class="form-control" type="text" name="location" value= <%=artipost.location%> required />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <textarea  rows="10" col="50" class="form-control" type="text" name="description"><%= artipost.description %></textarea>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <select class="selectpicker" data-style="btn-info" name="option">
-                        <optgroup label="Select Table">
-                            <option name="" value="0">Select Post Options</option>
-                            <option <%= artipost.option == '1' ? "selected" : ""  %> name="public" value="1">Public</option>
-                            <option <%= artipost.option == '2' ? "selected" : ""  %> name="friends" value="2">Friends</option>
-                            <option <%= artipost.option == '3' ? "selected" : ""  %> name="private" value="3">Private</option>
-                        </optgroup>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 editblogpostbuttons">
-                    <button class="btn btn-md btn-primary">Submit!</button>
-                    <a class="btn btn-md btn-outline-primary" href="/artifactposts/<%=artipost._id%>">Back</a>
-                </div>
-            </div>
         </form>
     </div>
 </section>
+</div>
 <% include ../partials/footer %>
+
+
+
+
