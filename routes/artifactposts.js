@@ -119,7 +119,8 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
         var option = req.body.option
         var author = {
             id: req.user._id,
-            username: req.user.username
+            username: req.user.username,
+            name: req.user.name
         }
         var newArtipost = {
             name: name,
