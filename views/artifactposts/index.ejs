@@ -19,7 +19,7 @@
         <div class="col-md-12 col-lg-12">
         <form class="search text-center md-form mt-2" action="/artifactposts/search" method="get">
           <div class="search-group form-group">
-            <input class="search-input text-center form-control form-control-sm" type="text" name="name" size="40"
+            <input class="search-input text-center form-control form-control-sm" type="text" name="name" size="50"
                    placeholder="Enter keywords to search your artifacts..." >
 
             <button class="search-btn" type="submit" value="Search"><i class="fas fa-search" aria-hidden="true"></i></button>
@@ -33,6 +33,9 @@
             <select name="date" id="date" class="form-control">
               <option value="">-</option>
             </select>
+            <label for="order"  class="bmd-label-floating">Sorting</label>
+            <input class="form-control" type="radio" name="order" id="order" value="date_desc" checked>Latest
+            <input class="form-control" type="radio" name="order" id="order" value="date_asc">Earliest
           </div>
         </form>
       </div>

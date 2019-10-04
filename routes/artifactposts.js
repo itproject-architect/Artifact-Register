@@ -52,6 +52,7 @@ router.get(
                 artipost.sort(function (a,b) {
                     return b.year - a.year;
                 });
+
                 res.render("artifactposts/index", {
                     artipost: artipost,
                     admin: admin
@@ -163,6 +164,7 @@ function filterByYear(artiposts, year) {
 // Search artifact by name, don't need to log in
 router.get("/artifactposts/search", function (req, res) {
     var params = url.parse(req.url, true).query;
+    var compFn;
     Artifactpost.find({
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
         "author.username" : {$regex : params.author, $options : "$i"}
@@ -178,6 +180,23 @@ router.get("/artifactposts/search", function (req, res) {
             if (params.date !== "") {
                 results = filterByYear(results, Number(params.date));
             }
+            switch (params.order) {
+                case "date_desc":
+                    compFn = function (a,b) {
+                        return b.year - a.year;
+                    };
+                    break;
+                case "date_asc":
+                    compFn = function (a,b) {
+                        return a.year - b.year;
+                    };
+                    break;
+                default:    // Sort by date, DESC
+                    compFn = function (a,b) {
+                        return b.year - a.year;
+                    };
+            }
+            results.sort(compFn);
             results.forEach(function (item) {
                 console.log(item.id + "\t" + item.name)
             });
