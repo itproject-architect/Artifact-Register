@@ -52,7 +52,6 @@ router.get(
                 artipost.sort(function (a,b) {
                     return b.year - a.year;
                 });
-                console.log(artipost);
                 res.render("artifactposts/index", {
                     artipost: artipost,
                     admin: admin
