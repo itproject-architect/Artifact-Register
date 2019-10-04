@@ -30,9 +30,22 @@
             <label class="bmd-label-floating" for="author">Author</label>
             <input class="form-control" type="text" name="author" id="author">
             <label for="date"  class="bmd-label-floating">Date</label>
-            <select name="date" id="date" class="form-control">
-              <option value="">-</option>
-            </select>
+            <div class="row">
+              <div class="col-lg-5">
+                <select name="date_from" id="date_from" class="form-control">
+                  <option value="">From...</option>
+                </select>
+              </div>
+              <div class="col-lg-2">
+                —
+              </div>
+              <div class="col-lg-5">
+                <select name="date_to" id="date_to" class="form-control">
+                  <option value="">To...</option>
+                </select>
+              </div>
+            </div>
+
             <label for="order"  class="bmd-label-floating">Sorting</label>
             <input class="form-control" type="radio" name="order" id="order" value="date_desc" checked>Latest
             <input class="form-control" type="radio" name="order" id="order" value="date_asc">Earliest
@@ -100,7 +113,10 @@
   for (var i = Number(date.getFullYear()); i >= 1900; i--) {
     var opt = document.createElement("option");
     opt.text = i.toString();
-    document.getElementById("date").add(opt, null);
+    document.getElementById("date_from").add(opt, null);
+    var opt = document.createElement("option");
+    opt.text = i.toString();
+    document.getElementById("date_to").add(opt, null);
   }
 </script>
 

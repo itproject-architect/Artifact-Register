@@ -150,11 +150,22 @@ router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
     res.render("artifactposts/new");
 });
 
-/*filtering post list by year*/
-function filterByYear(artiposts, year) {
+/* filtering post list by date, lower bound */
+function filterByDateLower(artiposts, date_from) {
     var newArtiposts = [];
     for (var i in artiposts) {
-        if (artiposts[i].year === year) {
+        if (artiposts[i].year >= date_from) {
+            newArtiposts.push(artiposts[i]);
+        }
+    }
+    return newArtiposts;
+}
+
+/* filtering post list by date, upper bound */
+function filterByDateUpper(artiposts, date_to) {
+    var newArtiposts = [];
+    for (var i in artiposts) {
+        if (artiposts[i].year <= date_to) {
             newArtiposts.push(artiposts[i]);
         }
     }
@@ -177,9 +188,14 @@ router.get("/artifactposts/search", function (req, res) {
             } else {
                 results = getPublicPosts(results);
             }
-            if (params.date !== "") {
-                results = filterByYear(results, Number(params.date));
+            // Filter by date
+            if (params.date_from !== "") {
+                results = filterByDateLower(results, Number(params.date_from));
             }
+            if (params.date_to !== "") {
+                results = filterByDateUpper(results, Number(params.date_to));
+            }
+            // Sorting
             switch (params.order) {
                 case "date_desc":
                     compFn = function (a,b) {
