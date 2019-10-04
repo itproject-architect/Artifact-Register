@@ -175,6 +175,9 @@ router.get("/artifactposts/search", function (req, res) {
             } else {
                 results = getPublicPosts(results);
             }
+            if (params.date !== "") {
+                results = filterByYear(results, Number(params.date));
+            }
             results.forEach(function (item) {
                 console.log(item.id + "\t" + item.name)
             });
