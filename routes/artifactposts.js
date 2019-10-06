@@ -20,7 +20,7 @@ var storage = multer.diskStorage({
 });
 var imageFilter = function (req, file, cb) {
     // accept image files only
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|tif)$/i)) {
         return cb(new Error('Only image files are supported'), false);
     }
     cb(null, true);
@@ -52,7 +52,7 @@ router.get(
                 artipost.sort(function (a,b) {
                     return b.year - a.year;
                 });
-                console.log(artipost);
+
                 res.render("artifactposts/index", {
                     artipost: artipost,
                     admin: admin
@@ -119,7 +119,8 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
         var option = req.body.option
         var author = {
             id: req.user._id,
-            username: req.user.username
+            username: req.user.username,
+            name: req.user.name
         }
         var newArtipost = {
             name: name,
@@ -149,10 +150,22 @@ router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
     res.render("artifactposts/new");
 });
 
-function filterByYear(artiposts, year) {
+/* filtering post list by date, lower bound */
+function filterByDateLower(artiposts, date_from) {
     var newArtiposts = [];
     for (var i in artiposts) {
-        if (artiposts[i].year === year) {
+        if (artiposts[i].year >= date_from) {
+            newArtiposts.push(artiposts[i]);
+        }
+    }
+    return newArtiposts;
+}
+
+/* filtering post list by date, upper bound */
+function filterByDateUpper(artiposts, date_to) {
+    var newArtiposts = [];
+    for (var i in artiposts) {
+        if (artiposts[i].year <= date_to) {
             newArtiposts.push(artiposts[i]);
         }
     }
@@ -162,9 +175,11 @@ function filterByYear(artiposts, year) {
 // Search artifact by name, don't need to log in
 router.get("/artifactposts/search", function (req, res) {
     var params = url.parse(req.url, true).query;
+    var compFn;
     Artifactpost.find({
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
-        "author.username" : {$regex : params.author, $options : "$i"}
+        "author.username" : {$regex : params.author, $options : "$i"},
+        "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"}
     }).populate("comments").exec(function (err, results) {
         if (err) {
             console.log(err);
@@ -174,9 +189,31 @@ router.get("/artifactposts/search", function (req, res) {
             } else {
                 results = getPublicPosts(results);
             }
-            if (params.date !== "") {
-                results = filterByYear(results, Number(params.date));
+            // Filter by date
+            if (params.date_from !== "") {
+                results = filterByDateLower(results, Number(params.date_from));
             }
+            if (params.date_to !== "") {
+                results = filterByDateUpper(results, Number(params.date_to));
+            }
+            // Sorting
+            switch (params.order) {
+                case "date_desc":
+                    compFn = function (a,b) {
+                        return b.year - a.year;
+                    };
+                    break;
+                case "date_asc":
+                    compFn = function (a,b) {
+                        return a.year - b.year;
+                    };
+                    break;
+                default:    // Sort by date, DESC
+                    compFn = function (a,b) {
+                        return b.year - a.year;
+                    };
+            }
+            results.sort(compFn);
             results.forEach(function (item) {
                 console.log(item.id + "\t" + item.name)
             });

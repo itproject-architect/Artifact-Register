@@ -72,7 +72,6 @@
 })();
 
 
-
 $(function(){
 
     var btnLoader = document.querySelector('.btnLoader');
@@ -90,3 +89,5 @@ $(function(){
     }, false);
 
 });
+
+
