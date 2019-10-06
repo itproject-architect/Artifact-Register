@@ -48,6 +48,7 @@ h1, h2 {
     border: 10px solid #ff9999;
     border-radius: 20px;
     box-shadow: 10px 10px 5px #888888;
+    overflow: hidden; /* make the child element dont overflow when it is zoomed in
 }
 .image-border{
     position: relative;
@@ -55,12 +56,42 @@ h1, h2 {
     border-radius: 10px; /* 50% to make it round*/
 
 }
-.text-frame{
+/*.text-frame{
     position: relative;
     padding-left: 1em;
     padding-right: 1em;
     padding-top: 3em;
+}*/
+
+.zoom{
+    transition: transform .2s; /* zoom animation*/
 }
+
+.zoom:hover{
+    transform: scale(1.5);
+}
+
+.image-center{
+    min-height: 150px;
+    min-width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle
+}
+
+.date-align{
+    text-align: right;
+    padding-right: 2.5em;
+}
+
+.cd-timeline__block:nth-child(even) .date-align{
+    text-align: left;
+    padding-left: 2.5em;
+}
+
+
 
 @media only screen and (min-width: 1170px) {
     .cd-is-hidden {
@@ -111,14 +142,14 @@ header h1 {
     top: 0;
     left: 18px;
     height: 100%;
-    width: 4px;
-    background: #d7e4ed;
+    width: 6px;
+    background: #FEE7D7;
 }
 
 @media only screen and (min-width: 1170px) {
     .cd-timeline {
-        margin-top: 3em;
-        margin-bottom: 3em;
+        margin-top: 2em;
+        margin-bottom: 2em;
     }
     .cd-timeline__container::before {
         left: 50%;
@@ -245,6 +276,12 @@ header h1 {
     padding: 1em;
     -webkit-box-shadow: 0 3px 0 #d7e4ed;
     box-shadow: 0 3px 0 #d7e4ed;
+    /*display: flex;*//* equal height of the children */
+}
+
+.flex-child{
+    flex: 1; /* additionally, equal width */
+    /*border: solid;*/
 }
 
 .cd-timeline__content:after {
@@ -267,13 +304,14 @@ header h1 {
 }
 
 .cd-timeline__content h2 {
-    color: #303e49;
+    color: black;
 }
 
 .cd-timeline__content p,
 .cd-timeline__read-more,
 .cd-timeline__date {
     font-size: 1.3rem;
+    color: black;
 }
 
 .cd-timeline__content p {
@@ -287,10 +325,7 @@ header h1 {
 }
 
 .cd-timeline__read-more {
-    float: right;
     padding: .8em 1em;
-    background: #acb7c0;
-    color: white;
     border-radius: 0.25em;
 }
 
@@ -300,13 +335,14 @@ header h1 {
 
 .cd-timeline__date {
     float: left;
-    padding: .8em 0;
+    text-align: left;
+    padding:  0;
     opacity: .7;
 }
 
 @media only screen and (min-width: 768px) {
     .cd-timeline__content h2 {
-        font-size: 2rem;
+        font-size: 4rem;
     }
     .cd-timeline__content p {
         font-size: 1.6rem;
@@ -333,13 +369,13 @@ header h1 {
         border-left-color: white;
     }
     .cd-timeline__read-more {
-        float: left;
+        float: right; /* or right */
     }
     .cd-timeline__date {
         position: absolute;
         width: 100%;
         left: 122%;
-        top: 6px;
+        top: 35%;
         font-size: 1.6rem;
     }
     .cd-timeline__block:nth-child(even) .cd-timeline__content {
@@ -353,13 +389,15 @@ header h1 {
         border-right-color: white;
     }
     .cd-timeline__block:nth-child(even) .cd-timeline__read-more {
-        float: right;
+        /*float: left;*/ /*or left*/
+        text-align: center;
     }
     .cd-timeline__block:nth-child(even) .cd-timeline__date {
         left: auto;
         right: 122%;
         text-align: right;
     }
+
     .cd-timeline__content.cd-timeline__content--bounce-in {
         visibility: visible;
         -webkit-animation: cd-bounce-2 0.6s;
