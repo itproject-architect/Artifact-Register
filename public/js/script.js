@@ -91,3 +91,21 @@ $(function(){
 });
 
 
+$("input[name='delete']").click(function(){
+    bootbox.confirm({
+        title: "Delete Post",
+        message: "Do you want to delete this post now? This cannot be undone.",
+        buttons: {
+            cancel: {
+                label: '<i class="fa fa-times"></i> Cancel'
+            },
+            confirm: {
+                label: '<i class="fa fa-check"></i> Confirm'
+            }
+        },
+        callback: function (result) {
+            if(result ==true)
+                $('#delete-form').submit();
+        }
+    });
+});

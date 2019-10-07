@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -38,7 +38,7 @@
 
   <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
     <a class="navbar-brand" href="/"><i class="fas fa-code-branch logostyle"></i
       ></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,20 +83,19 @@
     </div>
   </nav>
 
-  <br>
-  <br>
+
 
     <div class="container">
       <div class="row">
         <% if(error && error.length > 0){ %>
-        <div class="container flashmessagestyle">
+        <div class="container flashmessagestyle text-center">
           <div class="alert alert-danger" role="alert">
             <%= error %>
           </div>
           <% }%>
         </div>
         <% if(success && success.length > 0){ %>
-        <div class="container flashmessagestyle">
+        <div class="container flashmessagestyle text-center">
           <div class="alert alert-success" role="alert">
             <%= success %>
           </div>
