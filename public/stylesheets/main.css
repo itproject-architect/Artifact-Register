@@ -24,6 +24,9 @@ body {
 
 }
 
+input {
+    text-align: center;
+}
 
 
 .image-display img {
@@ -32,7 +35,7 @@ body {
 
 
 
-.author-icon, .multi-icon, .family-icon, .private-icon {
+.new-icon, .author-icon, .multi-icon, .family-icon, .private-icon {
 
 
     color: #ffffff;
@@ -101,6 +104,7 @@ body {
 
 }
 
+
 section .post {
     line-height: 1.5;
 }
@@ -157,8 +161,21 @@ section .post a:hover::before, section .post a:hover::after {
 section .post a:hover h3 {
     color: #897E3D;
 }
+
+
 section .post a img {
     width: 100%;
+}
+
+/*Pagination*/
+
+.page-item a{
+    color:#636161;
+}
+
+.page-item.active .page-link {
+    background-color: #636161;
+    border-color: #fff;
 }
 
 .search {
@@ -166,7 +183,11 @@ section .post a img {
     margin: 0  auto;
 
 }
+select {
 
+    text-align: center;
+    text-align-last: center;
+}
 .search-group {
     display: inline-flex;
 }
@@ -254,6 +275,7 @@ body .btn-bg.bg-2 .btn-2 button:after {
     position: relative;
     transition: padding-right .3s ease;
     font-weight: 700;
+
 }
 
 .btnLoader.spinning{

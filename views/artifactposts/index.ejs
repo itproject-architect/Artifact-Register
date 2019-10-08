@@ -12,8 +12,6 @@
     </div>
 
 
-
-
     <div class="container">
       <div class="row">
         <div class="col-md-12 col-lg-12">
@@ -37,23 +35,35 @@
             <div class="row">
               <div class="col-lg-5">
                 <select name="date_from" id="date_from" class="form-control">
-                  <option value="">From...</option>
+                  <option value="">FROM</option>
                 </select>
               </div>
               <div class="col-lg-2">
-                —
+                _
               </div>
               <div class="col-lg-5">
                 <select name="date_to" id="date_to" class="form-control">
-                  <option value="">To...</option>
+                  <option value="">TO</option>
                 </select>
               </div>
-            </div>
+
+            <div class="col-lg-12">
             <label class="bmd-label-floating" for="location">Location</label>
-            <input class="form-control" type="text" name="location" id="location">
+            <input class="form-control justify-content-center" type="text" name="location" id="location">
             <label for="order"  class="bmd-label-floating">Sorting</label>
-            <input class="form-control" type="radio" name="order" id="order" value="date_desc" checked>Latest
-            <input class="form-control" type="radio" name="order" id="order" value="date_asc">Earliest
+
+
+              <div class="radio col-12">
+                <label>
+                  <input type="radio" name="order" id="order" value="date_desc" checked>
+                  Descending date
+                </label>
+              </div>
+              <div class="radio col-12">
+                <label>
+                  <input type="radio" name="order" id="order" value="date_asc">Ascending date
+                </label>
+              </div>
           </div>
         </form>
       </div>
@@ -80,14 +90,25 @@
     <div class="row">
     <% artipost.forEach(function(artipost){ %>
 
-
       <div class="col-md-4 col-sm-6">
 
         <div class="post">
           <div class="main-wrapper text-center">
 
             <button class="author-icon mb-3" data-toggle="tooltip"
-                    title=<%=artipost.author.name%>><%=artipost.author.name.substring(0, 1)%></button>
+                    title=By:<%=artipost.author.name%>><%=artipost.author.name.substring(0, 1)%></button>
+
+            <%
+              var toDay = new Date()
+            if (toDay - artipost.created <  60 * 60 * 24 * 1000) {
+            %>
+
+
+
+              <button class="new-icon fas fa-bolt mb-3" data-toggle="tooltip" title='New Post'></button>
+
+            <% }%>
+
             <% if(artipost.image.length >= 2){ %>
               <button class="multi-icon far fa-clone mb-3" data-toggle="tooltip" title='Multiple Images'></button>
             <% } %>
@@ -100,23 +121,61 @@
 
           </div>
           <a href="/artifactposts/<%=artipost._id %>">
-
-
-              <img class="img-fluid" src="<%= artipost.image[0] %>" alt="<% artipost.name%>"/>
+            <img class="img-fluid" src="<%= artipost.image[0] %>" alt="<% artipost.name%>"/>
             <h3 class="year text-center mt-3"><%=artipost.year%></h3>
-              <h3 class="post-title text-center"><%=artipost.name%></h3>
-
-
+            <h3 class="post-title text-center"><%=artipost.name%></h3>
             <p class="text-center"><%- artipost.description.substring(0, 200) %>...</p>
-
           </a>
         </div>
     </div>
-      <% }); %>
+      <% }); %>  <!--end of artifact post foreach function-->
+
     </div>
   </div>
 
-  </section>
+
+    <% if (pages > 1) { %>
+    <nav aria-label="Page navigation">
+      <ul class="pagination pg-blue justify-content-center mt-5">
+        <% if (current == 1) { %>
+          <li class="page-item disabled"><a class="page-link">First</a></li>
+        <% } else { %>
+          <li class="page-item"><a class="page-link" href="/artifactposts/p/1">First</a></li>
+        <% } %>
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+          <!-- check number of current page and if less than 5 output pagination links from 1 to current page + 4-->
+        <% if (i !== 1) { %>
+          <li class="page-item disabled"><a class="page-link">...</a></li>
+          <!-- if value is more than 5 hide prev link (curr step - 5)-->
+        <% } %>
+        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+          <% if (i == current) { %>
+            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+          <% } else { %>
+            <li class="page-item"><a class="page-link" href="/artifactposts/p/<%= i %>"><%= i %></a></li>
+          <% } %>
+          <% if (i == Number(current) + 4 && i < pages) { %>
+            <li class="disabled"><a>...</a></li>
+          <% } %>
+        <% } %>
+        <% if (current == pages) { %>
+          <li class="page-item disabled"><a class="page-link">Last</a></li>
+        <% } else { %>
+          <li class="page-item"><a class='page-link' href="/artifactposts/p/<%= pages %>">Last</a></li>
+        <% } %>
+      </ul>
+    </nav>
+    <% } %>
+
+
+
+
+
+
+
+
+
+</section>
 
 <script>
   var date = new Date();

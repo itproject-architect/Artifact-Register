@@ -35,64 +35,39 @@ cloudinary.config({
 });
 
 //--------------------ROUTES--------------------
-//INDEX ROUTE
-router.get(
-    "/artifactposts", function (req, res) {
-        var admin = config.admin;
-        Artifactpost.find({}).exec(function (err, allArtiposts) {
-            if (err) {
-                console.log(err);
-            } else {
-                var artipost;
-                if (req.user) {
-                    artipost = getPrivatePosts(allArtiposts, req.user.username);
-                } else {
-                    artipost = getPublicPosts(allArtiposts);
-                }
-                artipost.sort(function (a,b) {
-                    return b.year - a.year;
-                });
 
-                res.render("artifactposts/index", {
-                    artipost: artipost,
-                    admin: admin
+//index routes
+router.get(
+    "/artifactposts/p/:page", function (req, res) {
+
+        var perPage = 6 //max number of artifacts per page (6 Items are displayed)
+        var page = req.params.page || 1 //current page number
+        var admin = config.admin;
+        var query = (req.user) ? {$or: [{option : '1'},{option :'2'}, {"author.id" : req.user._id}] } : {option : '1'}
+        //ternary query if logged in, check for post marked as public(1), friends only(2) and private( user id matches author id)
+
+            Artifactpost.find(query)
+                .sort({created : -1}) //display most recently created post to be on top
+                .skip((perPage * page) - perPage) // skip and limit for indexing  (used for pagination)
+                .limit(perPage)
+                .exec(function (err, allArtiposts) {
+                    Artifactpost.countDocuments(query).exec(function(err, count) { //count the number of query documents
+                        if (err) console.log(err);
+
+                        res.render("artifactposts/index", {
+                            artipost: allArtiposts,
+                            admin: admin,
+                            current: page, //current page location which is 1 by default but can be specified using URL
+                            pages: Math.ceil(count / perPage) //number of pages used for reference in bootstrap nav
+
+                        });
+                    })
+
+
                 });
-            }
-        });
-    }
+        }
 );
 
-function getPrivatePosts(allArtiposts, email) {
-    let newPosts = [];
-    console.log("iteration ", email);
-
-    for (var prop in allArtiposts) {
-        let post = allArtiposts[prop];
-        console.log("iteration author ", post.author.username);
-        console.log("iteration name ", post.name);
-
-        if (post.option === "1" || post.option === "2") {
-            console.log("post name public family ", post.name);
-            newPosts.push(post);
-        } else if (post.option === "3" && post.author.username === email) {
-            console.log("post name private ", post.name);
-
-            newPosts.push(post);
-        }
-    }
-    return newPosts;
-}
-
-function getPublicPosts(allArtiposts) {
-    let newPosts = [];
-    for (var prop in allArtiposts) {
-        let post = allArtiposts[prop];
-        if (post.option === "1") {
-            newPosts.push(post);
-        }
-    }
-    return newPosts;
-}
 
 //CREATE ARTIFACT POST ROUTE
 router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), function (req, res) {
@@ -136,7 +111,7 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
             if (err) {
                 console.log(err);
             } else {
-                res.redirect("/artifactposts");
+                res.redirect("/artifactposts/p/1");
             }
         });
     }).catch( (error) => {
@@ -172,10 +147,12 @@ function filterByDateUpper(artiposts, date_to) {
     return newArtiposts;
 }
 
+
 // Search artifact by name, don't need to log in
 router.get("/artifactposts/search", function (req, res) {
     var params = url.parse(req.url, true).query;
     var compFn;
+    var pages = 0;
     Artifactpost.find({
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
         "author.username" : {$regex : params.author, $options : "$i"},
@@ -217,10 +194,42 @@ router.get("/artifactposts/search", function (req, res) {
             results.forEach(function (item) {
                 console.log(item.id + "\t" + item.name)
             });
-            res.render("artifactposts/index", {artipost : results, admin : config.admin});
+            res.render("artifactposts/index", {artipost : results, admin : config.admin, pages: pages});
         }
     });
 });
+
+function getPrivatePosts(allArtiposts, email) {
+    let newPosts = [];
+    console.log("iteration ", email);
+
+    for (var prop in allArtiposts) {
+        let post = allArtiposts[prop];
+        console.log("iteration author ", post.author.username);
+        console.log("iteration name ", post.name);
+
+        if (post.option === "1" || post.option === "2") {
+            console.log("post name public family ", post.name);
+            newPosts.push(post);
+        } else if (post.option === "3" && post.author.username === email) {
+            console.log("post name private ", post.name);
+
+            newPosts.push(post);
+        }
+    }
+    return newPosts;
+}
+
+function getPublicPosts(allArtiposts) {
+    let newPosts = [];
+    for (var prop in allArtiposts) {
+        let post = allArtiposts[prop];
+        if (post.option === "1") {
+            newPosts.push(post);
+        }
+    }
+    return newPosts;
+}
 
 //SHOW ARTIFACT POST ROUTE
 router.get("/artifactposts/:id", function (req, res) {
@@ -306,7 +315,7 @@ router.delete("/artifactposts/:id", middleware.checkBlogpostOwnership, function 
             await Promise.all(destroyPromises);
             post.remove();
             req.flash('success', 'Successfuly deleted')
-            res.redirect('/artifactposts');
+            res.redirect('/artifactposts/p/1');
         } catch (err) {
             if (err) {
                 req.flash('error', err.message);
