@@ -123,7 +123,7 @@ router.post(
 router.get("/logout", function(req, res) {
   req.logout();
   req.flash("success", "Logout successful.");
-  res.redirect("back");
+  res.redirect("/");
 });
 
 

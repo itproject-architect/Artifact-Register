@@ -39,6 +39,7 @@ router.post(
                         if (req.user) {
                             comment.author.id = req.user._id;
                             comment.author.username = req.user.username;
+                            comment.author.name = req.user.name;
                         } else {
                             var guid = uuidGenerate();
                             comment.author.id = guid;

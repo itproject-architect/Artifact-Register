@@ -110,3 +110,26 @@ $("input[name='delete']").click(function(){
     });
 });
 
+
+
+$('#back-button').click(function(e){
+    e.preventDefault();
+    href = $(this).attr('href');
+    bootbox.confirm({
+        title: "Go Back",
+        message: "Do you want to go back now? ",
+        buttons: {
+            cancel: {
+                label: '<i class="fa fa-times"></i> Cancel'
+            },
+            confirm: {
+                label: '<i class="fa fa-check"></i> Confirm'
+            }
+        },
+        callback: function (result) {
+            if(result ==true)
+                window.location = href;
+        }
+    });
+});
+
