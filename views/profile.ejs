@@ -1,0 +1,37 @@
+<% include partials/header %>
+
+<section class="profilepage">
+    <div class="container">
+        <div class="row">
+            <div class="col-3 float-left">
+                <a class="btn btn-solid btn-primary btn-block" href="#">Change Password</a>
+                <a class="btn btn-solid btn-primary btn-block" href="#">Manage Artifacts</a>
+            </div>
+
+            <div class="col-9 float-right">
+                <div class="container mb-5">
+                    <header style="height: auto">
+                        <button class="author-icon mb-3" data-toggle="tooltip"
+                                title=<%= name %>><%= name.substring(0, 1) %></button>
+                    </header>
+                    <h2 class="title">Hello, <%= name %>!</h2>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <% artifacts.forEach(function (art) { %>
+                            <div class="col-4 post">
+                                <a href="artifactposts/<%= art._id %>" style="min-height: auto">
+                                    <img class="img-fluid img-fluid-small"
+                                         src="<%= art.image[0] %>" alt="<%= art.name %>"/>
+                                </a>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<% include partials/footer %>

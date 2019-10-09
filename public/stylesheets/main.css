@@ -84,6 +84,10 @@ body {
     height: 200px;
 }
 
+.img-fluid-small {
+    height: 100px;
+}
+
 .post-title {
     margin-top: 5px;
     font-family: 'Raleway',sans-serif;
@@ -286,4 +290,31 @@ body .btn-bg.bg-2 .btn-2 button:after {
     .heading h3{
         font-size:30px;
     }
+}
+
+.title {
+    text-align: center;
+}
+
+
+/* Footer absolute positioning */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 70px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+}
+
+.btn-solid {
+    background-color: #343a40 !important;
+    text-transform: capitalize;
 }

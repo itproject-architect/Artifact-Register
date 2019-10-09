@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
+var Artifactpost = require("../models/artifactpost");
 var User = require("../models/user");
 var UserInvite = require("../models/userinvite");
 const uuidGenerate = require("nodejs-simple-uuid");
@@ -26,11 +27,19 @@ router.get("/invitefamily", function(req, res) {
   res.render("invitefamily");
 });
 
+// user profile page
+router.get("/profile", middleware.isLoggedIn, function(req, res) {
+  Artifactpost.find({"author.username": req.user.username}).exec(function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("profile", {name: req.user.name, artifacts: results});
+    }
+  });
+});
+
 //--------------------REGISTER----------------------------------------
 //REGISTER ROUTE (form)
-router.get("/register", function(req, res) {
-  res.render("register");
-});
 router.get("/register", function(req, res) {
   res.render("register");
 });
