@@ -178,7 +178,7 @@ router.get("/artifactposts/search", function (req, res) {
     var compFn;
     Artifactpost.find({
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
-        "author.username" : {$regex : params.author, $options : "$i"},
+        "author.name" : {$regex : params.author, $options : "$i"},
         "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"}
     }).populate("comments").exec(function (err, results) {
         if (err) {
