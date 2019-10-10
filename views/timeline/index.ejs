@@ -2,18 +2,19 @@
 <% include ../partials/header %>
 <header style="margin-top: -4%"> <!-- this might not be a good way to remove blank space above header-->
   <div class="display-lower-middle">
-    <div class="heading">
-        <h3>Artifact Timeline</h3>
+    <div class="w3-display-container w3-animate-opacity w3-text-white">
+        <h1 class="w3-jumbo w3-animate-top">Artifact Time Line</h1>
         <hr class="w3-border-grey" style="margin:auto;width:40%">
-        <p class="w3-center mt-3">Click on image to show more</p>
+        <p class="w3-large w3-center">click on image to show more</p>
     </div>
   </div>
 
 </header>
 
 
-<section class="blogpostimelinepage">
+<section class="blogpostindexpage">
   <div class="blogpostindexintro greybackground">
+
 
   </div>
   <div class="container">
@@ -30,15 +31,15 @@
                   <p style="font-size: medium;line-height: 1px;" class="date-align"><%=artipost.year%></p>
                   <div class="image-frame">
                     <a href="/artifactposts/<%=artipost._id %>"
-                    ><img class="img-fluid image-border zoom image-center" src="<%= artipost.image[0]%>"
+                    ><img class="img-fluid image-border zoom image-center" style="width:100%;height: 100%;" src="<%= artipost.image[0]%>"
                       /></a>
                   </div>
 
 
                     <!--<p><%- artipost.description.substring(0, 200) %>...</p>-->
                   <!--<span class="cd-timeline__date">Jan 14</span>-->
-                  <div class="heading cd-timeline__date">
-                    <h3><%=artipost.name%></h3>
+                  <div class="cd-timeline__date">
+                    <h2 style="font-family: Tangerine, serif;"><%=artipost.name%></h2>
                     <!--<p style="font-size: medium; text-align: center"><%- artipost.description.substring(0, 200) %></p>-->
                     <!--<div class="cd-timeline__read-more" style="cd-timeline__date">
                       <a class="btn btn-outline-primary" href="/artifactposts/<%=artipost._id %>"
@@ -46,8 +47,14 @@
                     </div>-->
                   </div>
 
-                </div>
-              </div>
+
+
+                  <!--<h2>Title of section 1</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
+                  <a href="#0" class="cd-timeline__read-more">Read more</a>
+                  <span class="cd-timeline__date">Jan 14</span>-->
+                </div> <!-- cd-timeline__content -->
+              </div> <!-- cd-timeline__block -->
 
         <% }); %>
       </div>
