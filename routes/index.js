@@ -14,7 +14,7 @@ var config = require("../config.js");
 
 var serverdomain = "https://it-project.herokuapp.com";
 
-//".router" is used isntead of "app." as our routes are now in a seperate file that links back to the "app.js" file
+//".router" is used instead of "app." as our routes are now in a separate file that links back to the "app.js" file
 
 //ROOT ROUTE
 router.get("/", function(req, res) {
@@ -38,10 +38,23 @@ router.get("/profile", middleware.isLoggedIn, function(req, res) {
   });
 });
 
-
 // edit profile
 router.get("/profile/edit", middleware.isLoggedIn, function(req, res) {
   res.render("editprofile", {user: req.user});
+});
+
+// change name
+router.post("/profile/edit", middleware.isLoggedIn, function(req, res) {
+  User.updateOne({username : req.user.username}, {name : req.body.name}, {}, function (err, raw) {
+    if (err) {
+      console.log(err);
+      req.flash("error", "Error, update failed.");
+      res.redirect("back");
+    } else {
+      req.flash("success", "Success! Your new name is " + req.body.name + ".");
+      res.redirect("back");
+    }
+  });
 });
 
 //--------------------REGISTER----------------------------------------
