@@ -50,7 +50,7 @@ body {
     height: 100vh;
 }
 
-.heading  h3 {
+.heading {
     color: #636161;
     font-family: 'Raleway',sans-serif;
     font-size: 45px;
@@ -287,15 +287,15 @@ body .btn-bg.bg-2 .btn-2 button:after {
 }
 
 @media screen and (max-width: 450px) {
-    .heading h3{
+    .heading {
         font-size:30px;
     }
 }
 
 .title {
     text-align: center;
+    margin-bottom: 1rem;
 }
-
 
 /* Footer absolute positioning */
 html {
@@ -317,4 +317,18 @@ body {
 .btn-solid {
     background-color: #343a40 !important;
     text-transform: capitalize;
+}
+
+section.profilepage .profile-container {
+    background-color: #f5f5f5;
+    border: 1px solid #cacaca;
+    box-shadow: 0 0 5px -3px #000;
+    padding: 15px;
+    margin-bottom: 2rem;
+    font-size: larger;
+}
+
+.profile-container .row {
+    margin-top: 0.5rem;
+    padding: 5px;
 }

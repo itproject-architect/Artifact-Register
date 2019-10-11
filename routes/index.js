@@ -38,6 +38,12 @@ router.get("/profile", middleware.isLoggedIn, function(req, res) {
   });
 });
 
+
+// edit profile
+router.get("/profile/edit", middleware.isLoggedIn, function(req, res) {
+  res.render("editprofile", {user: req.user});
+});
+
 //--------------------REGISTER----------------------------------------
 //REGISTER ROUTE (form)
 router.get("/register", function(req, res) {

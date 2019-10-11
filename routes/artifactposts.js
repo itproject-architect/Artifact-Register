@@ -189,7 +189,7 @@ router.get("/artifactposts/search", function (req, res) {
             } else {
                 results = getPublicPosts(results);
             }
-            // Filter by date
+            // Filter by a range of date
             if (params.date_from !== "") {
                 results = filterByDateLower(results, Number(params.date_from));
             }
