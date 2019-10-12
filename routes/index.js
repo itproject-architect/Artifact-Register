@@ -6,6 +6,7 @@ var User = require("../models/user");
 var UserInvite = require("../models/userinvite");
 const uuidGenerate = require("nodejs-simple-uuid");
 var middleware = require("../middleware");
+var multer = require('multer');
 
 //Contact form
 var nodemailer = require("nodemailer");
@@ -13,6 +14,32 @@ var nodemailer = require("nodemailer");
 var config = require("../config.js");
 
 var serverdomain = "https://it-project.herokuapp.com";
+
+
+//--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
+// adapted from https://github.com/nax3t/image_upload_example/tree/edit-delete --------------------
+
+var storage = multer.diskStorage({
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + '_' + file.originalname);
+  }
+});
+var imageFilter = function (req, file, cb) {
+  // accept image files only
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif|tif)$/i)) {
+    return cb(new Error('Only image files are supported'), false);
+  }
+  cb(null, true);
+};
+var upload = multer({storage: storage, fileFilter: imageFilter});
+
+var cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: 'dvwezxakw',
+  api_key: '862182883151951',
+  api_secret: '75kzWvbY-siNUFuUWHLVpzmAcDU'
+});
+
 
 //".router" is used instead of "app." as our routes are now in a separate file that links back to the "app.js" file
 
@@ -29,11 +56,11 @@ router.get("/invitefamily", function(req, res) {
 
 // user profile page
 router.get("/profile", middleware.isLoggedIn, function(req, res) {
-  Artifactpost.find({"author.username": req.user.username}).exec(function (err, results) {
+  Artifactpost.find({"author.username" : req.user.username}).exec(function (err, results) {
     if (err) {
       console.log(err);
     } else {
-      res.render("profile", {name: req.user.name, artifacts: results});
+      res.render("profile", {user: req.user, artifacts: results});
     }
   });
 });
@@ -43,12 +70,32 @@ router.get("/profile/edit", middleware.isLoggedIn, function(req, res) {
   res.render("editprofile", {user: req.user});
 });
 
-// change name
-router.post("/profile/edit", middleware.isLoggedIn, function(req, res) {
-  User.updateOne({username : req.user.username}, {name : req.body.name}, {}, function (err, raw) {
+// upload photo
+router.post("/profile/edit/photo", middleware.isLoggedIn, upload.single("photo"), function (req, res) {
+  cloudinary.uploader.upload(req.file.path, function (err, result) {
     if (err) {
       console.log(err);
-      req.flash("error", "Error, update failed.");
+    } else {
+      User.updateOne({username : req.user.username}, {photo : result.secure_url}, function (err, raw) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Sorry, an error has occurred.");
+          res.redirect("back");
+        } else {
+          req.flash("success", "Success! Your photo has been updated.");
+          res.redirect("back");
+        }
+      });
+    }
+  });
+});
+
+// change name
+router.post("/profile/edit/name", middleware.isLoggedIn, function(req, res) {
+  User.updateOne({username : req.user.username}, {name : req.body.name}, function (err, raw) {
+    if (err) {
+      console.log(err);
+      req.flash("error", "Sorry, an error has occurred.");
       res.redirect("back");
     } else {
       req.flash("success", "Success! Your new name is " + req.body.name + ".");
@@ -231,6 +278,20 @@ router.post("/send", function(req, res) {
       res.redirect("invitefamily");
     }
   });
+});
+
+// debug
+router.get("/debug", function (req, res) {
+  User.updateOne({username : 'xlin5'},
+      {photo : 'https://res.cloudinary.com/dvwezxakw/image/upload/v1570892444/soxtjio53gigscyggtmh.jpg'},
+      function (err, raw) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(raw);
+    }
+  });
+
 });
 
 //--------------------EXPORT----------------------------------------

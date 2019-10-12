@@ -6,19 +6,32 @@
             <div class="container">
                 <h3 class="heading">:: Edit your profile ::</h3>
             </div>
-            <div class="container profile-container">
+            <div class="container profile-container" style="box-shadow: 0 0 5px -3px #000;">
                 <div class="row">
                     <div class="col-3">
                         <h3>Photo</h3>
                     </div>
                     <div class="col-8">
-                        <button class="author-icon mb-3" data-toggle="tooltip"
-                                title="<%= user.name %>"><%= user.name.substring(0, 1) %></button>
+                        <img class="img-fluid img-fluid-small" src="<%= user.photo %>" alt="<%= user.username %>" />
                     </div>
                     <div class="col-1">
-                        <a class="btn" href="#upload_photo">
+                        <a class="btn" href="#" data-toggle="collapse" data-target="#upload_photo">
                             <i class="fas fa-pen"></i>
                         </a>
+                    </div>
+                </div>
+                <div id="upload_photo" class="container profile-container collapse">
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-9">
+                            <form action="/profile/edit/photo" method="POST" enctype="multipart/form-data">
+                                <div class="fileuploader" style="padding: 0">
+                                    <label class="bmd-label-floating" for="photo">Upload your photo...</label>
+                                    <input type="file" name="photo" class="form-control" accept="image/*" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline-primary" style="margin: 1px">Upload</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -39,10 +52,12 @@
                     <div class="row">
                         <div class="col-3"></div>
                         <div class="col-9">
-                            <form action="/profile/edit" method="POST">
-                                <input type="text" class="form-control mb-3" name="name"
-                                       placeholder="Enter your new name..." required>
-                                <button type="submit" class="btn btn-outline-primary">Done!</button>
+                            <form action="/profile/edit/name" method="POST">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating" for="name">Enter your new name...</label>
+                                    <input type="text" name="name" class="form-control mb-3" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline-primary" style="margin: 1px">Done</button>
                             </form>
                         </div>
                     </div>
@@ -60,6 +75,10 @@
                             <i class="fas fa-pen"></i>
                         </a>
                     </div>
+                </div>
+            </div>
+            <div class="text-center container">
+                <a class="btn btn-raised btn-danger btn-block mt-2" href="/profile">Back</a>
             </div>
         </div>
     </div>

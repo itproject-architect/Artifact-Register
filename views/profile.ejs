@@ -4,17 +4,22 @@
     <div class="container">
         <div class="row">
             <div class="col-3 float-left">
-                <a class="btn btn-solid btn-primary btn-block" href="profile/edit">Edit Profile</a>
-                <a class="btn btn-solid btn-primary btn-block" href="#">Manage Artifacts</a>
+                <a class="btn btn-raised btn-primary btn-block btn-capitalize" href="profile/edit">Edit Profile</a>
+                <a class="btn btn-raised btn-primary btn-block btn-capitalize" href="#">Manage Artifacts</a>
             </div>
 
             <div class="col-9 float-right">
                 <div class="container mb-5">
                     <header style="height: auto">
-                        <button class="author-icon mb-3" data-toggle="tooltip"
-                                title="<%= name %>"><%= name.substring(0, 1) %></button>
+                        <% if (user.photo) { %>
+                            <img class="img-fluid img-fluid-small mb-3"
+                                 src="<%= user.photo %>" alt="<%= user.username %>" />
+                        <% } else { %>
+                            <button class="author-icon mb-3" data-toggle="tooltip"
+                                    title="<%= user.name %>"><%= user.name.substring(0, 1) %></button>
+                        <% } %>
                     </header>
-                    <h2 class="text-center">Hello, <%= name %>!</h2>
+                    <h2 class="text-center">Hello, <%= user.name %>!</h2>
                 </div>
                 <div class="container">
                     <div class="row">

@@ -7,15 +7,15 @@ var asyncHandler = require("express-async-handler");
 var http = require('http');
 var url = require('url');
 var util = require('util');
+var multer = require('multer');
 
 
 //--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
 // adapted from https://github.com/nax3t/image_upload_example/tree/edit-delete --------------------
 
-var multer = require('multer');
 var storage = multer.diskStorage({
     filename: function (req, file, callback) {
-        callback(null, Date.now() + file.originalname);
+        callback(null, Date.now() + '_' + file.originalname);
     }
 });
 var imageFilter = function (req, file, cb) {
@@ -25,7 +25,7 @@ var imageFilter = function (req, file, cb) {
     }
     cb(null, true);
 };
-var upload = multer({storage: storage, fileFilter: imageFilter})
+var upload = multer({storage: storage, fileFilter: imageFilter});
 
 var cloudinary = require('cloudinary');
 cloudinary.config({
@@ -64,18 +64,20 @@ router.get(
 
 function getPrivatePosts(allArtiposts, email) {
     let newPosts = [];
-    console.log("iteration ", email);
+    /* console.log("iteration ", email); */
 
     for (var prop in allArtiposts) {
         let post = allArtiposts[prop];
+        /*
         console.log("iteration author ", post.author.username);
         console.log("iteration name ", post.name);
+         */
 
         if (post.option === "1" || post.option === "2") {
-            console.log("post name public family ", post.name);
+            /* console.log("post name public/family ", post.name); */
             newPosts.push(post);
         } else if (post.option === "3" && post.author.username === email) {
-            console.log("post name private ", post.name);
+            /* console.log("post name private ", post.name); */
 
             newPosts.push(post);
         }
@@ -110,13 +112,13 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
 
 
     Promise.all(uploadPromises).then( (result) => {
-        let images = result.map(value => value.secure_url)
-        let imageIds = result.map(value => value.public_id)
+        let images = result.map(value => value.secure_url);
+        let imageIds = result.map(value => value.public_id);
         var name = req.body.name;
         var year = req.body.year;
         var location = req.body.location;
         var desc = req.body.description;
-        var option = req.body.option
+        var option = req.body.option;
         var author = {
             id: req.user._id,
             username: req.user.username,
