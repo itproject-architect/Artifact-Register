@@ -7,7 +7,6 @@
         this.offset = 0.8;
         this.hideBlocks();
     };
-
     VerticalTimeline.prototype.hideBlocks = function() {
         //hide timeline blocks which are outside the viewport
         if ( !"classList" in document.documentElement ) {
@@ -66,9 +65,7 @@
             timeline.showBlocks();
         });
         scrolling = false;
-    };
-
-
+    }
 })();
 
 
@@ -132,4 +129,42 @@ $('#back-button').click(function(e){
         }
     });
 });
+
+function displayDate(){
+    var today;
+    var n_day;
+    var day;
+    today = new Date();
+    n_day = today.getDay();
+    switch (n_day){
+        case 0: day = "Sunday"; break;
+        case 1: day = "Monday"; break;
+        case 0: day = "Tuesday"; break;
+        case 0: day = "Wednesday"; break;
+        case 0: day = "Thursday"; break;
+        case 0: day = "Friday"; break;
+        case 0: day = "Saturday"; break;
+    }
+    this.document.write(today.getFullYear()+'.'+(today.getMonth()+1)+"."+today.getDate()+"  "+day);
+}
+
+/*$(window).on("scroll", function() {
+    if(Math.round(($(window).scrollTop())/(($(document).height())-($(window).height()))*100) > 50) {
+        $(".scroll-effect").addClass("active");
+    } else {
+        //remove the background property so it comes transparent again (defined in your css)
+        $(".scroll-effect").removeClass("active");
+    }
+});*/
+
+
+/*const [red, green, blue] = [255, 242, 223];
+const section1 = document.querySelector('.scroll-effect');
+$(window).on("scroll", function() {
+    if(Math.round(($(window).scrollTop())/(($(document).height())-($(window).height()))*100) > 50) {
+        const y = 1 + (window.scrollY || window.pageYOffset) / 150;
+        const [r, g, b] = [red / y, green / y, blue / y].map(Math.round);
+        section1.style.backgroundColor = `rgb(${r}, ${g}, ${b})`
+    }
+});*/
 
