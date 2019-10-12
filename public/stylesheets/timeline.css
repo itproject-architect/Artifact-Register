@@ -41,12 +41,29 @@ h5{ /*need fixing @media problem*/
     height: 100%;
 
 }
-/*.text-frame{
-    position: relative;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 3em;
-}*/
+
+.frame {
+    margin-bottom: 1em;
+    margin-left: 2.5em;
+    margin-right: 2.5em;
+    background-color: #ddc;
+    border: solid 5vmin #eee;
+    border-bottom-color: #fff;
+    border-left-color: #eee;
+    border-radius: 2px;
+    border-right-color: #eee;
+    border-top-color: #ddd;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25) inset, 0 5px 10px 5px rgba(0, 0, 0, 0.25);
+    /*box-sizing: border-box;*/
+    /*display: inline-block;*/
+    /*height: 80vh;*/
+    padding: 3vmin;
+    /*position: relative;*/
+    text-align: center;
+    overflow: hidden;
+}
+
+
 
 .zoom{
     transition: transform .2s; /* zoom animation*/
@@ -77,10 +94,48 @@ h5{ /*need fixing @media problem*/
 }
 
 
+/*.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}*/
+.circle-image{
+    border-radius: 50%;
+    background: url("../pics/day.png") no-repeat center;
+    background-size: 100%;
+}
+.cd-timeline__block:nth-child(even) .circle-image{
+    background: url("../pics/night2.png") no-repeat center;
+    background-size: 60px 60px;
+}
+
+.cd-timeline__block:first-child .circle-image{
+    background: url("../pics/end.png") no-repeat center;
+    background-size: 100%;
+}
+
+.cd-timeline__block:last-child .circle-image{
+    background: url("../pics/start.png") no-repeat center;
+    background-size: 100%;
+}
+
+
+
 .showmore {
     border-radius: 10px;
     animation: pulse 5s infinite;
 }
+
+
+/*.scroll-effect {
+    background-color: #fff2df;
+}*/
+
+/*.scroll-effect.active {
+    background-color: darkblue;
+}*/
+
 
 @keyframes pulse {
     0% {
