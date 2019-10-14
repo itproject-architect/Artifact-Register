@@ -105,6 +105,20 @@ router.post("/profile/edit/name", middleware.isLoggedIn, function(req, res) {
   });
 });
 
+// change password
+router.post("/profile/edit/password", middleware.isLoggedIn, function(req, res) {
+  req.user.changePassword(req.body.old_pwd, req.body.new_pwd, function (err, result) {
+    if (err) {
+      console.log(err);
+      req.flash("error", `Error: ${err.message}.`);
+      res.redirect("back");
+    } else {
+      req.flash("success", "Success! Your password has be changed.");
+      res.redirect("back");
+    }
+  })
+});
+
 //--------------------REGISTER----------------------------------------
 //REGISTER ROUTE (form)
 router.get("/register", function(req, res) {
