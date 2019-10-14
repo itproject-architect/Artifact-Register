@@ -3,11 +3,11 @@
 <div class="timelinepage">
 <header style="margin-top: -4%;">
   <div class="display-lower-middle">
-    <div class="w3-display-container w3-animate-opacity w3-text-white heading">
+    <div class="w3-display-container w3-animate-opacity heading text-center">
         <h3>Artifact TimeLine</h3>
         <!--<hr class="w3-border-grey" style="margin:auto;width:40%">-->
         <!--<span><script type="text/javascript">displayDate()</script></span>-->
-        <p class="w3-center showmore" style="font-family: Impact, Charcoal, sans-serif">click on image to show more</p>
+        <h2 class="w3-center show-more" style="font-family: Impact, Charcoal, sans-serif;">click on image to show more</h2>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
         <% artipost.forEach(function(artipost){ %>
 
               <div class="cd-timeline__block js-cd-block">
-                <div class="cd-timeline__img circle-image js-cd-img">
+                <div class="cd-timeline__img js-cd-img cd-timeline__img--picture" >
                     <!--<div class="circle-image" style="background: url('../../public/pics/day.png');"></div>-->
                     <!--<img src="../../public/pics/night.png" alt="Picture">-->
                     <!--<div class="circle-image" style="border: solid;padding: 40px"></div>-->
@@ -29,20 +29,18 @@
                 </div> <!-- cd-timeline__img -->
 
                 <div class="cd-timeline__content js-cd-content">
-                  <p style="font-size: medium;line-height: 1px;" class="date-align"></p>
                   <div class="frame">
                     <a href="/artifactposts/<%=artipost._id %>"
                     ><img class="img-fluid image-border zoom image-center" style="width:100%;height: 100%;" src="<%= artipost.image[0]%>"
                       /></a>
                   </div>
-
+                  <p class="date-align">by <%=artipost.author.name%></p>
 
                     <!--<p><%- artipost.description.substring(0, 200) %>...</p>-->
                   <!--<span class="cd-timeline__date">Jan 14</span>-->
                   <div class="cd-timeline__date">
-
+                    <h2 class="text-center"><%=artipost.name%></h2>
                     <h1 class="text-center"><%=artipost.year%></h1>
-                    <h2 class="text-center"   style="font-family: Tangerine, serif;"><%=artipost.name%></h2>
 
 
                   </div>
