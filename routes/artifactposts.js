@@ -39,23 +39,30 @@ cloudinary.config({
 //index routes
 router.get(
     "/artifactposts/p/:page", function (req, res) {
+        console.log("...");
 
-        var perPage = 6 //max number of artifacts per page (6 Items are displayed)
-        var page = req.params.page || 1 //current page number
+        var perPage = 6; //max number of artifacts per page (6 Items are displayed)
+        var page = req.params.page || 1; //current page number
         var admin = config.admin;
-        var query = (req.user) ? {$or: [{option : '1'},{option :'2'}, {"author.id" : req.user._id}] } : {option : '1'}
+        var query = (req.user) ? {$or: [{option: '1'}, {option: '2'}, {"author.id": req.user._id}]} : {option: '1'};
         //ternary query if logged in, check for post marked as public(1), friends only(2) and private( user id matches author id)
 
-            Artifactpost.find(query)
-                .sort({created : -1}) //display most recently created post to be on top
-                .skip((perPage * page) - perPage) // skip and limit for indexing  (used for pagination)
-                .limit(perPage)
-                .exec(function (err, allArtiposts) {
-                    Artifactpost.countDocuments(query).exec(function(err, count) { //count the number of query documents
-                        if (err) console.log(err);
+        Artifactpost.find(query)
+            .sort({created: -1}) //display most recently created post to be on top
+            .skip((perPage * page) - perPage) // skip and limit for indexing  (used for pagination)
+            .limit(perPage)
+            .exec(function (err, allArtiposts) {
+                Artifactpost.countDocuments(query).exec(function (err, count) { //count the number of query documents
+                    if (err) console.log(err);
+                    res.render("artifactposts/index", {
+                        artipost: allArtiposts,
+                        admin: admin,
+                        current: page,
+                        pages: Math.ceil(count / perPage)
+                    })
                 });
-        }
-);
+            });
+    });
 
 
 //CREATE ARTIFACT POST ROUTE
@@ -281,7 +288,7 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
             updatedArtipost.description = req.body.description;
             updatedArtipost.save();
 
-            req.flash('success', "successfuly updated")
+            req.flash('success', "successfuly updated");
             res.redirect("/artifactposts/" + req.params.id);
 
         }
