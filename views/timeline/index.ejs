@@ -21,13 +21,17 @@
         <% artipost.forEach(function(artipost){ %>
 
               <div class="cd-timeline__block js-cd-block">
-                <div class="cd-timeline__img circle-image js-cd-img"
-                     style="background: url(<%= artipost.author.photo %>) no-repeat center/cover">
+                <% if (artipost.author.photo) { %>
+                  <div class="cd-timeline__img circle-image js-cd-img"
+                       style="background-image: url(<%= artipost.author.photo %>)">
+                <% } else { %>
+                  <div class="cd-timeline__img cd-timeline__img--picture circle-image js-cd-img">
+                <% } %>
                     <!--<div class="circle-image" style="background: url('../../public/pics/day.png');"></div>-->
                     <!--<img src="../../public/pics/night.png" alt="Picture">-->
                     <!--<div class="circle-image" style="border: solid;padding: 40px"></div>-->
 
-                </div> <!-- cd-timeline__img -->
+                </div>
 
                 <div class="cd-timeline__content js-cd-content">
                   <div class="frame">
