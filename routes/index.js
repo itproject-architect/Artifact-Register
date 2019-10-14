@@ -57,7 +57,7 @@ router.get("/invitefamily", middleware.isLoggedIn, function(req, res) {
 
 // user profile page
 router.get("/profile", middleware.isLoggedIn, function(req, res) {
-  Artifactpost.find({"author.username" : req.user.username}).exec(function (err, results) {
+  Artifactpost.find({"author.username" : req.user.username}, function (err, results) {
     if (err) {
       console.log(err);
     } else {

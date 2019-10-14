@@ -149,10 +149,10 @@ router.get("/artifactposts/search", function (req, res) {
     var compFn;
     var pages = 0;
     Artifactpost.find({
-        "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
+        "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"}, // RegExp matching, case insensitive
         "author.name" : {$regex : params.author, $options : "$i"},
         "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"}
-    }).exec(function (err, results) {
+    }, function (err, results) {
         if (err) {
             console.log(err);
         } else {

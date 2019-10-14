@@ -21,7 +21,8 @@
         <% artipost.forEach(function(artipost){ %>
 
               <div class="cd-timeline__block js-cd-block">
-                <div class="cd-timeline__img circle-image js-cd-img">
+                <div class="cd-timeline__img circle-image js-cd-img"
+                     style="background: url(<%= artipost.author.photo %>) no-repeat center/cover">
                     <!--<div class="circle-image" style="background: url('../../public/pics/day.png');"></div>-->
                     <!--<img src="../../public/pics/night.png" alt="Picture">-->
                     <!--<div class="circle-image" style="border: solid;padding: 40px"></div>-->
