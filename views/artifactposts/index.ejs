@@ -1,11 +1,11 @@
 <!--BLOGPOST INDEX-->
 <% include ../partials/header %>
 
-<section class="blogpostindexpage">
+<section class="blogpostindexpage ">
   <div class="blogpostindexintro">
     <div class="container">
       <div class="row mb-2">
-        <div class="col-12 heading text-center">
+        <div class="col-12 heading text-center mt-5 w3-animate-opacity w3-text-white">
           <h3>Artifacts</h3>
         </div>
       </div>
@@ -124,7 +124,7 @@
             <img class="img-fluid" src="<%= artipost.image[0] %>" alt="<% artipost.name%>"/>
             <h3 class="year text-center mt-3"><%=artipost.year%></h3>
             <h3 class="post-title text-center"><%=artipost.name%></h3>
-            <p class="text-center"><%- artipost.description.substring(0, 200) %>...</p>
+            <p class="text-center"><%- artipost.description.substring(0, 70) %>...</p>
           </a>
         </div>
       </div>

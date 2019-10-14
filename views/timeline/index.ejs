@@ -1,9 +1,10 @@
 <!--BLOGPOST INDEX-->
 <% include ../partials/header %>
-<header style="margin-top: -4%;"> <!-- this might not be a good way to remove blank space above header-->
+<div class="timelinepage">
+<header style="margin-top: -4%;">
   <div class="display-lower-middle">
     <div class="w3-display-container w3-animate-opacity w3-text-white heading">
-        <h3 class="w3-animate-top">Artifact Time Line</h3>
+        <h3>Artifact TimeLine</h3>
         <!--<hr class="w3-border-grey" style="margin:auto;width:40%">-->
         <!--<span><script type="text/javascript">displayDate()</script></span>-->
         <p class="w3-center showmore" style="font-family: Impact, Charcoal, sans-serif">click on image to show more</p>
@@ -28,7 +29,7 @@
                 </div> <!-- cd-timeline__img -->
 
                 <div class="cd-timeline__content js-cd-content">
-                  <p style="font-size: medium;line-height: 1px;" class="date-align"><%=artipost.year%></p>
+                  <p style="font-size: medium;line-height: 1px;" class="date-align"></p>
                   <div class="frame">
                     <a href="/artifactposts/<%=artipost._id %>"
                     ><img class="img-fluid image-border zoom image-center" style="width:100%;height: 100%;" src="<%= artipost.image[0]%>"
@@ -39,28 +40,23 @@
                     <!--<p><%- artipost.description.substring(0, 200) %>...</p>-->
                   <!--<span class="cd-timeline__date">Jan 14</span>-->
                   <div class="cd-timeline__date">
-                    <h2 style="font-family: Tangerine, serif;"><%=artipost.name%></h2>
-                    <!--<p style="font-size: medium; text-align: center"><%- artipost.description.substring(0, 200) %></p>-->
-                    <!--<div class="cd-timeline__read-more" style="cd-timeline__date">
-                      <a class="btn btn-outline-primary" href="/artifactposts/<%=artipost._id %>"
-                      >Read More</a>
-                    </div>-->
+
+                    <h1 class="text-center"><%=artipost.year%></h1>
+                    <h2 class="text-center"   style="font-family: Tangerine, serif;"><%=artipost.name%></h2>
+
+
                   </div>
 
 
-
-                  <!--<h2>Title of section 1</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-                  <a href="#0" class="cd-timeline__read-more">Read more</a>
-                  <span class="cd-timeline__date">Jan 14</span>-->
-                </div> <!-- cd-timeline__content -->
-              </div> <!-- cd-timeline__block -->
+                </div>
+              </div>
 
         <% }); %>
       </div>
-    </section> <!-- cd-timeline -->
+    </section>
 
   </div>
 </section>
+</div>
 
 <% include ../partials/footer %>

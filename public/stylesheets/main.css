@@ -83,6 +83,9 @@ input {
 
 }
 
+#count_message {
+    color:#c3b9aa
+}
 
 
 
@@ -114,6 +117,11 @@ input {
     font-size: 30px;
 
 }
+
+.img-fluid {
+    height: 200px;
+}
+
 
 
 section .post {
@@ -379,6 +387,12 @@ body .btn-bg.bg-2 .btn-2 button:after {
 
 }
 
+/*form input size restriction*/
+.form-size-res{
+    max-width: 400px;
+    margin: 0 auto;
+}
+
 @keyframes rotate360 {
     100% {
         transform: rotate(360deg);
@@ -402,17 +416,11 @@ body .btn-bg.bg-2 .btn-2 button:after {
     }
 }
 
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-   .blogpostindexpage, .newblogpostpage, .editblogpostpage{
-;
-        transform: scale(0.8); /* 80% */
 
-    }
 
-    .heading h3 {
-        margin-top: 0;
-    }
+.loginpage, .blogpostindexpage, .showblogpostpage, .newblogpostpage,
+.registerpage, .editblogpostpage, .blogpostindexpage {
+    min-height: 100vh;
 }
 
 

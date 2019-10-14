@@ -148,23 +148,19 @@ function displayDate(){
     this.document.write(today.getFullYear()+'.'+(today.getMonth()+1)+"."+today.getDate()+"  "+day);
 }
 
-/*$(window).on("scroll", function() {
-    if(Math.round(($(window).scrollTop())/(($(document).height())-($(window).height()))*100) > 50) {
-        $(".scroll-effect").addClass("active");
-    } else {
-        //remove the background property so it comes transparent again (defined in your css)
-        $(".scroll-effect").removeClass("active");
+/*description word count for new/edit postings*/
+
+var max_word = 300;
+$('#count_message').html(max_word + ' remaining');
+$('#descArea').keyup(function() {
+    var text_length = $('#descArea').val().length;
+    var text_remaining = max_word - text_length;
+
+    $('#count_message').html(text_remaining + ' remaining');
+
+    if ((text-remaining) <= 0) {
+        $('#submit-post').disabled = true;
     }
-});*/
 
 
-/*const [red, green, blue] = [255, 242, 223];
-const section1 = document.querySelector('.scroll-effect');
-$(window).on("scroll", function() {
-    if(Math.round(($(window).scrollTop())/(($(document).height())-($(window).height()))*100) > 50) {
-        const y = 1 + (window.scrollY || window.pageYOffset) / 150;
-        const [r, g, b] = [red / y, green / y, blue / y].map(Math.round);
-        section1.style.backgroundColor = `rgb(${r}, ${g}, ${b})`
-    }
-});*/
-
+});
