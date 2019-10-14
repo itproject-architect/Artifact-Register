@@ -61,7 +61,7 @@ router.get("/profile", middleware.isLoggedIn, function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("profile", {user: req.user, artifacts: results});
+      res.render("profile", {user: req.user, artifacts: results.slice(0, 9)});  // show at most 9 artifacts (3*3)
     }
   });
 });
