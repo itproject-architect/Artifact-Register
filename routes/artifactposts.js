@@ -237,26 +237,22 @@ router.get("/artifactposts/:id", function (req, res) {
             res.render("artifactposts/show", {artipost: foundArtipost});
         }
     });
-
-})
+});
 
 //EDIT ARTIFACT POST ROUTE
 router.get("/artifactposts/:id/edit", middleware.checkBlogpostOwnership, function (req, res) {
     Artifactpost.findById(req.params.id, function (err, foundArtipost) {
         if (err) {
-            res.flash("failure", "Sorry, artifact not found.");
+            res.flash("error", "Sorry, artifact not found.");
             res.redirect("/artifactposts");
-
         } else {
             res.render("artifactposts/edit", {artipost: foundArtipost});
-
         }
     });
 });
 
 //UPDATE ARTIFACT POST
 router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array('image', 5), function (req, res) {
-
     Artifactpost.findById(req.params.id, async function (err, updatedArtipost) {
         if (err) {
             req.flash("error", err.message);

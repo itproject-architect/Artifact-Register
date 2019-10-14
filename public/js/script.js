@@ -81,7 +81,6 @@ $(function(){
             function  (){
                 btnLoader.classList.remove('spinning');
                 /*btnLoader.innerHTML = "Sign In";*/
-
             }, 6000);
     }, false);
 
@@ -101,7 +100,7 @@ $("input[name='delete']").click(function(){
             }
         },
         callback: function (result) {
-            if(result ==true)
+            if(result == true)
                 $('#delete-form').submit();
         }
     });
@@ -151,16 +150,21 @@ function displayDate(){
 /*description word count for new/edit postings*/
 
 var max_word = 300;
-$('#count_message').html(max_word + ' remaining');
+var text_length = $('#descArea').val().length;
+var text_remaining = max_word - text_length;
+$('#count_message').html(text_remaining  + ' remaining');
 $('#descArea').keyup(function() {
-    var text_length = $('#descArea').val().length;
-    var text_remaining = max_word - text_length;
+    text_length = $('#descArea').val().length;
+    text_remaining = max_word - text_length;
 
     $('#count_message').html(text_remaining + ' remaining');
 
-    if ((text-remaining) <= 0) {
-        $('#submit-post').disabled = true;
+    if (text_remaining < 0) {
+        console.log("Disable");
+        $('#submit-post').prop("disabled", true);
+    } else if ($('#submit-post').prop("disabled")) {
+        console.log("Enable");
+        $('#submit-post').prop("disabled", false);
     }
-
-
 });
+

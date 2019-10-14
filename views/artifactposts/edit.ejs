@@ -4,37 +4,40 @@
 <section class="editblogpostpage">
     <div class="container">
 
-            <div class="heading text-center mb-5">
-                <h3>Edit post: <%= artipost.name %></h3>
-            </div>
-        <div class="row">
-            <div class="col-12 col-lg-6 col-md-12 col-sm-12">
-                <form action="/artifactposts/<%= artipost._id %>/?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="heading text-center mb-5">
+            <h3>Edit post: <%= artipost.name %></h3>
+        </div>
 
-
+        <form action="/artifactposts/<%= artipost._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-12 col-lg-6 col-md-12 col-sm-12">
                     <div class="form-group">
                         <label class="bmd-label-floating" for="name">Artifact Post Title</label>
-                        <input class="form-control" type="text" name="name" value=<%= artipost.name%> required>
+                        <input class="form-control" type="text" name="name" value="<%= artipost.name %>" required />
                         <span class="bmd-help">Enter the name of the artwork</span>
                     </div>
 
-                    <label class="bmd-label-floating" for="year">Year</label>
-                    <input class="form-control" type="number" name="year", min="1850" max="2019" step="1" value="<%= artipost.year%>" required/>
+                    <div class="form-group">
+                        <label class="bmd-label-floating" for="year">Year</label>
+                        <input class="form-control" type="number" name="year" min="1850" max="2019"
+                               step="1" value="<%= artipost.year%>" required />
+                    </div>
 
                     <div class="form-group">
                         <label class="bmd-label-floating" for="location">Location</label>
-                        <input class="form-control" type="text" name="location" value=<%= artipost.location%> required/>
+                        <input class="form-control" type="text" name="location" value="<%= artipost.location %>" required />
                         <span class="bmd-help">Enter the name of the artwork</span>
                     </div>
 
 
                     <div class="form-group">
                         <label for="descArea" class="bmd-label-floating">Description</label>
-                        <textarea rows="10" col="50" type="text" class="form-control" id="descArea" name="description"><%= artipost.description%></textarea>
+                        <textarea rows="10" cols="50" class="form-control"
+                                  id="descArea" name="description"><%= artipost.description %></textarea>
+                        <p class="text-right" id="count_message"></p>
                     </div>
 
                     <div class="form-group">
-
                         <label for="select-option" class="bmd-label-floating">Post View Privileges</label>
                         <select name="option" class="form-control" id="select-option">
                             <option <%= artipost.option == '1' ? "selected" : ""  %> name="public" value="1">Public</option>
@@ -44,28 +47,24 @@
                         <span class="bmd-help">Only post marked as public will be displayed on timeline if not logged in</span>
                     </div>
 
+                </div>
+
+
+                <div class="fileuploader col-12 col-lg-6 col-md-12 col-sm-12">
+                    <label class="bmd-label-floating" for="image">Artworks (Max 5 files)</label>
+                    <input type="file" name="image" accept="image/*" data-max-files="5" data-fileuploader-limit="5" multiple>
+                </div>
             </div>
 
-
-            <div class="fileuploader col-12 col-lg-6 col-md-12 col-sm-12">
-                <label class="bmd-label-floating" for="image">Artworks (Max 5 files)</label>
-                <input type="file" name="image" accept="image/*" data-max-files="5" data-fileuploader-limit="5" required multiple>
+            <div class="row">
+                <div class="text-center mt-5 col-12">
+                    <button id="submit-post" class="black-btn btn btn-raised btn-success">Submit</button>
+                    <a class="black-btn btn btn-raised btn-danger" href="/artifactposts/<%= artipost._id %>">Back</a>
+                </div>
             </div>
-
-        </div>
-
-
-
-        <div class="row">
-            <div class="text-center mt-5 col-12 col-lg-12 col-md-12 col-sm-12">
-                <button class="black-btn btn btn-raised btn-success">Submit</button>
-                <a class="black-btn btn btn-raised btn-danger" href="/artifactposts/p/1">Back</a>
-            </div>
-        </div>
         </form>
     </div>
 </section>
-</div>
 
 <% include ../partials/footer %>
 
