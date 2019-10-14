@@ -1,8 +1,18 @@
 /* --------------------------------
 
-Primary style
+fav colors:
+light:
+    #FABEA6
+    #EBACAD
+
+strong:
+    #F9838A red pink
+
+pink: #F8C2CF
 
 -------------------------------- */
+
+
 *, *::after, *::before {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -42,7 +52,7 @@ h5{ /*need fixing @media problem*/
 }
 
 .frame {
-    margin-bottom: 1em;
+    margin-top: 1em;
     margin-left: 2.5em;
     margin-right: 2.5em;
     background-color: #ddc;
@@ -83,20 +93,21 @@ h5{ /*need fixing @media problem*/
 }
 
 .date-align{
+    padding-top: 10px;
     text-align: right;
     padding-right: 2.5em;
 }
 
-.cd-timeline__block:nth-child(even) .date-align{
+/*.cd-timeline__block:nth-child(even) .date-align{
     text-align: left;
     padding-left: 2.5em;
-}
+}*/
 
 
 /*.center {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 50%;
+    margin-right: 50%;
     width: 50%;
 }*/
 .circle-image{
@@ -121,9 +132,11 @@ h5{ /*need fixing @media problem*/
 
 
 
-.showmore {
+.show-more {
+    /*font-family: Impact, Charcoal, sans-serif;*/
     border-radius: 10px;
-    animation: pulse 5s infinite;
+    animation: pulse 7s infinite;
+    color: #636161;
 }
 
 
@@ -138,13 +151,16 @@ h5{ /*need fixing @media problem*/
 
 @keyframes pulse {
     0% {
-        background-color: #fff2df;
+        color: #fff2df;
     }
     50% {
-        background-color: #DAF7A6;
+        color: #636161;/*#F9838A;*/
+    }
+    75%{
+        color: #F9838A;
     }
     100% {
-        background-color: #fff2df;
+        color: #fff2df;
     }
 }
 
@@ -157,7 +173,7 @@ h5{ /*need fixing @media problem*/
 }
 
 header {
-    height: 200px;
+    height: 300px;
     /*line-height: 200px;*/
     text-align: center;
     background-color: transparent;
@@ -264,7 +280,7 @@ header h1 {
 }
 
 .cd-timeline__img.cd-timeline__img--picture {
-    background: #DAF7A6;
+    background: #FABEA6;
 }
 
 .cd-timeline__img.cd-timeline__img--movie {
@@ -272,7 +288,7 @@ header h1 {
 }
 
 .cd-timeline__img.cd-timeline__img--location {
-    background: #f0ca45;
+    background: #DAF7A6;
 }
 
 @media only screen and (min-width: 1170px) {
@@ -334,7 +350,9 @@ header h1 {
     padding: 1em;
     -webkit-box-shadow: 0 3px 0 #d7e4ed;
     box-shadow: 0 3px 0 #d7e4ed;
+    font-family: Tangerine, serif;
     /*display: flex;*//* equal height of the children */
+    text-align: center;
 }
 
 .flex-child{
@@ -373,9 +391,11 @@ header h1 {
 }
 
 .cd-timeline__content p {
-    margin: 1em 0;
-    line-height: 1.6;
+    /*margin: 1em 0;*/
+    margin-top: 0.8em;
+    line-height: 1px;
 }
+
 
 .cd-timeline__read-more,
 .cd-timeline__date {
@@ -392,8 +412,7 @@ header h1 {
 }
 
 .cd-timeline__date {
-    float: left;
-    text-align: left;
+    text-align: center;
     padding:  0;
     opacity: 2; /* make title stand out more */
 }
