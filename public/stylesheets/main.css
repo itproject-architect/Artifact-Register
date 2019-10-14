@@ -38,6 +38,9 @@ input {
 .btn.btn-primary:hover {
     color: #636161;
 }
+.btn.btn-icon {
+    color: inherit;
+}
 
 .image-display img {
     max-width: 500px;
@@ -441,14 +444,11 @@ section.profilepage .profile-container {
 }
 
 
-    .dateOption p {
-        font-size: 10px;
-    }
+.dateOption p {
+    font-size: 10px;
 }
 
-
-
 .loginpage, .blogpostindexpage, .showblogpostpage, .newblogpostpage,
-.registerpage, .editblogpostpage, .blogpostindexpage {
+.registerpage, .editblogpostpage, .blogpostindexpage, .profilepage {
     min-height: 100vh;
 }

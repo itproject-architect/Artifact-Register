@@ -39,8 +39,6 @@ cloudinary.config({
 //index routes
 router.get(
     "/artifactposts/p/:page", function (req, res) {
-        console.log("...");
-
         var perPage = 6; //max number of artifacts per page (6 Items are displayed)
         var page = req.params.page || 1; //current page number
         var admin = config.admin;
@@ -288,7 +286,7 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
             updatedArtipost.description = req.body.description;
             updatedArtipost.save();
 
-            req.flash('success', "successfuly updated");
+            req.flash('success', "Successfully updated.");
             res.redirect("/artifactposts/" + req.params.id);
 
         }
