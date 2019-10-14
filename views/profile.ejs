@@ -11,13 +11,15 @@
             <div class="col-9 float-right">
                 <div class="container mb-5">
                     <header style="height: auto">
-                        <% if (user.photo) { %>
-                            <img class="img-fluid-small mb-3"
-                                 src="<%= user.photo %>" alt="<%= user.username %>" />
-                        <% } else { %>
-                            <button class="author-icon mb-3" data-toggle="tooltip"
-                                    title="<%= user.name %>"><%= user.name.substring(0, 1) %></button>
-                        <% } %>
+                        <a href="/profile/edit">
+                            <% if (user.photo) { %>
+                                <img class="img-small circle-image mb-3"
+                                     src="<%= user.photo %>" alt="<%= user.username %>" href="/profile/edit"/>
+                            <% } else { %>
+                                <button class="author-icon mb-3" data-toggle="tooltip"
+                                        title="<%= user.name %>"><%= user.name.substring(0, 1) %></button>
+                            <% } %>
+                        </a>
                     </header>
                     <h2 class="text-center"><%= user.name %></h2>
                 </div>

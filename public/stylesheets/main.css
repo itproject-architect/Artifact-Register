@@ -108,10 +108,12 @@ input {
     color: #636161;
 }
 
-
-
-.img-fluid-small {
+.img-small {
     height: 100px;
+}
+
+.img-medium {
+    height: 150px;
 }
 
 .post-title {
