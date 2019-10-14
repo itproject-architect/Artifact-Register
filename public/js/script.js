@@ -7,7 +7,6 @@
         this.offset = 0.8;
         this.hideBlocks();
     };
-
     VerticalTimeline.prototype.hideBlocks = function() {
         //hide timeline blocks which are outside the viewport
         if ( !"classList" in document.documentElement ) {
@@ -66,9 +65,7 @@
             timeline.showBlocks();
         });
         scrolling = false;
-    };
-
-
+    }
 })();
 
 
@@ -91,3 +88,79 @@ $(function(){
 });
 
 
+$("input[name='delete']").click(function(){
+    bootbox.confirm({
+        title: "Delete Post",
+        message: "Do you want to delete this post now? This cannot be undone.",
+        buttons: {
+            cancel: {
+                label: '<i class="fa fa-times"></i> Cancel'
+            },
+            confirm: {
+                label: '<i class="fa fa-check"></i> Confirm'
+            }
+        },
+        callback: function (result) {
+            if(result ==true)
+                $('#delete-form').submit();
+        }
+    });
+});
+
+
+
+$('#back-button').click(function(e){
+    e.preventDefault();
+    href = $(this).attr('href');
+    bootbox.confirm({
+        title: "Go Back",
+        message: "Do you want to go back now? ",
+        buttons: {
+            cancel: {
+                label: '<i class="fa fa-times"></i> Cancel'
+            },
+            confirm: {
+                label: '<i class="fa fa-check"></i> Confirm'
+            }
+        },
+        callback: function (result) {
+            if(result ==true)
+                window.location = href;
+        }
+    });
+});
+
+function displayDate(){
+    var today;
+    var n_day;
+    var day;
+    today = new Date();
+    n_day = today.getDay();
+    switch (n_day){
+        case 0: day = "Sunday"; break;
+        case 1: day = "Monday"; break;
+        case 0: day = "Tuesday"; break;
+        case 0: day = "Wednesday"; break;
+        case 0: day = "Thursday"; break;
+        case 0: day = "Friday"; break;
+        case 0: day = "Saturday"; break;
+    }
+    this.document.write(today.getFullYear()+'.'+(today.getMonth()+1)+"."+today.getDate()+"  "+day);
+}
+
+/*description word count for new/edit postings*/
+
+var max_word = 300;
+$('#count_message').html(max_word + ' remaining');
+$('#descArea').keyup(function() {
+    var text_length = $('#descArea').val().length;
+    var text_remaining = max_word - text_length;
+
+    $('#count_message').html(text_remaining + ' remaining');
+
+    if ((text-remaining) <= 0) {
+        $('#submit-post').disabled = true;
+    }
+
+
+});

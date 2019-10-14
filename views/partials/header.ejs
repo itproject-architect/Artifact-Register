@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -18,11 +18,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
     />
 
-
     <!-- fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Slab&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Slab|Montserrat+Alternates" rel="stylesheet">
 
     <link href="/dist/font/font-fileuploader.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
 
 
     <!-- styles -->
@@ -38,7 +38,7 @@
 
   <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
     <a class="navbar-brand" href="/"><i class="fas fa-code-branch logostyle"></i
       ></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="/artifactposts">Artifacts</a>
+          <a class="nav-link" href="/artifactposts/p/1">Artifacts</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/timeline">Timeline</a>
@@ -69,7 +69,7 @@
 
 
           <li class="nav-item navbar-right" id="welcomemessage">
-            <a class="nav-link" href="/profile"> Welcome <%= currentUser.name %></a>
+            <a class="nav-link" href="#profile"> Welcome <%= currentUser.name %></a>
           </li>
 
 
@@ -83,20 +83,19 @@
     </div>
   </nav>
 
-  <br>
-  <br>
+
 
     <div class="container">
       <div class="row">
         <% if(error && error.length > 0){ %>
-        <div class="container flashmessagestyle">
+        <div class="container flashmessagestyle text-center">
           <div class="alert alert-danger" role="alert">
             <%= error %>
           </div>
           <% }%>
         </div>
         <% if(success && success.length > 0){ %>
-        <div class="container flashmessagestyle">
+        <div class="container flashmessagestyle text-center">
           <div class="alert alert-success" role="alert">
             <%= success %>
           </div>
@@ -104,5 +103,3 @@
         <% } %>
       </div>
     </div>
-
-

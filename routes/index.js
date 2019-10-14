@@ -50,8 +50,9 @@ router.get("/", function(req, res) {
 
 
 //invite family member ROUTE
-router.get("/invitefamily", function(req, res) {
+router.get("/invitefamily", middleware.isLoggedIn, function(req, res) {
   res.render("invitefamily");
+  res.redirect('back');
 });
 
 // user profile page
@@ -141,7 +142,7 @@ router.post("/register", function(req, res) {
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Welcome, " + user.username + ".");
-      res.redirect("/artifactposts");
+      res.redirect("/artifactposts/p/1");
     });
   });
 });
@@ -156,7 +157,7 @@ router.put("/inviteregister", function(req, res) {
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Welcome, " + user.username + ".");
-      res.redirect("/artifactposts");
+      res.redirect("/artifactposts/p/1");
     });
   });
 });
@@ -169,7 +170,7 @@ router.post("/inviteregister", function(req, res) {
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Welcome, " + user.username + ".");
-      res.redirect("/artifactposts");
+      res.redirect("/artifactposts/p/1");
     });
   });
 });
@@ -183,7 +184,7 @@ router.get("/login", function(req, res) {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/artifactposts",
+    successRedirect: "/artifactposts/p/1",
     successFlash: "Welcome, you have successfully logged in.",
     failureRedirect: "/login",
     failureFlash: "Invalid username or password."
@@ -197,7 +198,7 @@ router.post(
 router.get("/logout", function(req, res) {
   req.logout();
   req.flash("success", "Logout successful.");
-  res.redirect("back");
+  res.redirect("/");
 });
 
 

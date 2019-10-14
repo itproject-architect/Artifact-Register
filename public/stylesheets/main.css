@@ -4,6 +4,8 @@
     padding:0;
 }
 
+
+
 html, html{
     min-height: 100%;
     position: relative;
@@ -15,13 +17,27 @@ html, html{
 
 body {
     background-color: #fff2df;
-    /*background-image: -webkit-linear-gradient(30deg, #fff2df 50%, #f9ccac 50%);*/
     min-height: 500px;
     background-repeat: no-repeat;
+    /*background-repeat: repeat;*/
     background-attachment: fixed;
+    /*background-image: url("../pics/peach1.png");*/
+
 }
 
+input {
+    text-align: center;
+}
 
+.btn {
+    color: #b16f6fde;
+}
+.btn.btn-primary {
+    color: #306310;
+}
+.btn.btn-primary:hover {
+    color: #636161;
+}
 
 .image-display img {
     max-width: 500px;
@@ -29,14 +45,14 @@ body {
 
 
 
-.author-icon, .multi-icon, .family-icon, .private-icon {
+.new-icon, .author-icon, .multi-icon, .family-icon, .private-icon {
 
 
     color: #ffffff;
     background-color: #636161;
     border-radius: 50%;
     display: inline-block;
-    padding: 15px;
+
     height:45px;
     width:45px;
     font-size: 15px;
@@ -56,11 +72,20 @@ body {
     font-size: 45px;
     font-weight: 800;
     line-height: 72px;
-    margin: 0 0 24px;
+    margin: 30px 0 24px;
     text-align: center;
     text-transform: uppercase;
+
 }
 
+.heading p {
+    color: gray;
+
+}
+
+#count_message {
+    color:#c3b9aa
+}
 
 
 
@@ -73,6 +98,9 @@ body {
 .w3-center{text-align:center!important}
 .w3-border-grey{border-color:#9e9e9e!important}
 
+.img-samesize{
+    height: 200px;
+}
 
 /*POST INDEX CSS*/
 .year {
@@ -80,9 +108,7 @@ body {
     color: #636161;
 }
 
-.img-fluid {
-    height: 200px;
-}
+
 
 .img-fluid-small {
     height: 100px;
@@ -96,8 +122,15 @@ body {
 
 }
 
+.img-fluid {
+    height: 200px;
+}
+
+
+
 section .post {
     line-height: 1.5;
+    font-family: 'Montserrat Alternates' , sans-serif;
 }
 section .post a {
     min-height: 456px;
@@ -152,8 +185,21 @@ section .post a:hover::before, section .post a:hover::after {
 section .post a:hover h3 {
     color: #897E3D;
 }
+
+
 section .post a img {
     width: 100%;
+}
+
+/*Pagination*/
+
+.page-item a{
+    color:#636161;
+}
+
+.page-item.active .page-link {
+    background-color: #636161;
+    border-color: #fff;
 }
 
 .search {
@@ -161,7 +207,11 @@ section .post a img {
     margin: 0  auto;
 
 }
+select {
 
+    text-align: center;
+    text-align-last: center;
+}
 .search-group {
     display: inline-flex;
 }
@@ -220,7 +270,74 @@ body .btn-bg.bg-2 .btn-2 button:after {
 }
 
 
+/*Show ejs CSS*/
 
+
+.dateOption{
+    display: flex;
+    justify-content: space-between;
+}
+
+.dateOption p {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 16px;
+
+}
+
+#carouselExampleIndicators {
+    margin-top: 50px;
+}
+
+#edit-link{
+    text-decoration: none;
+
+}
+
+.info {
+    background-color: #f5f5f5;
+}
+
+.info i {
+    color: #636161;
+}
+
+.heading h2 {
+    font-family: Raleway;
+    font-size: 18px;
+}
+
+.info p , .comment-text p{
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+#paint-year {
+    font-size: 30px;
+}
+
+
+
+.comment {
+    margin-top: 30px;
+}
+
+
+.comment-author {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.comment-text {
+    padding: 12px;
+    background-color: #f8f8f8;
+    border-bottom: 5px solid #e5e6e6;
+}
+
+.comment-date {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #bdc3c7;
+}
 
 .footer-container{
     padding-bottom: 2.5em;
@@ -239,6 +356,7 @@ body .btn-bg.bg-2 .btn-2 button:after {
     position: relative;
     transition: padding-right .3s ease;
     font-weight: 700;
+
 }
 
 .btnLoader.spinning{
@@ -273,6 +391,12 @@ body .btn-bg.bg-2 .btn-2 button:after {
 
 }
 
+/*form input size restriction*/
+.form-size-res{
+    max-width: 400px;
+    margin: 0 auto;
+}
+
 @keyframes rotate360 {
     100% {
         transform: rotate(360deg);
@@ -290,28 +414,12 @@ body .btn-bg.bg-2 .btn-2 button:after {
     .heading {
         font-size:30px;
     }
+
 }
 
 .title {
     text-align: center;
     margin-bottom: 1rem;
-}
-
-/* Footer absolute positioning */
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 70px;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 70px;
 }
 
 .btn-capitalize {
@@ -330,4 +438,17 @@ section.profilepage .profile-container {
 .profile-container .row {
     margin-top: 0.5rem;
     padding: 5px 10px;
+}
+
+
+    .dateOption p {
+        font-size: 10px;
+    }
+}
+
+
+
+.loginpage, .blogpostindexpage, .showblogpostpage, .newblogpostpage,
+.registerpage, .editblogpostpage, .blogpostindexpage {
+    min-height: 100vh;
 }
