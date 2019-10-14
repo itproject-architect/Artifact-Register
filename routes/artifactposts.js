@@ -242,6 +242,7 @@ router.get("/artifactposts/:id", function (req, res) {
 router.get("/artifactposts/:id/edit", middleware.checkBlogpostOwnership, function (req, res) {
     Artifactpost.findById(req.params.id, function (err, foundArtipost) {
         if (err) {
+            res.flash("failure", "Sorry, artifact not found.");
             res.redirect("/artifactposts");
 
         } else {

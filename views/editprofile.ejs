@@ -14,7 +14,13 @@
                         <h3>Avatar</h3>
                     </div>
                     <div class="col-8">
-                        <img class="img-fluid-small" src="<%= user.photo %>" alt="<%= user.username %>" />
+                        <% if (user.photo) { %>
+                            <img class="img-fluid-small"
+                                 src="<%= user.photo %>" alt="<%= user.username %>" />
+                        <% } else { %>
+                            <button class="author-icon" data-toggle="tooltip"
+                                    title="<%= user.name %>"><%= user.name.substring(0, 1) %></button>
+                        <% } %>
                     </div>
                     <div class="col-1">
                         <a class="btn btn-icon" href="#" data-toggle="collapse" data-target="#upload_photo">
