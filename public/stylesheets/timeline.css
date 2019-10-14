@@ -336,6 +336,7 @@ header h1 {
     box-shadow: 0 3px 0 #d7e4ed;
     /*display: flex;*//* equal height of the children */
     text-align: center; /*makes title and year align to center in mobile screen*/
+    font-family: Tangerine, serif;
 }
 
 .flex-child{
