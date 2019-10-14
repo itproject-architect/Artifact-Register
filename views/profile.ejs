@@ -1,0 +1,42 @@
+<% include partials/header %>
+
+<section class="profilepage">
+    <div class="container">
+        <div class="row">
+            <div class="col-3 float-left">
+                <a class="btn btn-raised btn-primary btn-block btn-capitalize" href="profile/edit">Edit Profile</a>
+                <a class="btn btn-raised btn-primary btn-block btn-capitalize" href="#">Manage Artifacts</a>
+            </div>
+
+            <div class="col-9 float-right">
+                <div class="container mb-5">
+                    <header style="height: auto">
+                        <% if (user.photo) { %>
+                            <img class="img-fluid img-fluid-small mb-3"
+                                 src="<%= user.photo %>" alt="<%= user.username %>" />
+                        <% } else { %>
+                            <button class="author-icon mb-3" data-toggle="tooltip"
+                                    title="<%= user.name %>"><%= user.name.substring(0, 1) %></button>
+                        <% } %>
+                    </header>
+                    <h2 class="text-center">Hello, <%= user.name %>!</h2>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <% artifacts.forEach(function (art) { %>
+                            <div class="col-4 post">
+                                <a href="artifactposts/<%= art._id %>" style="min-height: auto">
+                                    <img class="img-fluid img-fluid-small"
+                                         src="<%= art.image[0] %>" alt="<%= art.name %>"/>
+                                </a>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<% include partials/footer %>

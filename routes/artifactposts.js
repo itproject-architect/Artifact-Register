@@ -7,15 +7,15 @@ var asyncHandler = require("express-async-handler");
 var http = require('http');
 var url = require('url');
 var util = require('util');
+var multer = require('multer');
 
 
 //--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
 // adapted from https://github.com/nax3t/image_upload_example/tree/edit-delete --------------------
 
-var multer = require('multer');
 var storage = multer.diskStorage({
     filename: function (req, file, callback) {
-        callback(null, Date.now() + file.originalname);
+        callback(null, Date.now() + '_' + file.originalname);
     }
 });
 var imageFilter = function (req, file, cb) {
@@ -25,7 +25,7 @@ var imageFilter = function (req, file, cb) {
     }
     cb(null, true);
 };
-var upload = multer({storage: storage, fileFilter: imageFilter})
+var upload = multer({storage: storage, fileFilter: imageFilter});
 
 var cloudinary = require('cloudinary');
 cloudinary.config({
@@ -53,17 +53,6 @@ router.get(
                 .exec(function (err, allArtiposts) {
                     Artifactpost.countDocuments(query).exec(function(err, count) { //count the number of query documents
                         if (err) console.log(err);
-
-                        res.render("artifactposts/index", {
-                            artipost: allArtiposts,
-                            admin: admin,
-                            current: page, //current page location which is 1 by default but can be specified using URL
-                            pages: Math.ceil(count / perPage) //number of pages used for reference in bootstrap nav
-
-                        });
-                    })
-
-
                 });
         }
 );
@@ -85,13 +74,13 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
 
 
     Promise.all(uploadPromises).then( (result) => {
-        let images = result.map(value => value.secure_url)
-        let imageIds = result.map(value => value.public_id)
+        let images = result.map(value => value.secure_url);
+        let imageIds = result.map(value => value.public_id);
         var name = req.body.name;
         var year = req.body.year;
         var location = req.body.location;
         var desc = req.body.description;
-        var option = req.body.option
+        var option = req.body.option;
         var author = {
             id: req.user._id,
             username: req.user.username,
@@ -155,7 +144,7 @@ router.get("/artifactposts/search", function (req, res) {
     var pages = 0;
     Artifactpost.find({
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
-        "author.username" : {$regex : params.author, $options : "$i"},
+        "author.name" : {$regex : params.author, $options : "$i"},
         "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"}
     }).populate("comments").exec(function (err, results) {
         if (err) {
@@ -166,7 +155,7 @@ router.get("/artifactposts/search", function (req, res) {
             } else {
                 results = getPublicPosts(results);
             }
-            // Filter by date
+            // Filter by a range of date
             if (params.date_from !== "") {
                 results = filterByDateLower(results, Number(params.date_from));
             }

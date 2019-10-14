@@ -14,8 +14,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-12 col-lg-12">
-          <form class="search text-center md-form mt-2" action="/artifactposts/search" method="get">
+        <div class="col-md-12 col-lg-12"><form class="search text-center md-form mt-2" action="/artifactposts/search" method="get">
             <div class="search-group form-group">
               <input class="search-input text-center form-control form-control-sm" type="text" name="name" size="50"
                      placeholder="Enter keywords to search your artifacts..." >
@@ -108,7 +107,7 @@
               <button class="new-icon fas fa-bolt mb-3" data-toggle="tooltip" title='New Post'></button>
 
             <% }%>
-
+            
             <% if(artipost.image.length >= 2){ %>
               <button class="multi-icon far fa-clone mb-3" data-toggle="tooltip" title='Multiple Images'></button>
             <% } %>

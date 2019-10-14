@@ -160,7 +160,8 @@ header {
     height: 200px;
     /*line-height: 200px;*/
     text-align: center;
-    background: #fff2df;
+    background-color: transparent;
+    /*background: #fff2df;*/
     /*background: #008000;*/
 }
 
