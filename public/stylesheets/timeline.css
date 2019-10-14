@@ -394,7 +394,7 @@ header h1 {
     float: left;
     text-align: left;
     padding:  0;
-    opacity: .7;
+    opacity: 2; /* make title stand out more */
 }
 
 @media only screen and (min-width: 768px) {
