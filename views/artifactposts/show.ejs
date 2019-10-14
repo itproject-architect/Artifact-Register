@@ -18,15 +18,17 @@
 
                     <% if(currentUser && artipost.author.id.equals(currentUser._id)){ %>
                         <div class="dropdown text-right d-flex">
-                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="ex1"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-v"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex1">
-                                <a id="edit-link" href="/artifactposts/<%= artipost._id%>/edit"><button class="dropdown-item" type="button" >Edit</button></a>
-                                <form id="delete-form" action ="/artifactposts/<%= artipost._id %>?_method=DELETE" method="POST">
+                                <a id="edit-link" href="/artifactposts/<%= artipost._id %>/edit">
+                                    <button class="dropdown-item" type="button">Edit</button>
+                                </a>
+                                <form id="delete-form" class="mb-0" action="/artifactposts/<%= artipost._id %>?_method=DELETE" method="POST">
                                     <input type='submit' value='Delete' name='delete' form="delete_form" class="dropdown-item" >
                                 </form>
-
                             </div>
                         </div>
                     <% } %>
@@ -107,7 +109,6 @@
             </div>
         </div>
     </div>
-</section>
 
 
 <div class="container comments">
