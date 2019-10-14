@@ -38,16 +38,16 @@
                         <label for="select-option" class="bmd-label-floating">Post View Privileges</label>
                         <select name="option" class="form-control" id="select-option">
                             <option <%= artipost.option == '1' ? "selected" : ""  %> name="public" value="1">Public</option>
-                            <option <%= artipost.option == '1' ? "selected" : ""  %> name="public" value="1">Public</option>
+                            <option <%= artipost.option == '2' ? "selected" : ""  %> name="family" value="2">Family</option>
                             <option <%= artipost.option == '3' ? "selected" : ""  %> name="private" value="3">Private</option>
                         </select>
-                        <span class="bmd-help">Only post marked as public will be displayed on timeline</span>
+                        <span class="bmd-help">Only post marked as public will be displayed on timeline if not logged in</span>
                     </div>
 
             </div>
 
 
-            <div class="fileupload col-12 col-lg-6 col-md-12 col-sm-12">
+            <div class="fileuploader col-12 col-lg-6 col-md-12 col-sm-12">
                 <label class="bmd-label-floating" for="image">Artworks (Max 5 files)</label>
                 <input type="file" name="image" accept="image/*" data-max-files="5" data-fileuploader-limit="5" required multiple>
             </div>
@@ -66,6 +66,7 @@
     </div>
 </section>
 </div>
+
 <% include ../partials/footer %>
 
 

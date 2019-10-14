@@ -4,22 +4,19 @@
 
 
 
-<section class="newblogpostpage mt-5">
+<section class="newblogpostpage">
 
 
-
-    <div class="heading text-center mb-5">
-        <h3>Create New Post</h3>
-    </div>
     <div class="container">
 
+        <div class="heading text-center mb-5">
+            <h3>Create New Post</h3>
+        </div>
 
         <form action="/artifactposts" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-12 col-lg-6 col-md-12 col-sm-12">
-
-
-                        <div class="form-group">
+                    <div class="form-group">
                             <label class="bmd-label-floating" for="name">Artifact Post Title</label>
                             <input class="form-control" type="text" name="name" required>
                             <span class="bmd-help">Enter the name of the artwork</span>
@@ -74,7 +71,5 @@
     </div>
 </section>
 </div>
-
-
 
 <% include ../partials/footer %>

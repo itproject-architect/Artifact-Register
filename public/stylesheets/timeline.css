@@ -350,9 +350,9 @@ header h1 {
     padding: 1em;
     -webkit-box-shadow: 0 3px 0 #d7e4ed;
     box-shadow: 0 3px 0 #d7e4ed;
-    font-family: Tangerine, serif;
     /*display: flex;*//* equal height of the children */
-    text-align: center;
+    text-align: center; /*makes title and year align to center in mobile screen*/
+    font-family: Tangerine, serif;
 }
 
 .flex-child{

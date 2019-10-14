@@ -38,6 +38,9 @@ input {
 .btn.btn-primary:hover {
     color: #636161;
 }
+.btn.btn-icon {
+    color: inherit;
+}
 
 .image-display img {
     max-width: 500px;
@@ -59,11 +62,6 @@ input {
     text-transform: uppercase;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
-}
-
-
-.newblogpostpage {
-    height: 100vh;
 }
 
 .heading h3 {
@@ -445,15 +443,11 @@ section.profilepage .profile-container {
     padding: 5px 10px;
 }
 
-
-    .dateOption p {
-        font-size: 10px;
-    }
-
-
-
+.dateOption p {
+    font-size: 10px;
+}
 
 .loginpage, .blogpostindexpage, .showblogpostpage, .newblogpostpage,
-.registerpage, .editblogpostpage, .blogpostindexpage {
+.registerpage, .editblogpostpage, .blogpostindexpage, .profilepage {
     min-height: 100vh;
 }

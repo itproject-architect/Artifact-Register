@@ -52,7 +52,7 @@ router.get("/", function(req, res) {
 //invite family member ROUTE
 router.get("/invitefamily", middleware.isLoggedIn, function(req, res) {
   res.render("invitefamily");
-  res.redirect('back');
+  /* res.redirect('back'); */
 });
 
 // user profile page

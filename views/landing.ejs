@@ -1,22 +1,22 @@
 <!--Moved down due to adding white bar at top of page-->
 <% include partials/header %>
 
-<div class="w3-display-middle">
-  <div class="w3-display-container w3-animate-opacity w3-text-white">
-    <h1 class="w3-jumbo w3-animate-top">Share Your Memories With The People You Love</h1>
-    <hr class="w3-border-grey" style="margin:auto;width:40%">
-    <% if(currentUser){ %>
-      <p class="w3-large w3-center">Hello! <%= currentUser.name %></p>
-    <% } %>
-  </div>
-</div>
+
 
 
 <section class="blogpostindexpage">
   <div class="blogpostindexintro greybackground">
     <div class="container">
       <div class="row">
-        <!-- nothing here, yet-->
+        <div class="w3-display-middle">
+          <div class="w3-display-container w3-animate-opacity w3-text-white">
+            <h1 class="w3-jumbo w3-animate-top text-center">Share Your Memories With The People You Love</h1>
+            <% if (currentUser) { %>
+              <hr class="w3-border-grey mt-3 mb-3" style="margin:auto;width:40%">
+              <p class="w3-large w3-center">Hello! <%= currentUser.name %></p>
+            <% } %>
+          </div>
+        </div>
       </div>
       <div class="row"></div>
     </div>

@@ -39,8 +39,6 @@ cloudinary.config({
 //index routes
 router.get(
     "/artifactposts/p/:page", function (req, res) {
-        console.log("...");
-
         var perPage = 6; //max number of artifacts per page (6 Items are displayed)
         var page = req.params.page || 1; //current page number
         var admin = config.admin;
@@ -91,8 +89,9 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
         var author = {
             id: req.user._id,
             username: req.user.username,
-            name: req.user.name
-        }
+            name: req.user.name,
+            photo: req.user.photo
+        };
         var newArtipost = {
             name: name,
             year: year,
@@ -153,10 +152,11 @@ router.get("/artifactposts/search", function (req, res) {
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"},    // RegExp matching, case insensitive
         "author.name" : {$regex : params.author, $options : "$i"},
         "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"}
-    }).populate("comments").exec(function (err, results) {
+    }).exec(function (err, results) {
         if (err) {
             console.log(err);
         } else {
+            console.log(results);
             if (req.user) {
                 results = getPrivatePosts(results, req.user.username);
             } else {
@@ -231,7 +231,7 @@ function getPublicPosts(allArtiposts) {
 router.get("/artifactposts/:id", function (req, res) {
     Artifactpost.findById(req.params.id).populate("comments").exec(function (err, foundArtipost) {
         if (err || !foundArtipost) {
-            req.flash("error", "Artifact not found.");
+            req.flash("error", "Sorry, artifact not found.");
             res.redirect("back");
         } else {
             res.render("artifactposts/show", {artipost: foundArtipost});
@@ -244,6 +244,7 @@ router.get("/artifactposts/:id", function (req, res) {
 router.get("/artifactposts/:id/edit", middleware.checkBlogpostOwnership, function (req, res) {
     Artifactpost.findById(req.params.id, function (err, foundArtipost) {
         if (err) {
+            res.flash("failure", "Sorry, artifact not found.");
             res.redirect("/artifactposts");
 
         } else {
@@ -264,7 +265,7 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
             if (req.files.length > 0) {
                 let {files} = req;
                 let {image, imageId} = updatedArtipost;
-                let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value))
+                let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value));
                 let uploadPromises = files.map((value) => cloudinary.uploader.upload(value.path));
 
                 try {
@@ -288,7 +289,7 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
             updatedArtipost.description = req.body.description;
             updatedArtipost.save();
 
-            req.flash('success', "successfuly updated");
+            req.flash('success', "Successfully updated.");
             res.redirect("/artifactposts/" + req.params.id);
 
         }
@@ -304,13 +305,13 @@ router.delete("/artifactposts/:id", middleware.checkBlogpostOwnership, function 
         }
 
         let {imageId} = post;
-        let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value))
+        let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value));
 
         try {
 
             await Promise.all(destroyPromises);
             post.remove();
-            req.flash('success', 'Successfuly deleted')
+            req.flash('success', 'Successfully deleted.');
             res.redirect('/artifactposts/p/1');
         } catch (err) {
             if (err) {
