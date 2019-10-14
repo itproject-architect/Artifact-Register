@@ -335,6 +335,7 @@ header h1 {
     -webkit-box-shadow: 0 3px 0 #d7e4ed;
     box-shadow: 0 3px 0 #d7e4ed;
     /*display: flex;*//* equal height of the children */
+    text-align: center; /*makes title and year align to center in mobile screen*/
 }
 
 .flex-child{
