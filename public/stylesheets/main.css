@@ -38,9 +38,6 @@ input {
 .btn.btn-primary:hover {
     color: #636161;
 }
-.btn.btn-icon {
-    color: inherit;
-}
 
 .image-display img {
     max-width: 500px;
@@ -62,6 +59,11 @@ input {
     text-transform: uppercase;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
+}
+
+
+.newblogpostpage {
+    height: 100vh;
 }
 
 .heading h3 {
@@ -108,12 +110,10 @@ input {
     color: #636161;
 }
 
-.img-small {
-    height: 100px;
-}
 
-.img-medium {
-    height: 150px;
+
+.img-fluid-small {
+    height: 100px;
 }
 
 .post-title {
@@ -445,11 +445,88 @@ section.profilepage .profile-container {
     padding: 5px 10px;
 }
 
-.dateOption p {
-    font-size: 10px;
-}
+
+    .dateOption p {
+        font-size: 10px;
+    }
+
+
+
 
 .loginpage, .blogpostindexpage, .showblogpostpage, .newblogpostpage,
-.registerpage, .editblogpostpage, .blogpostindexpage, .profilepage {
+.registerpage, .editblogpostpage, .blogpostindexpage {
     min-height: 100vh;
+}
+
+.fake-button{
+    display: inline-block;
+    padding: 25px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #FABEA6;
+    border: none;
+    border-radius: 25%;
+    box-shadow: 0 9px #999;
+}
+.fake-button:hover {background-color: #EBACAD}
+
+.fake-button:active {
+    background-color: #FABEA6;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.fake-button:active + .talkbubble {
+    /*visibility: visible;*/
+    animation: 1s fadeIn;
+    animation-fill-mode: forwards;
+}
+
+
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+.talkbubble {
+    margin-left: 2em;
+    margin-top: -1.5em;
+    float: right;
+    visibility: hidden;
+    width: 360px;
+    height: 180px;
+    background: #FABEA6;
+    position: relative;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+.talkbubble:before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    top: 26px;
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-right: 26px solid #FABEA6;
+    border-bottom: 13px solid transparent;
+}
+
+ul.a {
+    list-style-type: circle;
+}
+li.a{
+    margin-left: 2em;
+    color: #636161;
 }
