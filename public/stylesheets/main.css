@@ -458,7 +458,7 @@ section.profilepage .profile-container {
     min-height: 100vh;
 }
 
-.fake-button{
+.fake-button {
     display: inline-block;
     padding: 25px 25px;
     font-size: 24px;
@@ -467,18 +467,24 @@ section.profilepage .profile-container {
     text-decoration: none;
     outline: none;
     color: #fff;
-    background-color: #FABEA6;
-    border: none;
-    border-radius: 25%;
+    /*background-color: #FABEA6;*/
+    border: whitesmoke solid;
+    border-radius: 50%;
     box-shadow: 0 9px #999;
+    background: url("../pics/button.png") no-repeat;
+    background-position: center;
+    background-size: contain;
 }
-.fake-button:hover {background-color: #EBACAD}
+
+
+.fake-button:hover {background-color: #EBACAD;}
 
 .fake-button:active {
     background-color: #FABEA6;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
+
 
 .fake-button:active + .talkbubble {
     /*visibility: visible;*/
@@ -499,13 +505,14 @@ section.profilepage .profile-container {
 }
 
 .talkbubble {
+    padding: 0.5em 2em;
     margin-left: 2em;
     margin-top: -1.5em;
     float: right;
     visibility: hidden;
-    width: 360px;
-    height: 180px;
-    background: #FABEA6;
+    width: 400px;
+    height: 190px;
+    background: #f5f5f5;
     position: relative;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -519,14 +526,130 @@ section.profilepage .profile-container {
     width: 0;
     height: 0;
     border-top: 13px solid transparent;
-    border-right: 26px solid #FABEA6;
+    border-right: 26px solid #f5f5f5;
     border-bottom: 13px solid transparent;
 }
 
+
 ul.a {
+    font-family: 'Raleway',sans-serif;
     list-style-type: circle;
 }
 li.a{
-    margin-left: 2em;
+    border-radius: 5px;
+    font-family: 'Raleway',sans-serif;
     color: #636161;
+    line-height: 1.8;
+    background: #ffe5e5;/*#ffe5e5*/
+    margin: 5px;
+}
+
+
+.btn--shockwave.is-active {
+    /*-webkit-animation: shockwaveJump 2s ease-out infinite;*/
+    animation: shockwaveJump 2s ease-out infinite;
+}
+.btn--shockwave.is-active:active {
+    animation: none;
+}
+
+.btn--shockwave.is-active:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    /*-webkit-animation: shockwave 2s .65s ease-out infinite;*/
+    animation: shockwave 2s .65s ease-out infinite;
+}
+.btn--shockwave.is-active:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    /*-webkit-animation: shockwave 2s .5s ease-out infinite;*/
+    animation: shockwave 2s .5s ease-out infinite;
+}
+
+
+@keyframes shockwaveJump {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    40% {
+        -webkit-transform: scale(1.08);
+        transform: scale(1.08);
+    }
+    50% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+    55% {
+        -webkit-transform: scale(1.02);
+        transform: scale(1.02);
+    }
+    60% {
+        -webkit-transform: scale(0.98);
+        transform: scale(0.98);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes shockwave {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), inset 0 0 1px rgba(0, 0, 0, 0.15);
+    }
+    95% {
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0), inset 0 0 30px rgba(0, 0, 0, 0);
+    }
+    100% {
+        -webkit-transform: scale(2.25);
+        transform: scale(2.25);
+    }
+}
+
+
+.btn--wiggle.is-active {
+    -webkit-animation: 2s wiggle ease forwards;
+    animation: 2s wiggle ease forwards;
+}
+
+@keyframes wiggle {
+    0% {
+        -webkit-transform: rotate(-3deg);
+        transform: rotate(-3deg);
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    }
+    20% {
+        -webkit-transform: rotate(15deg);
+        transform: rotate(15deg);
+    }
+    40% {
+        -webkit-transform: rotate(-10deg);
+        transform: rotate(-10deg);
+    }
+    60% {
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg);
+    }
+    90% {
+        -webkit-transform: rotate(-1deg);
+        transform: rotate(-1deg);
+    }
+    100% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    }
 }

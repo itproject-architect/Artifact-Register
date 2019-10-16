@@ -137,6 +137,8 @@ h5{ /*need fixing @media problem*/
     border-radius: 10px;
     animation: pulse 7s infinite;
     color: #636161;
+    display: inline-block;
+    text-align: center;
 }
 
 
@@ -151,16 +153,17 @@ h5{ /*need fixing @media problem*/
 
 @keyframes pulse {
     0% {
-        color: #fff2df;
+        color: darkgray;
+        background-color: #fff2df;
+        text-shadow: 3px 2px #fff2df;
     }
-    50% {
-        color: #636161;/*#F9838A;*/
-    }
-    75%{
-        color: #636161;
+    50%{
+        color: darkgray;
     }
     100% {
-        color: #fff2df;
+        color: darkgray;
+        background-color: #fff2df;/*#F9838A;*/
+        text-shadow: 3px 2px #fff2df;
     }
 }
 
