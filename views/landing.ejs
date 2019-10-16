@@ -2,22 +2,23 @@
 <% include partials/header %>
 
 <div class="w3-display-middle">
-  <div class="w3-display-container w3-animate-opacity w3-text-white">
-    <h1 class="w3-jumbo w3-animate-top">Share Your Memories With The People You Love</h1>
-    <hr class="w3-border-grey" style="margin:auto;width:40%">
+  <div class="w3-display-container w3-animate-opacity w3-text-white" style="text-align: center">
+    <h1 class="w3-jumbo w3-animate-top" style="font-family: Tangerine, serif;">"Share Your Memories With The People You Love"</h1>
+    <h4 style="margin-left: 15em;font-family: Tangerine, serif;">some smart kid</h4>
     <% if(currentUser){ %>
       <p class="w3-large w3-center">Hello! <%= currentUser.name %></p>
     <% } %>
-      <p class="w3-large w3-center show-more" style="font-family: Impact, Charcoal, sans-serif;margin-top: 10px">Press and hold button to start auto drive mode</p>
+      <h2 class="w3-large w3-center btn--wiggle is-active show-more" style="margin-top: 10px">Hold button to start auto drive mode</h2>
   </div>
   <div style="overflow: visible;position: absolute;margin-top: 3em; margin-left: 2em">
-      <button class="fake-button"></button>
+      <button class="fake-button btn--shockwave is-active"></button>
       <ul class="talkbubble a">
-          <p style="font-size: 50px; float: right">&#128512;</p>
-          <p style="margin-left: 10px;margin-top: 10px">Just kidding that's in Tesla</p>
-          <li class="a">Upload and search artifacts in ARTIFACTS page.</li>
+          <span style="font-size: 40px;float: right;">&#128512;</span>
+          <p style="margin-top: 20px;font-weight: bold;color: #636161;">Just kidding that's in Tesla</p>
+
+          <li class="a">Upload/search artifacts in ARTIFACTS page.</li>
           <li class="a">View timeline gallery in TIMELINE page.</li>
-          <li class="a">Sign in to edit profile and invite family members to join.</li>
+          <li class="a">Sign in to edit profile.</li>
       </ul>
   </div>
 </div>
