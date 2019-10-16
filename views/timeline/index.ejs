@@ -1,17 +1,23 @@
 <!--BLOGPOST INDEX-->
 <% include ../partials/header %>
 <div class="timelinepage">
-<header style="margin-top: -4%;">
-  <div class="display-lower-middle">
+  <div class="container">
+    <div class="row mb-2">
+      <div class="col-12 heading text-center mt-5 w3-animate-opacity w3-text-white">
+        <h3>Artifact TimeLine</h3>
+        <h2 class="w3-center show-more btn--wiggle is-active" style="margin-bottom: 80px;">click on image to show more</h2>
+      </div>
+    </div>
+  </div>
+<!--<header style="margin-top: -4%;">
+  <div class="display-lower-middle container row mb-2">
     <div class="w3-display-container w3-animate-opacity heading text-center">
         <h3>Artifact TimeLine</h3>
-        <!--<hr class="w3-border-grey" style="margin:auto;width:40%">-->
-        <!--<span><script type="text/javascript">displayDate()</script></span>-->
-        <h2 class="w3-center show-more" style="font-family: Impact, Charcoal, sans-serif;">click on image to show more</h2>
+        <h2 class="w3-center show-more">click on image to show more</h2>
     </div>
   </div>
 
-</header>
+</header>-->
 
 
 <section>
@@ -21,17 +27,12 @@
         <% artipost.forEach(function(artipost){ %>
 
               <div class="cd-timeline__block js-cd-block">
-                <% if (artipost.author.photo) { %>
-                  <div class="cd-timeline__img circle-image js-cd-img"
-                       style="background-image: url(<%= artipost.author.photo %>)">
-                <% } else { %>
-                  <div class="cd-timeline__img cd-timeline__img--picture circle-image js-cd-img">
-                <% } %>
+                <div class="cd-timeline__img js-cd-img cd-timeline__img--picture" >
                     <!--<div class="circle-image" style="background: url('../../public/pics/day.png');"></div>-->
                     <!--<img src="../../public/pics/night.png" alt="Picture">-->
                     <!--<div class="circle-image" style="border: solid;padding: 40px"></div>-->
 
-                </div>
+                </div> <!-- cd-timeline__img -->
 
                 <div class="cd-timeline__content js-cd-content">
                   <div class="frame">
