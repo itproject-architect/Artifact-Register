@@ -141,6 +141,17 @@ h5{ /*need fixing @media problem*/
     text-align: center;
 }
 
+@media screen and (max-width: 450px) {
+    .show-more{
+        font-size: 10px;
+    }
+}
+@media screen and (max-width: 950px) {
+    .show-more{
+        font-size: 12px;
+    }
+}
+
 
 /*.scroll-effect {
     background-color: #fff2df;
