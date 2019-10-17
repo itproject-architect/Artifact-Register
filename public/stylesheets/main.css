@@ -509,7 +509,7 @@ section.profilepage .profile-container {
     margin-left: 30px;
     margin-top: -20px;
     float: right;
-    /*visibility: hidden;*/
+    visibility: hidden;
     width: 400px;
     height: 190px;
     background: #f5f5f5;
