@@ -506,10 +506,10 @@ section.profilepage .profile-container {
 
 .talkbubble {
     padding: 0.5em 2em;
-    margin-left: 2em;
-    margin-top: -1.5em;
+    margin-left: 30px;
+    margin-top: -20px;
     float: right;
-    visibility: hidden;
+    /*visibility: hidden;*/
     width: 400px;
     height: 190px;
     background: #f5f5f5;
@@ -539,8 +539,7 @@ li.a{
     border-radius: 5px;
     font-family: 'Raleway',sans-serif;
     color: #636161;
-    line-height: 1.8;
-    background: #ffe5e5;/*#ffe5e5*/
+    line-height: 2;
     margin: 5px;
 }
 
@@ -652,4 +651,100 @@ li.a{
         transform: rotate(0);
         box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     }
+}
+
+.background1 {
+    background-color: #62bbd3;
+    background-image: linear-gradient(30deg, #80c9dd 12%, transparent 12.5%, transparent 87%, #80c9dd 87.5%, #80c9dd), linear-gradient(150deg, #80c9dd 12%, transparent 12.5%, transparent 87%, #80c9dd 87.5%, #80c9dd), linear-gradient(30deg, #80c9dd 12%, transparent 12.5%, transparent 87%, #80c9dd 87.5%, #80c9dd), linear-gradient(150deg, #80c9dd 12%, transparent 12.5%, transparent 87%, #80c9dd 87.5%, #80c9dd), linear-gradient(60deg, #d5eaf0 25%, transparent 25.5%, transparent 75%, #d5eaf0 75%, #d5eaf0), linear-gradient(60deg, #d5eaf0 25%, transparent 25.5%, transparent 75%, #d5eaf0 75%, #d5eaf0);
+    background-size: 40px 70px;
+    background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
+}
+
+.background-circle-pattern{
+    background: radial-gradient(circle, #B3CCA2 0.75em,
+    rgba(255, 255, 255, 0) 0.75em, rgba(255, 255, 255, 0) 1.5em, rgba(204, 195, 148, 0.7) 1.5em,
+    rgba(204, 195, 148, 0.7) 1.8em, rgba(255, 255, 255, 0) 1.8em) 0 0, radial-gradient(circle, #CCC394 0.75em,
+    rgba(255, 255, 255, 0) 0.75em, rgba(255, 255, 255, 0) 1.5em, rgba(179, 204, 162, 0.7) 1.5em,
+    rgba(179, 204, 162, 0.7) 1.8em, rgba(255, 255, 255, 0) 1.8em) 3em 3em,
+    radial-gradient(circle, rgba(179, 204, 162, 0.7) 0.375em, rgba(255, 255, 255, 0) 0.375em) 3em 0,
+    radial-gradient(circle, rgba(204, 195, 148, 0.7) 0.3em, rgba(255, 255, 255, 0) 0.3em) 0 3em;
+    background-size: 6em 6em;
+    background-color: #F2DBA5;
+    background-repeat: repeat;
+    font: 16px/2 'Trebuchet MS', Verdana, sans-serif;
+}
+
+.testbg{
+    background: url("../pics/test2.png");
+
+}
+
+.background2{
+    background-color: #fff;
+    background-image:
+            linear-gradient(90deg, transparent 12px, #abced4 10px, #abced4 12px, transparent 14px),
+            linear-gradient(#eee .1em, transparent .1em);
+    background-size: 100% 1.2em;
+}
+
+h5.landing{
+    margin-left: 15em;
+    font-family: Tangerine, serif;
+    font-size: 25px;
+}
+@media screen and (max-width: 950px) {
+    h5.landing {
+        margin-left: 35%;
+        font-family: Tangerine, serif;
+        font-size:20px;
+    }
+    span.a{
+        font-size: 10px;
+    }
+}
+@media screen and (max-width: 450px) {
+    h5.landing {
+        margin-left: 50%;
+        font-family: Tangerine, serif;
+        font-size:12px;
+    }
+    .fake-button{
+        padding: 20px 20px;
+        font-size: 19px;
+        margin-left: -60px;
+        background-size: 40px;
+    }
+    .talkbubble{
+        padding-left: 20px;
+        margin-left: 10px;
+        width: 200px;
+        height: 90px;
+        font-size: 8px;
+    }
+    li.a{
+        line-height: 1;
+        margin: 5px;
+    }
+    li.b{
+        margin-top: 10px;
+    }
+    span.a{
+        display: none;
+
+    }
+}
+
+li.b{
+    margin-top: -5px;
+}
+
+span.a{
+    font-size: 40px;
+    float: right;
+}
+
+p.a{
+    margin-top: 12px;
+    font-weight: bold;
+    color: #636161;
 }
