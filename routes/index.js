@@ -277,11 +277,13 @@ router.post("/send", function(req, res) {
     } else {
       console.log("Message sent: %s", info.messageId);
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
       var newUserInvite = {
         name: contactname,
         username: email,
         guid: guid
       };
+
       UserInvite.create(newUserInvite, function(err, newlyCreated) {
         if (err) {
           console.log(err);

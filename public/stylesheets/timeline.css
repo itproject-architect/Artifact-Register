@@ -112,7 +112,8 @@ h5{ /*need fixing @media problem*/
 }*/
 .circle-image{
     border-radius: 50%;
-    background: url("../pics/day.png") no-repeat center;
+    max-width: 200px;
+    max-height: 200px;
     background-size: 100%;
 }
 .cd-timeline__block:nth-child(even) .circle-image{
