@@ -654,10 +654,14 @@ li.a{
 }
 
 .background1 {
-    background-color: #62bbd3;
-    background-image: linear-gradient(30deg, #80c9dd 12%, transparent 12.5%, transparent 87%, #80c9dd 87.5%, #80c9dd), linear-gradient(150deg, #80c9dd 12%, transparent 12.5%, transparent 87%, #80c9dd 87.5%, #80c9dd), linear-gradient(30deg, #80c9dd 12%, transparent 12.5%, transparent 87%, #80c9dd 87.5%, #80c9dd), linear-gradient(150deg, #80c9dd 12%, transparent 12.5%, transparent 87%, #80c9dd 87.5%, #80c9dd), linear-gradient(60deg, #d5eaf0 25%, transparent 25.5%, transparent 75%, #d5eaf0 75%, #d5eaf0), linear-gradient(60deg, #d5eaf0 25%, transparent 25.5%, transparent 75%, #d5eaf0 75%, #d5eaf0);
-    background-size: 40px 70px;
-    background-position: 0 0, 0 0, 20px 35px, 20px 35px, 0 0, 20px 35px;
+    background-color: silver;
+    background-image: linear-gradient(335deg, #b00 23px, transparent 23px),
+    linear-gradient(155deg, #d00 23px, transparent 23px),
+    linear-gradient(335deg, #b00 23px, transparent 23px),
+    linear-gradient(155deg, #d00 23px, transparent 23px);
+    background-size: 58px 58px;
+    background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+    font: 16px/2 'Trebuchet MS', Verdana, sans-serif;
 }
 
 .background-circle-pattern{
@@ -671,6 +675,18 @@ li.a{
     background-size: 6em 6em;
     background-color: #F2DBA5;
     background-repeat: repeat;
+    font: 16px/2 'Trebuchet MS', Verdana, sans-serif;
+}
+
+.background3{
+    background-color:#c9c993;
+    background-image:
+            radial-gradient(circle at 100% 150%, #c9c993 24%, #F2DBA5 24%, #F2DBA5 28%, #c9c993 28%, #c9c993 36%, #F2DBA5 36%, #F2DBA5 40%, transparent 40%, transparent),
+            radial-gradient(circle at 0    150%, #c9c993 24%, #F2DBA5 24%, #F2DBA5 28%, #c9c993 28%, #c9c993 36%, #F2DBA5 36%, #F2DBA5 40%, transparent 40%, transparent),
+            radial-gradient(circle at 50%  100%, #F2DBA5 10%, #c9c993 10%, #c9c993 23%, #F2DBA5 23%, #F2DBA5 30%, #c9c993 30%, #c9c993 43%, #F2DBA5 43%, #F2DBA5 50%, #c9c993 50%, #c9c993 63%, #F2DBA5 63%, #F2DBA5 71%, transparent 71%, transparent),
+            radial-gradient(circle at 100% 50%, #F2DBA5 5%, #c9c993 5%, #c9c993 15%, #F2DBA5 15%, #F2DBA5 20%, #c9c993 20%, #c9c993 29%, #F2DBA5 29%, #F2DBA5 34%, #c9c993 34%, #c9c993 44%, #F2DBA5 44%, #F2DBA5 49%, transparent 49%, transparent),
+            radial-gradient(circle at 0    50%, #F2DBA5 5%, #c9c993 5%, #c9c993 15%, #F2DBA5 15%, #F2DBA5 20%, #c9c993 20%, #c9c993 29%, #F2DBA5 29%, #F2DBA5 34%, #c9c993 34%, #c9c993 44%, #F2DBA5 44%, #F2DBA5 49%, transparent 49%, transparent);
+    background-size: 25px 12px;
     font: 16px/2 'Trebuchet MS', Verdana, sans-serif;
 }
 
