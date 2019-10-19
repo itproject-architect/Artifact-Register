@@ -445,11 +445,48 @@ section.profilepage .profile-container {
     padding: 5px 10px;
 }
 
+section.managepage .manage-container {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.manage-container .row {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #bbbbbb;
+}
+
+.manage-container .row:first-child {
+    border-top: 1px solid #bbbbbb;
+}
+
+.manage-container a {
+    text-decoration: none;
+}
+
+.manage-container .art-info {
+    margin: 1rem 0;
+    padding: 0;
+}
+
+.art-info p {
+    color: #666666;
+    margin-bottom: 0;
+}
+
+.art-info span {
+    margin-right: 8px;
+}
+
 .dateOption p {
     font-size: 10px;
 }
 
 .loginpage, .blogpostindexpage, .showblogpostpage, .newblogpostpage,
-.registerpage, .editblogpostpage, .blogpostindexpage, .profilepage {
+.registerpage, .editblogpostpage, .blogpostindexpage, .profilepage,
+.managepage {
     min-height: 100vh;
+}
+
+button.edit-button {
+    color: #606060!important;
 }
