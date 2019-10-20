@@ -172,19 +172,13 @@ router.get("/artifactposts/search", function (req, res) {
             // Sorting
             switch (params.order) {
                 case "date_desc":
-                    compFn = function (a,b) {
-                        return b.year - a.year;
-                    };
+                    compFn = (a, b) => b.year - a.year;
                     break;
                 case "date_asc":
-                    compFn = function (a,b) {
-                        return a.year - b.year;
-                    };
+                    compFn = (a, b) => a.year - b.year;
                     break;
                 default:    // Sort by date, DESC
-                    compFn = function (a,b) {
-                        return b.year - a.year;
-                    };
+                    compFn = (a, b) => b.year - a.year;
             }
             results.sort(compFn);
             results.forEach(function (item) {

@@ -22,19 +22,32 @@
                             <% } %>
                         </a>
                     </header>
-                    <h2 class="text-center"><%= user.name %></h2>
+                    <h2 class="text-center">
+                        <%= user.name %>
+                    </h2>
                 </div>
                 <div class="container">
-                    <div class="row">
-                        <% artifacts.forEach(function (art) { %>
-                            <div class="col-4 post">
-                                <a href="artifactposts/<%= art._id %>" style="min-height: auto">
-                                    <img class="img-small"
-                                         src="<%= art.image[0] %>" alt="<%= art.name %>"/>
-                                </a>
+                    <% var years = Array.from(artifacts.keys()).sort((a,b) => b - a); %>
+                    <% years.forEach(function (year) { %>
+                    <div class="card">
+                        <button class="btn btn-block btn-success btn-raised"
+                                data-toggle="collapse" data-target="#artifacts<%= year %>">
+                            <%= year %>
+                        </button>
+                        <div class="card-body pb-0 collapse" id="artifacts<%= year %>">
+                            <div class="row">
+                                <% artifacts.get(year).forEach(function (art) { %>
+                                <div class="col-4 post">
+                                    <a href="artifactposts/<%= art._id %>" style="min-height: auto">
+                                        <img class="img-small"
+                                             src="<%= art.image[0] %>" alt="<%= art.name %>"/>
+                                    </a>
+                                </div>
+                                <% }) %>
                             </div>
-                        <% }) %>
+                        </div>
                     </div>
+                    <% }) %>
                 </div>
             </div>
         </div>

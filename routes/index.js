@@ -61,9 +61,17 @@ router.get("/profile", middleware.isLoggedIn, function(req, res) {
     if (err) {
       console.log(err);
     } else {
+      let artifacts = new Map();
+      results.forEach(function (art) {
+        if (artifacts.has(art.year)) {
+          artifacts.set(art.year, artifacts.get(art.year).concat([art]));
+        } else {
+          artifacts.set(art.year, [art]);
+        }
+      });
       res.render("profile", {
         user: req.user,
-        artifacts: results.reverse().slice(0, 9)  // show the latest uploaded 9 artifacts (3*3)
+        artifacts: artifacts, // show the latest uploaded 9 artifacts (3*3)
       });
     }
   });
