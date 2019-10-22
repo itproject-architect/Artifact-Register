@@ -131,9 +131,9 @@ router.get("/artifactposts/search", function (req, res) {
     var params = reqURL.query;
     var page = params.page || 1;    //current page number
     var query = {
-        "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"}, // RegExp matching, case insensitive
+        "name" : {$regex : params.name.replace(/\s/g, "|"), $options : "$i"}, // RegExp matching, case insensitive
         "author.name" : {$regex : params.author, $options : "$i"},
-        "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"},
+        "location" : {$regex : params.location.replace(/\s/g, "|"), $options : "$i"},
         "year": {}
     };
     /* Filter by privilege */
