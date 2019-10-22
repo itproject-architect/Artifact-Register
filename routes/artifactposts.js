@@ -124,29 +124,6 @@ router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
     res.render("artifactposts/new");
 });
 
-/* filtering post list by date, lower bound */
-function filterByDateLower(artiposts, date_from) {
-    var newArtiposts = [];
-    for (var i in artiposts) {
-        if (artiposts[i].year >= date_from) {
-            newArtiposts.push(artiposts[i]);
-        }
-    }
-    return newArtiposts;
-}
-
-/* filtering post list by date, upper bound */
-function filterByDateUpper(artiposts, date_to) {
-    var newArtiposts = [];
-    for (var i in artiposts) {
-        if (artiposts[i].year <= date_to) {
-            newArtiposts.push(artiposts[i]);
-        }
-    }
-    return newArtiposts;
-}
-
-
 // Search artifact by name, don't need to log in
 router.get("/artifactposts/search", function (req, res) {
     var reqURL = url.parse(req.url, true);
@@ -156,13 +133,27 @@ router.get("/artifactposts/search", function (req, res) {
     var query = {
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"}, // RegExp matching, case insensitive
         "author.name" : {$regex : params.author, $options : "$i"},
-        "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"}
+        "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"},
+        "year": {}
     };
+    /* Filter by privilege */
     if (req.user) {
         query.$or = [{option: '1'}, {option: '2'}, {"author.id": req.user._id}];
     } else {
         query.option = '1';
     }
+    /* Filter by a range of date */
+    if (params.date_from !== "") {
+        query.year.$gte = Number(params.date_from);
+    }
+    if (params.date_to !== "") {
+        query.year.$lte = Number(params.date_to);
+    }
+    /* Prevent CastError when date is not specified */
+    if (Object.keys(query.year).length === 0 && query.year.constructor === Object) {
+        delete query.year;
+    }
+    console.log(query);
     Artifactpost.find(query)
         .sort({year: params.order === "date_asc" ? 1 : -1})
         .skip(perPage * (page - 1))
@@ -173,18 +164,6 @@ router.get("/artifactposts/search", function (req, res) {
         } else {
             Artifactpost.countDocuments(query, function (err, count) {
                 var pages = Math.ceil(count / perPage);
-                if (req.user) {
-                    results = getPrivatePosts(results, req.user.username);
-                } else {
-                    results = getPublicPosts(results);
-                }
-                // Filter by a range of date
-                if (params.date_from !== "") {
-                    results = filterByDateLower(results, Number(params.date_from));
-                }
-                if (params.date_to !== "") {
-                    results = filterByDateUpper(results, Number(params.date_to));
-                }
                 /*
                 results.forEach(function (item) {
                     console.log(item.id + "\t" + item.name)
@@ -201,40 +180,6 @@ router.get("/artifactposts/search", function (req, res) {
         }
     });
 });
-
-function getPrivatePosts(allArtiposts, email) {
-    let newPosts = [];
-    console.log("iteration ", email);
-
-    for (var prop in allArtiposts) {
-        let post = allArtiposts[prop];
-        /*
-        console.log("iteration author ", post.author.username);
-        console.log("iteration name ", post.name);
-         */
-
-        if (post.option === "1" || post.option === "2") {
-            console.log("post name public family ", post.name);
-            newPosts.push(post);
-        } else if (post.option === "3" && post.author.username === email) {
-            console.log("post name private ", post.name);
-
-            newPosts.push(post);
-        }
-    }
-    return newPosts;
-}
-
-function getPublicPosts(allArtiposts) {
-    let newPosts = [];
-    for (var prop in allArtiposts) {
-        let post = allArtiposts[prop];
-        if (post.option === "1") {
-            newPosts.push(post);
-        }
-    }
-    return newPosts;
-}
 
 //SHOW ARTIFACT POST ROUTE
 router.get("/artifactposts/:id", function (req, res) {
