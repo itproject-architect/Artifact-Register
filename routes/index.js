@@ -57,7 +57,7 @@ router.get("/invitefamily", middleware.isLoggedIn, function(req, res) {
 
 // user profile page
 router.get("/profile", middleware.isLoggedIn, function(req, res) {
-  Artifactpost.find({"author.username" : req.user.username}, function (err, results) {
+  Artifactpost.find({"author.id" : req.user._id}, function (err, results) {
     if (err) {
       console.log(err);
     } else {
@@ -84,11 +84,11 @@ router.get("/profile/edit", middleware.isLoggedIn, function(req, res) {
 
 // manage artifacts
 router.get("/profile/manage", middleware.isLoggedIn, function(req, res) {
-  Artifactpost.find({"author.username" : req.user.username}, function (err, results) {
+  Artifactpost.find({"author.id" : req.user._id}, function (err, results) {
     if (err) {
       console.log(err);
     } else {
-      res.render("manageart", {user: req.user, artifacts: results});
+      res.render("manageart", {user: req.user, artifacts: results.reverse()});
     }
   });
 });
@@ -178,7 +178,7 @@ router.post("/register", function(req, res) {
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Welcome, " + user.username + ".");
-      res.redirect("/artifactposts/p/1");
+      res.redirect("/artifactposts");
     });
   });
 });
@@ -193,7 +193,7 @@ router.put("/inviteregister", function(req, res) {
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Welcome, " + user.username + ".");
-      res.redirect("/artifactposts/p/1");
+      res.redirect("/artifactposts");
     });
   });
 });
@@ -206,7 +206,7 @@ router.post("/inviteregister", function(req, res) {
     }
     passport.authenticate("local")(req, res, function() {
       req.flash("success", "Welcome, " + user.username + ".");
-      res.redirect("/artifactposts/p/1");
+      res.redirect("/artifactposts");
     });
   });
 });
@@ -220,7 +220,7 @@ router.get("/login", function(req, res) {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/artifactposts/p/1",
+    successRedirect: "/artifactposts",
     successFlash: "Welcome, you have successfully logged in.",
     failureRedirect: "/login",
     failureFlash: "Invalid username or password."

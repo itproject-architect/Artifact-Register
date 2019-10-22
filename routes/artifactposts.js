@@ -34,13 +34,16 @@ cloudinary.config({
     api_secret: '75kzWvbY-siNUFuUWHLVpzmAcDU'
 });
 
+var perPage = 6;    // Maximum number of artifacts per page (6 items are displayed)
+
 //--------------------ROUTES--------------------
 
 //index routes
 router.get(
-    "/artifactposts/p/:page", function (req, res) {
-        var perPage = 6; //max number of artifacts per page (6 Items are displayed)
-        var page = req.params.page || 1; //current page number
+    "/artifactposts", function (req, res) {
+        var reqURL = url.parse(req.url, true);
+        var page = reqURL.query.page || 1;    //current page number
+        var path = reqURL.pathname;
         var admin = config.admin;
         var query = (req.user) ? {$or: [{option: '1'}, {option: '2'}, {"author.id": req.user._id}]} : {option: '1'};
         //ternary query if logged in, check for post marked as public(1), friends only(2) and private( user id matches author id)
@@ -56,7 +59,8 @@ router.get(
                         artipost: allArtiposts,
                         admin: admin,
                         current: page,
-                        pages: Math.ceil(count / perPage)
+                        pages: Math.ceil(count / perPage),
+                        path: path
                     })
                 });
             });
@@ -106,11 +110,11 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
             if (err) {
                 console.log(err);
             } else {
-                res.redirect("/artifactposts/p/1");
+                res.redirect("/artifactposts");
             }
         });
     }).catch( (error) => {
-        console.log("error", error)
+        console.log("Error: ", error)
     })
 
 });
@@ -145,46 +149,55 @@ function filterByDateUpper(artiposts, date_to) {
 
 // Search artifact by name, don't need to log in
 router.get("/artifactposts/search", function (req, res) {
-    var params = url.parse(req.url, true).query;
-    var compFn;
-    var pages = 0;
-    Artifactpost.find({
+    var reqURL = url.parse(req.url, true);
+    var path = reqURL.path;
+    var params = reqURL.query;
+    var page = params.page || 1;    //current page number
+    var query = {
         "name" : {$regex : params.name.replace(" ", "|"), $options : "$i"}, // RegExp matching, case insensitive
         "author.name" : {$regex : params.author, $options : "$i"},
         "location" : {$regex : params.location.replace(" ", "|"), $options : "$i"}
-    }, function (err, results) {
+    };
+    if (req.user) {
+        query.$or = [{option: '1'}, {option: '2'}, {"author.id": req.user._id}];
+    } else {
+        query.option = '1';
+    }
+    Artifactpost.find(query)
+        .sort({year: params.order === "date_asc" ? 1 : -1})
+        .skip(perPage * (page - 1))
+        .limit(perPage)
+        .exec(function (err, results) {
         if (err) {
             console.log(err);
         } else {
-            console.log(results);
-            if (req.user) {
-                results = getPrivatePosts(results, req.user.username);
-            } else {
-                results = getPublicPosts(results);
-            }
-            // Filter by a range of date
-            if (params.date_from !== "") {
-                results = filterByDateLower(results, Number(params.date_from));
-            }
-            if (params.date_to !== "") {
-                results = filterByDateUpper(results, Number(params.date_to));
-            }
-            // Sorting
-            switch (params.order) {
-                case "date_desc":
-                    compFn = (a, b) => b.year - a.year;
-                    break;
-                case "date_asc":
-                    compFn = (a, b) => a.year - b.year;
-                    break;
-                default:    // Sort by date, DESC
-                    compFn = (a, b) => b.year - a.year;
-            }
-            results.sort(compFn);
-            results.forEach(function (item) {
-                console.log(item.id + "\t" + item.name)
-            });
-            res.render("artifactposts/index", {artipost : results, admin : config.admin, pages: pages});
+            Artifactpost.countDocuments(query, function (err, count) {
+                var pages = Math.ceil(count / perPage);
+                if (req.user) {
+                    results = getPrivatePosts(results, req.user.username);
+                } else {
+                    results = getPublicPosts(results);
+                }
+                // Filter by a range of date
+                if (params.date_from !== "") {
+                    results = filterByDateLower(results, Number(params.date_from));
+                }
+                if (params.date_to !== "") {
+                    results = filterByDateUpper(results, Number(params.date_to));
+                }
+                /*
+                results.forEach(function (item) {
+                    console.log(item.id + "\t" + item.name)
+                });
+                 */
+                res.render("artifactposts/index", {
+                    artipost : results,
+                    admin : config.admin,
+                    current: page,
+                    pages: pages,
+                    path: path
+                });
+            })
         }
     });
 });
@@ -195,8 +208,10 @@ function getPrivatePosts(allArtiposts, email) {
 
     for (var prop in allArtiposts) {
         let post = allArtiposts[prop];
+        /*
         console.log("iteration author ", post.author.username);
         console.log("iteration name ", post.name);
+         */
 
         if (post.option === "1" || post.option === "2") {
             console.log("post name public family ", post.name);
@@ -302,7 +317,7 @@ router.delete("/artifactposts/:id", middleware.checkBlogpostOwnership, function 
             await Promise.all(destroyPromises);
             post.remove();
             req.flash('success', 'Successfully deleted.');
-            res.redirect('/artifactposts/p/1');
+            res.redirect('/artifactposts');
         } catch (err) {
             if (err) {
                 req.flash('error', err.message);

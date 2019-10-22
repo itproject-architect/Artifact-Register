@@ -14,7 +14,8 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-12 col-lg-12"><form class="search text-center md-form mt-2" action="/artifactposts/search" method="get">
+        <div class="col-md-12 col-lg-12">
+          <form class="search text-center md-form mt-2" action="/artifactposts/search" method="get">
             <div class="search-group form-group">
               <input class="search-input text-center form-control form-control-sm" type="text" name="name" size="50"
                      placeholder="Enter keywords to search your artifacts..." >
@@ -63,6 +64,8 @@
                     </label>
                   </div>
                 </div>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -133,12 +136,18 @@
 
 
   <% if (pages > 1) { %>
+    <% if (path.includes("?")) { %>
+      <% path = path.replace(/&page=\d*/gi, "") %>
+      <% path = path.concat("&page="); %>
+    <% } else { %>
+      <% path = path.concat("?page="); %>
+    <% } %>
     <nav aria-label="Page navigation">
       <ul class="pagination pg-blue justify-content-center mt-5">
         <% if (current == 1) { %>
           <li class="page-item disabled"><a class="page-link">First</a></li>
         <% } else { %>
-          <li class="page-item"><a class="page-link" href="/artifactposts/p/1">First</a></li>
+          <li class="page-item"><a class="page-link" href="<%= path %>1">First</a></li>
         <% } %>
         <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
         <!-- check number of current page and if less than 5 output pagination links from 1 to current page + 4-->
@@ -150,7 +159,7 @@
           <% if (i == current) { %>
             <li class="page-item active"><a class="page-link"><%= i %></a></li>
           <% } else { %>
-            <li class="page-item"><a class="page-link" href="/artifactposts/p/<%= i %>"><%= i %></a></li>
+            <li class="page-item"><a class="page-link" href="<%= path %><%= i %>"><%= i %></a></li>
           <% } %>
           <% if (i == Number(current) + 4 && i < pages) { %>
             <li class="disabled"><a>...</a></li>
@@ -159,20 +168,11 @@
         <% if (current == pages) { %>
           <li class="page-item disabled"><a class="page-link">Last</a></li>
         <% } else { %>
-          <li class="page-item"><a class='page-link' href="/artifactposts/p/<%= pages %>">Last</a></li>
+          <li class="page-item"><a class='page-link' href="<%= path %><%= pages %>">Last</a></li>
         <% } %>
       </ul>
     </nav>
   <% } %>
-
-
-
-
-
-
-
-
-
 </section>
 
 <script>
