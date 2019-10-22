@@ -8,6 +8,7 @@ var http = require('http');
 var url = require('url');
 var util = require('util');
 var multer = require('multer');
+var ensure = require('connect-ensure-login');
 
 
 //--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
@@ -68,7 +69,7 @@ router.get(
 
 
 //CREATE ARTIFACT POST ROUTE
-router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), function (req, res) {
+router.post("/artifactposts", ensure.ensureLoggedIn('/login'), upload.array('image', 5), function (req, res) {
     let files = req.files;
     // Files contains an array of "images" {destination, fieldname, filename, path, size ...}
 
@@ -120,7 +121,7 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
 });
 
 //NEW ARTIFACT POST ROUTE (displays form)
-router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
+router.get("/artifactposts/new", ensure.ensureLoggedIn('/login'), function (req, res) {
     res.render("artifactposts/new");
 });
 

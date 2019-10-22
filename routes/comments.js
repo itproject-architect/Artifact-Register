@@ -5,11 +5,12 @@ var Comment = require("../models/comment");
 var middleware = require("../middleware");
 const asyncHandler = require("express-async-handler");
 const uuidGenerate = require("nodejs-simple-uuid");
+var ensure = require('connect-ensure-login');
 
 //NEW COMMENT ROUTE (form)
 router.get(
     "/artifactposts/:id/comments/new",
-    middleware.isLoggedIn,
+    ensure.ensureLoggedIn('/login'),
     asyncHandler(async (req, res, next) => {
         await Artifactpost.findById(req.params.id, function(err, artipost) {
             if (err) {
