@@ -61,7 +61,18 @@ router.get("/profile", middleware.isLoggedIn, function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("profile", {user: req.user, artifacts: results.slice(0, 9)});  // show at most 9 artifacts (3*3)
+      let artifacts = new Map();
+      results.forEach(function (art) {
+        if (artifacts.has(art.year)) {
+          artifacts.set(art.year, artifacts.get(art.year).concat([art]));
+        } else {
+          artifacts.set(art.year, [art]);
+        }
+      });
+      res.render("profile", {
+        user: req.user,
+        artifacts: artifacts, // show the latest uploaded 9 artifacts (3*3)
+      });
     }
   });
 });
@@ -69,6 +80,17 @@ router.get("/profile", middleware.isLoggedIn, function(req, res) {
 // edit profile
 router.get("/profile/edit", middleware.isLoggedIn, function(req, res) {
   res.render("editprofile", {user: req.user});
+});
+
+// manage artifacts
+router.get("/profile/manage", middleware.isLoggedIn, function(req, res) {
+  Artifactpost.find({"author.username" : req.user.username}, function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("manageart", {user: req.user, artifacts: results});
+    }
+  });
 });
 
 // upload photo
