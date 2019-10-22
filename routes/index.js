@@ -7,6 +7,7 @@ var UserInvite = require("../models/userinvite");
 const uuidGenerate = require("nodejs-simple-uuid");
 var middleware = require("../middleware");
 var multer = require('multer');
+var ensure = require('connect-ensure-login');
 
 //Contact form
 var nodemailer = require("nodemailer");
@@ -50,13 +51,13 @@ router.get("/", function(req, res) {
 
 
 //invite family member ROUTE
-router.get("/invitefamily", middleware.isLoggedIn, function(req, res) {
+router.get("/invitefamily", ensure.ensureLoggedIn('/login'), function(req, res) {
   res.render("invitefamily");
   /* res.redirect('back'); */
 });
 
 // user profile page
-router.get("/profile", middleware.isLoggedIn, function(req, res) {
+router.get("/profile", ensure.ensureLoggedIn("/login"), function(req, res) {
   Artifactpost.find({"author.id" : req.user._id}, function (err, results) {
     if (err) {
       console.log(err);
@@ -78,12 +79,12 @@ router.get("/profile", middleware.isLoggedIn, function(req, res) {
 });
 
 // edit profile
-router.get("/profile/edit", middleware.isLoggedIn, function(req, res) {
+router.get("/profile/edit", ensure.ensureLoggedIn('/login'), function(req, res) {
   res.render("editprofile", {user: req.user});
 });
 
 // manage artifacts
-router.get("/profile/manage", middleware.isLoggedIn, function(req, res) {
+router.get("/profile/manage", ensure.ensureLoggedIn('/login'), function(req, res) {
   Artifactpost.find({"author.id" : req.user._id}, function (err, results) {
     if (err) {
       console.log(err);
@@ -94,7 +95,7 @@ router.get("/profile/manage", middleware.isLoggedIn, function(req, res) {
 });
 
 // upload photo
-router.post("/profile/edit/photo", middleware.isLoggedIn, upload.single("photo"), function (req, res) {
+router.post("/profile/edit/photo", ensure.ensureLoggedIn('/login'), upload.single("photo"), function (req, res) {
   cloudinary.uploader.upload(req.file.path, function (err, result) {
     if (err) {
       console.log(err);
@@ -114,7 +115,7 @@ router.post("/profile/edit/photo", middleware.isLoggedIn, upload.single("photo")
 });
 
 // change name
-router.post("/profile/edit/name", middleware.isLoggedIn, function(req, res) {
+router.post("/profile/edit/name", ensure.ensureLoggedIn('/login'), function(req, res) {
   User.updateOne({username : req.user.username}, {name : req.body.name}, function (err, raw) {
     if (err) {
       console.log(err);
@@ -128,7 +129,7 @@ router.post("/profile/edit/name", middleware.isLoggedIn, function(req, res) {
 });
 
 // change password
-router.post("/profile/edit/password", middleware.isLoggedIn, function(req, res) {
+router.post("/profile/edit/password", ensure.ensureLoggedIn('/login'), function(req, res) {
   req.user.changePassword(req.body.old_pwd, req.body.new_pwd, function (err, result) {
     if (err) {
       console.log(err);
@@ -182,6 +183,7 @@ router.post("/register", function(req, res) {
     });
   });
 });
+
 //UPDATE artifactposts
 router.put("/inviteregister", function(req, res) {
   console.log("register ", req.body);
@@ -197,6 +199,7 @@ router.put("/inviteregister", function(req, res) {
     });
   });
 });
+
 router.post("/inviteregister", function(req, res) {
   var newUser = new User({ username: req.body.username });
   User.register(newUser, req.body.password, function(err, user) {
@@ -220,7 +223,7 @@ router.get("/login", function(req, res) {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/artifactposts",
+    successReturnToOrRedirect: '/artifactposts',
     successFlash: "Welcome, you have successfully logged in.",
     failureRedirect: "/login",
     failureFlash: "Invalid username or password."
@@ -321,16 +324,7 @@ router.post("/send", function(req, res) {
 
 // debug
 router.get("/debug", function (req, res) {
-  User.updateOne({username : 'xlin5'},
-      {photo : 'https://res.cloudinary.com/dvwezxakw/image/upload/v1570892444/soxtjio53gigscyggtmh.jpg'},
-      function (err, raw) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(raw);
-    }
-  });
-
+  /* null */
 });
 
 //--------------------EXPORT----------------------------------------
