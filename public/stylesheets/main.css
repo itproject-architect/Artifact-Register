@@ -117,7 +117,7 @@ a:hover {
 
 
 
-.img-fluid-small {
+.img-small, .img-fluid-small {
     height: 100px;
 }
 
@@ -129,7 +129,7 @@ a:hover {
 
 }
 
-.img-fluid {
+.img-medium, .img-fluid {
     height: 200px;
 }
 
