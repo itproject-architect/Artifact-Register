@@ -1,22 +1,32 @@
 <!--Moved down due to adding white bar at top of page-->
 <% include partials/header %>
 
-
+<div class="w3-display-middle">
+  <div class="w3-display-container w3-animate-opacity w3-text-white" style="text-align: center">
+    <h1 class="w3-jumbo w3-animate-top" style="font-family: Tangerine, serif;">"Share Your Memories With The People You Love"</h1>
+    <h5 class="landing">team internet architects</h5>
+    <% if(currentUser){ %>
+      <p class="w3-large w3-center">Hello! <%= currentUser.name %></p>
+    <% } %>
+      <!--<h2 class="w3-center btn--wiggle is-active show-more background3" style="margin-top: 10px;color: white;">Hold button to start auto drive mode</h2>-->
+  </div>
+  <!--<div style="overflow: visible;position: absolute;margin-top: 3em; margin-left: 2em">
+      <button class="fake-button btn--shockwave is-active"></button>
+      <ul class="talkbubble a background2">
+          <span class="a">&#128512;</span>
+          <li class="a b">Upload/search artifacts in ARTIFACTS page.</li>
+          <li class="a">View timeline gallery in TIMELINE page.</li>
+          <li class="a">Sign in to edit profile.</li>
+      </ul>
+  </div>-->
+</div>
 
 
 <section class="blogpostindexpage">
   <div class="blogpostindexintro greybackground">
     <div class="container">
       <div class="row">
-        <div class="w3-display-middle">
-          <div class="w3-display-container w3-animate-opacity w3-text-white">
-            <h1 class="w3-jumbo w3-animate-top text-center">Share Your Memories With The People You Love</h1>
-            <% if (currentUser) { %>
-              <hr class="w3-border-grey mt-3 mb-3" style="margin:auto;width:40%">
-              <p class="w3-large w3-center">Hello! <%= currentUser.name %></p>
-            <% } %>
-          </div>
-        </div>
+        <!-- nothing here, yet-->
       </div>
       <div class="row"></div>
     </div>
