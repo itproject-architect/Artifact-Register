@@ -10,8 +10,6 @@ var express = require("express"),
     Blogpost = require("./models/artifactpost"),
     Comment = require("./models/comment"),
     User = require("./models/user"),
-
-    //Contact form for invitation
     nodemailer = require("nodemailer"),
     config = require("./config.js");
 
@@ -20,7 +18,8 @@ var express = require("express"),
 var commentRoutes = require("./routes/comments"),
     blogpostRoutes = require("./routes/artifactposts"),
     indexRoutes = require("./routes/index"),
-    timelineRoutes = require("./routes/timeline");
+    timelineRoutes = require("./routes/timeline"),
+    landingRoutes = require("./routes/landing");
 
 //----------------DATABASE CONNECTION-------------------
 
@@ -83,6 +82,8 @@ app.use(indexRoutes);
 app.use(blogpostRoutes);
 app.use(commentRoutes);
 app.use(timelineRoutes);
+app.use(landingRoutes);
+
 
 //--------------------LISTENER--------------------
 const PORT = process.env.PORT || 3000;

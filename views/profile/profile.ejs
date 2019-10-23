@@ -1,0 +1,100 @@
+<% include ../partials/header %>
+
+<section class="profilepage">
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+
+            <ul class="sidebar-nav" style="margin-left:0;">
+                <li class="sidebar-brand">
+
+                    <a href="#menu-toggle"  id="menu-toggle" style="margin-top:20px;float:right;" > <i class="fa fa-bars " style="font-size:20px !Important;" aria-hidden="true" aria-hidden="true"></i></a>
+                </li>
+                <li class="active">
+                    <a href="/profile"><i class="fa fa-id-badge " aria-hidden="true"> </i> <span style="margin-left:10px;">Profile</span>  </a>
+                </li>
+                <li>
+                    <a href="/profile/edit"> <i class="fa fa-pen " aria-hidden="true"> </i> <span style="margin-left:10px;"> Edit Profile</span> </a>
+                </li>
+                <li>
+                    <a href="/profile/manage"> <i class="fa fa-tasks" aria-hidden="true"> </i> <span style="margin-left:10px;"> Manage Artifact</span> </a>
+                </li>
+            </ul>
+        </div>
+
+
+    <div class="row">
+        <div class="container">
+            <div class="heading mt-5">
+                <h3 class="text-center">Profile</h3>
+            </div>
+        </div>
+
+
+                <div class="container mt-5">
+                    <div class='row'>
+                        <div class="circle-tile col-lg-6">
+
+
+                                <% if (user.photo) { %>
+                                <a href="profile/edit"><div class="circle-tile-heading"><img src="<%= user.photo %>" alt="<%= user.username %>" href="/profile/edit"/></div></a>
+
+                                <% } else { %>
+                                    <button id="author-profile" class="author-icon" data-toggle="tooltip"
+                                            title="<%= user.name %>"> <%= user.name.substring(0, 1) %></button>
+                                <% } %>
+                                    <div class="circle-tile-content">
+                                        <div class="circle-tile-description text-capitalize"> <%= user.name %></div>
+                                        <div class="circle-tile-number invisible">Null</div>
+                                        <a class="circle-tile-footer" href="/profile/edit">Edit Profile <i class="fa fa-chevron-circle-right"></i></a>
+                                    </div>
+
+
+
+                        </div>
+
+                            <div class="circle-tile col-lg-6 ">
+                                <a href="profile/manage"><div class="circle-tile-heading"><i class="fa fa-paint-brush fa-fw fa-3x"></i></div></a>
+                                <div class="circle-tile-content">
+                                    <div class="circle-tile-description"> Artifacts</div>
+                                    <div class="circle-tile-number"><%=counting%></div>
+                                    <a class="circle-tile-footer" href="profile/manage">Manage Artifacts <i class="fa fa-chevron-circle-right"></i></a>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+
+
+                <div class="container">
+
+
+                    <% var years = Array.from(artifacts.keys()).sort((a,b) => b - a); %>
+                    <% years.forEach(function (year) { %>
+                    <div class="card">
+                        <button id="expand-button" class="btn btn-block btn-success btn-raised"
+                                data-toggle="collapse" data-target="#artifacts<%= year %>">
+                            <%= year %>
+                        </button>
+                        <div class="card-body pb-0 collapse" id="artifacts<%= year %>">
+                            <div class="row">
+                                <% artifacts.get(year).forEach(function (art) { %>
+                                <div class="col-lg-4 col-md-6 col-sm-12 post">
+                                    <a href="artifactposts/<%= art._id %>" style="min-height: auto">
+                                        <img class="img-medium"
+                                             src="<%= art.image[0] %>" alt="<%= art.name %>"/>
+                                    </a>
+                                </div>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+
+            </div>
+        </div>
+
+</section>
+
+
+<% include ../partials/footer %>

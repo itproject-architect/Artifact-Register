@@ -28,11 +28,16 @@
 
               <div class="cd-timeline__block js-cd-block">
                 <div class="cd-timeline__img js-cd-img cd-timeline__img--picture" >
-                    <!--<div class="circle-image" style="background: url('../../public/pics/day.png');"></div>-->
-                    <!--<img src="../../public/pics/night.png" alt="Picture">-->
-                    <!--<div class="circle-image" style="border: solid;padding: 40px"></div>-->
+                  <%if (artipost.author.photo) { %>
+                  <img class="ml-1" src="<%=artipost.author.photo%>"/>
 
-                </div> <!-- cd-timeline__img -->
+
+                  <%} else {%>
+                    <button class="author-icon ml-1" style="height:50px; width:50px;" data-toggle="tooltip"
+                            title="<%=  artipost.author.name %>"><%= artipost.author.name.substring(0, 1) %></button>
+                  <%}%>
+
+                </div>
 
                 <div class="cd-timeline__content js-cd-content">
                   <div class="frame">
@@ -43,7 +48,7 @@
                   <p class="date-align">by <%=artipost.author.name%></p>
 
                     <!--<p><%- artipost.description.substring(0, 200) %>...</p>-->
-                  <!--<span class="cd-timeline__date">Jan 14</span>-->
+                  <
                   <div class="cd-timeline__date">
                     <h2 class="text-center"><%=artipost.name%></h2>
                     <h1 class="text-center"><%=artipost.year%></h1>

@@ -21,6 +21,7 @@ body {
     background-repeat: no-repeat;
     /*background-repeat: repeat;*/
     background-attachment: fixed;
+    overflow-x: hidden;
     /*background-image: url("../pics/peach1.png");*/
 
 }
@@ -452,6 +453,8 @@ body .btn-bg.bg-2 .btn-2 button:after {
     text-decoration: none;
 }
 
+
+
 section.profilepage .profile-container {
     background-color: #f5f5f5;
     border: 1px solid #cacaca;
@@ -466,6 +469,273 @@ section.profilepage .profile-container {
     margin-top: 0.5rem;
     padding: 5px 10px;
 }
+
+#expand-button {
+    background-color:#636161;
+    border-bottom: solid 2px  #fafafa;
+    padding: 15px;
+
+
+}
+
+#expand-button:hover {
+
+    opacity: 0.5;
+
+}
+
+
+
+/*Responsive Side Bar Nav from https://bootsnipp.com/snippets/Pa9xl*/
+/* Toggle Styles */
+
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.6s ease;
+    -moz-transition: all 0.6s ease;
+    -o-transition: all 0.6s ease;
+    transition: all 0.6s ease;
+
+}
+
+#wrapper.toggled {
+    padding-left: 20px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background-color:#423c3c !Important;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 0;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 10px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-left:-250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    right:15px;
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: #312A25;
+}
+
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 220px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 200px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 40px;
+
+
+    }
+
+    #wrapper.toggled span {
+        visibility:hidden;
+
+    }
+    #wrapper.toggled   i {
+        float:right;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+
+@media(max-width:767px) {
+
+    #wrapper.toggled #page-content-wrapper {
+        position: absolute;
+        margin-right:60px;
+    }
+
+    #wrapper.toggled {
+        padding-right: 60px;
+    }
+
+    #wrapper {
+        padding-left: 20px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 50px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 140px;
+
+
+    }
+
+    #wrapper.toggled span {
+        visibility:visible;
+        position:relative;
+        left:70px;
+        bottom:13px;
+
+    }
+
+    #wrapper span {
+        visibility:hidden;
+
+    }
+    #wrapper.toggled   i {
+        float:right;
+    }
+
+    #wrapper   i {
+        float:right;
+    }
+
+    #page-content-wrapper {
+        padding: 5px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+.circle-tile {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#author-profile {
+    height: 40px;
+    width:40px;
+}
+.circle-tile-heading {
+
+
+    color: black;
+    height: 80px;
+    margin: 0 auto -40px;
+    position: relative;
+    transition: all 0.3s ease-in-out 0s;
+    width: 80px;
+}
+
+
+.circle-tile-heading img {
+    height: 80px;
+
+}
+.circle-tile-heading .fa {
+    line-height: 80px;
+}
+
+
+.circle-tile-content {
+    padding-top: 50px;
+}
+.circle-tile-number {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 5px 0 15px;
+}
+.circle-tile-description {
+    text-transform: uppercase;
+}
+.circle-tile-footer {
+    background-color: rgba(244, 186, 163, 0.7);
+    color: rgba(255, 255, 255, 0.85);
+    display: block;
+    padding: 5px;
+    transition: all 0.3s ease-in-out 0s;
+}
+.circle-tile-footer:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+
 
 
 section.managepage .manage-container {
@@ -513,12 +783,23 @@ section.managepage .manage-container {
 
 
 .loginpage, .blogpostindexpage, .showblogpostpage, .newblogpostpage,
-.registerpage, .editblogpostpage, .blogpostindexpage, .profilepage,
+.registerpage, .editblogpostpage, .blogpostindexpage,  .landingpage, .profilepage,
 .managepage {
     min-height: 100vh;
 }
 
+.landingpage {
+    background-image: url("../image/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
+#header {
+    background-color: #ffffffba;
+    padding: 20px;
+
+
+}
 button.edit-button {
     color: #606060!important;
 }
@@ -795,3 +1076,6 @@ p.a{
     font-weight: bold;
     color: #636161;
 }
+
+
+
