@@ -44,10 +44,6 @@ cloudinary.config({
 
 //".router" is used instead of "app." as our routes are now in a separate file that links back to the "app.js" file
 
-//ROOT ROUTE
-router.get("/", function(req, res) {
-  res.render("landing");
-});
 
 
 //invite family member ROUTE
@@ -62,25 +58,30 @@ router.get("/profile", ensure.ensureLoggedIn("/login"), function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      let artifacts = new Map();
-      results.forEach(function (art) {
-        if (artifacts.has(art.year)) {
-          artifacts.set(art.year, artifacts.get(art.year).concat([art]));
-        } else {
-          artifacts.set(art.year, [art]);
-        }
+
+        let artifacts = new Map();
+        results.forEach(function (art) {
+          if (artifacts.has(art.year)) {
+            artifacts.set(art.year, artifacts.get(art.year).concat([art]));
+          } else {
+            artifacts.set(art.year, [art]);
+          }
+        });
+      Artifactpost.countDocuments({"author.id" : req.user._id}, function (err, count) {
+        res.render("profile/profile", {
+          user: req.user,
+          artifacts: artifacts, // show the latest uploaded 9 artifacts (3*3)
+          counting:count
+        });
       });
-      res.render("profile", {
-        user: req.user,
-        artifacts: artifacts, // show the latest uploaded 9 artifacts (3*3)
-      });
-    }
+      }
   });
+
 });
 
 // edit profile
 router.get("/profile/edit", ensure.ensureLoggedIn('/login'), function(req, res) {
-  res.render("editprofile", {user: req.user});
+  res.render("profile/editprofile", {user: req.user});
 });
 
 // manage artifacts
@@ -89,7 +90,7 @@ router.get("/profile/manage", ensure.ensureLoggedIn('/login'), function(req, res
     if (err) {
       console.log(err);
     } else {
-      res.render("manageart", {user: req.user, artifacts: results.reverse()});
+      res.render("profile/manageart", {user: req.user, artifacts: results.reverse()});
     }
   });
 });

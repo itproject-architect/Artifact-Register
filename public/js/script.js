@@ -69,6 +69,13 @@
 })();
 
 
+$("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+});
+
+
+
 $(function(){
 
     var btnLoader = document.querySelector('.btnLoader');
@@ -85,6 +92,11 @@ $(function(){
     }, false);
 
 });
+
+$(document).ready(function() {
+    $('body').bootstrapMaterialDesign();
+    $('[data-toggle="tooltip"]').tooltip()});
+// Tooltips Initialization
 
 
 $("input[name='delete']").click(function(){
@@ -162,6 +174,7 @@ $('#descArea').keyup(function() {
     if (text_remaining < 0) {
         console.log("Disable");
         $('#submit-post').prop("disabled", true);
+        document.getElementById("count_message").style.color = "#fabea6";
     } else if ($('#submit-post').prop("disabled")) {
         console.log("Enable");
         $('#submit-post').prop("disabled", false);
