@@ -485,6 +485,11 @@ section.profilepage .profile-container {
 }
 
 
+nav.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
 
 /*Responsive Side Bar Nav from https://bootsnipp.com/snippets/Pa9xl*/
 /* Toggle Styles */
@@ -782,10 +787,15 @@ section.managepage .manage-container {
 }
 
 
-.loginpage, .blogpostindexpage, .showblogpostpage, .newblogpostpage,
-.registerpage, .editblogpostpage, .blogpostindexpage,  .landingpage, .profilepage,
+.landingpage, .loginpage, .registerpage, .blogpostindexpage, .showblogpostpage,
+.newblogpostpage, .editblogpostpage, .editcommentpage, .timelinepage, .profilepage,
 .managepage {
+    margin-top: 56px;   /* height of page-top navbar */
     min-height: 100vh;
+}
+
+.newblogpostpage, .editblogpostpage {
+    margin-top: 86px;   /* 56px navbar + 30px heading h3 */
 }
 
 .landingpage {
@@ -1076,6 +1086,5 @@ p.a{
     font-weight: bold;
     color: #636161;
 }
-
 
 
