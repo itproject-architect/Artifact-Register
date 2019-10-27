@@ -1,8 +1,6 @@
-var express = require("express");
-var router = express.Router();
-var Artifactpost = require("../models/artifactpost");
-var middleware = require("../middleware");
-var config = require("../config.js");
+const express = require("express");
+const router = express.Router();
+const Artifactpost = require("../models/artifactpost");
 
 //--------------------ROUTES--------------------
 

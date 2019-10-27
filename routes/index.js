@@ -1,18 +1,15 @@
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
-var Artifactpost = require("../models/artifactpost");
-var User = require("../models/user");
-var UserInvite = require("../models/userinvite");
+const express = require("express");
+const router = express.Router();
+const passport = require("passport");
+const Artifactpost = require("../models/artifactpost");
+const User = require("../models/user");
+const UserInvite = require("../models/userinvite");
 const uuidGenerate = require("nodejs-simple-uuid");
-var middleware = require("../middleware");
-var multer = require('multer');
-var ensure = require('connect-ensure-login');
+const multer = require('multer');
+const ensure = require('connect-ensure-login');
 
 //Contact form
-var nodemailer = require("nodemailer");
-//API key storage
-var config = require("../config.js");
+const nodemailer = require("nodemailer");
 
 var serverdomain = "https://it-project.herokuapp.com";
 

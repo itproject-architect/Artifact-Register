@@ -1,14 +1,11 @@
-var express = require("express");
-var router = express.Router();
-var Artifactpost = require("../models/artifactpost");
-var middleware = require("../middleware");
-var config = require("../config.js");
-var asyncHandler = require("express-async-handler");
-var http = require('http');
-var url = require('url');
-var util = require('util');
-var multer = require('multer');
-var ensure = require('connect-ensure-login');
+const express = require("express");
+const router = express.Router();
+const Artifactpost = require("../models/artifactpost");
+const middleware = require("../middleware");
+const config = require("../config.js");
+const url = require('url');
+const multer = require('multer');
+const ensure = require('connect-ensure-login');
 
 
 //--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
@@ -208,6 +205,7 @@ router.get("/artifactposts/:id/edit", middleware.checkBlogpostOwnership, functio
 
 //UPDATE ARTIFACT POST
 router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array('image', 5), function (req, res) {
+    console.log(req.body);
     Artifactpost.findById(req.params.id, async function (err, updatedArtipost) {
         if (err) {
             req.flash("error", err.message);
@@ -236,6 +234,7 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
 
             updatedArtipost.name = req.body.name;
             updatedArtipost.year = req.body.year;
+            updatedArtipost.location = req.body.location;
             updatedArtipost.option = req.body.option;
             updatedArtipost.description = req.body.description;
             updatedArtipost.save();
