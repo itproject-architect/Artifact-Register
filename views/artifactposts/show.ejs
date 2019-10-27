@@ -147,9 +147,9 @@
 
     <div class="row text-center">
         <div class="col-12">
-            <% artipost.comments.forEach(function(comment){ %>
+            <% artipost.comments.forEach(function (comment) { %>
 
-                <% if(JSON.stringify(comment.author) === '{}') { %>
+                <% if (JSON.stringify(comment.author) === '{}') { %>
 
                 <div class="comment">
                     <div class="comment-author">Guest</div>
@@ -157,37 +157,42 @@
                         <p><%= comment.text %></p>
                         <div class="comment-date"> <strong><%= comment.created.toDateString() %></strong></div>
                     </div>
+                </div>
 
 
-                <% } else{ %>
+                <% } else { %>
                     <div class="comment">
-                        <div class="comment-author"><%=comment.author.name%></div>
+                        <div class="comment-author">
+                            <%= comment.author.name %>
+                        </div>
                         <div class="comment-text">
-                            <p><%= comment.text %></p>
-                            <div class="comment-date"> <strong><%= comment.created.toDateString() %></strong></div>
-                            <% } %>
+                            <p>
+                                <%= comment.text %>
+                            </p>
+                            <div class="comment-date">
+                                <strong><%= comment.created.toDateString() %></strong>
+                            </div>
 
-                            <% if(currentUser && (String(comment.author.id) == String(currentUser._id))){ %>
-                                <a
-                                        class="btn btn-xs btn-warning mt-3"
-                                        href="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>/edit"
-                                >Edit</a
-                                >
-                                <form
-                                        class="delete-form"
-                                        action="/artifactposts/<%= artipost._id%>/comments/<%= comment._id %>?_method=DELETE"
-                                        method="POST"
-                                >
+                            <% if (currentUser && (String(comment.author.id) == String(currentUser._id))) { %>
+                                <a class="btn btn-xs btn-warning mt-3"
+                                   href="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>/edit">
+                                    Edit
+                                </a>
+                                <form class="delete-form"
+                                      action="/artifactposts/<%= artipost._id%>/comments/<%= comment._id %>?_method=DELETE"
+                                      method="POST">
                                     <button role="button" class="btn btn-xs btn-danger" value="Delete">
                                         Delete
                                     </button>
                                 </form>
-                            <% } %> <% }) %>
-                     </div>
-                </div>
-            </div>
-        </div> <!-- End of comment container-->
-    </div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+    </div> <!-- End of comment container-->
+
 </div>
 </section>
 
