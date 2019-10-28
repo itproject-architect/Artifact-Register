@@ -18,7 +18,7 @@ pink: #F8C2CF
     box-sizing: border-box;
 }
 
-h5{ /*need fixing @media problem*/
+h5{
     font-size: 30px;
 }
 
@@ -29,22 +29,10 @@ h5{ /*need fixing @media problem*/
     transform:translate(-50%,-50%);
     -ms-transform:translate(-50%,-50%)
 }
-.image-frame{
-    background: #ff9999;
-    /*margin-top: 0.5em;*/
-    margin-bottom: 1em;
-    margin-left: 2.5em;
-    margin-right: 2.5em;
-    border: 10px solid #ff9999;
-    border-radius: 20px;
-    box-shadow: 10px 10px 5px #888888;
-    overflow: hidden;
-}
 
 
 .image-border{
     position: relative;
-    /*border: 12px solid #ff9999;*/
     border-radius: 10px; /* 50% to make it round*/
     width:100%;
     height: 100%;
@@ -63,11 +51,7 @@ h5{ /*need fixing @media problem*/
     border-right-color: #eee;
     border-top-color: #ddd;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25) inset, 0 5px 10px 5px rgba(0, 0, 0, 0.25);
-    /*box-sizing: border-box;*/
-    /*display: inline-block;*/
-    /*height: 80vh;*/
     padding: 3vmin;
-    /*position: relative;*/
     text-align: center;
     overflow: hidden;
 }
@@ -98,18 +82,6 @@ h5{ /*need fixing @media problem*/
     padding-right: 2.5em;
 }
 
-/*.cd-timeline__block:nth-child(even) .date-align{
-    text-align: left;
-    padding-left: 2.5em;
-}*/
-
-
-/*.center {
-    display: block;
-    margin-left: 50%;
-    margin-right: 50%;
-    width: 50%;
-}*/
 .circle-image{
     border-radius: 50%;
     max-width: 200px;
@@ -120,7 +92,6 @@ h5{ /*need fixing @media problem*/
 
 
 .show-more {
-    /*font-family: Impact, Charcoal, sans-serif;*/
     border-radius: 10px;
     animation: pulse 7s infinite;
     color: #636161;
@@ -140,15 +111,6 @@ h5{ /*need fixing @media problem*/
 }
 
 
-/*.scroll-effect {
-    background-color: #fff2df;
-}*/
-
-/*.scroll-effect.active {
-    background-color: darkblue;
-}*/
-
-
 @keyframes pulse {
     0% {
         color: darkgray;
@@ -160,7 +122,7 @@ h5{ /*need fixing @media problem*/
     }
     100% {
         color: darkgray;
-        background-color: #fff2df;/*#F9838A;*/
+        background-color: #fff2df;
         text-shadow: 3px 2px #fff2df;
     }
 }
@@ -175,25 +137,15 @@ h5{ /*need fixing @media problem*/
 
 header {
     height: 300px;
-    /*line-height: 200px;*/
     text-align: center;
     background-color: transparent;
-    /*background: #fff2df;*/
-    /*background: #008000;*/
 }
 
-header h1 {
-    /*color: white;
-    /*font-size: 1.8rem;*/
-}
+
 
 @media only screen and (min-width: 1170px) {
     header {
         height: 300px;
-        /*line-height: 300px;*/
-    }
-    header h1 {
-        /*font-size: 2.4rem;*/
     }
 }
 
