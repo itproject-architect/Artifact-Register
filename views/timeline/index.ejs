@@ -1,68 +1,59 @@
 <!--BLOGPOST INDEX-->
 <% include ../partials/header %>
 <div class="timelinepage">
-  <div class="container">
-    <div class="row mb-2">
-      <div class="col-12 heading text-center mt-5 w3-animate-opacity w3-text-white">
-        <h3>Artifact TimeLine</h3>
-
-      </div>
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-12 heading text-center mt-5 w3-animate-opacity w3-text-white">
+                <h3>Artifact TimeLine</h3>
+            </div>
+        </div>
     </div>
-  </div>
-<!--<header style="margin-top: -4%;">
-  <div class="display-lower-middle container row mb-2">
-    <div class="w3-display-container w3-animate-opacity heading text-center">
-        <h3>Artifact TimeLine</h3>
-        <h2 class="w3-center show-more">click on image to show more</h2>
-    </div>
-  </div>
-
-</header>-->
 
 
-<section>
-  <div class="container">
-    <section class="cd-timeline js-cd-timeline">
-      <div class="cd-timeline__container">
-        <% artipost.forEach(function(artipost){ %>
+    <section>
+        <div class="container">
+            <section class="cd-timeline js-cd-timeline">
+                <div class="cd-timeline__container">
+                    <% artipost.forEach(function(artipost){ %>
 
-              <div class="cd-timeline__block js-cd-block">
-                <div class="cd-timeline__img js-cd-img cd-timeline__img--picture" >
-                  <%if (artipost.author.photo) { %>
-                  <img class="ml-1" src="<%=artipost.author.photo%>"/>
+                    <div class="cd-timeline__block js-cd-block">
+                        <div class="cd-timeline__img js-cd-img cd-timeline__img--picture" >
+                            <%if (artipost.author.photo) { %>
+                            <img class="ml-1" src="<%=artipost.author.photo%>"/>
 
 
-                  <%} else {%>
-                    <button class="author-icon ml-1" style="height:50px; width:50px;" data-toggle="tooltip"
-                            title="<%=  artipost.author.name %>"><%= artipost.author.name.substring(0, 1) %></button>
-                  <%}%>
+                            <%} else {%>
+                                <button class="author-icon ml-1" style="height:50px; width:50px;" data-toggle="tooltip"
+                                        title="<%=  artipost.author.name %>"><%= artipost.author.name.substring(0, 1) %></button>
+                            <%}%>
 
+                        </div>
+
+                        <div class="cd-timeline__content js-cd-content">
+                            <div class="frame">
+                                <a href="/artifactposts/<%=artipost._id %>"
+                                ><img class="img-fluid image-border zoom image-center" style="width:100%;height: 100%;" src="<%= artipost.image[0]%>"
+                                    /></a>
+                            </div>
+                            <p class="date-align">by <%=artipost.author.name%></p>
+
+
+                            <!-- opposite side of artifact image -->
+                            <div class="cd-timeline__date">
+                                <h2 class="text-center"><%=artipost.name%></h2>
+                                <h1 class="text-center"><%=artipost.year%></h1>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <% }); %>
                 </div>
+            </section>
 
-                <div class="cd-timeline__content js-cd-content">
-                  <div class="frame">
-                    <a href="/artifactposts/<%=artipost._id %>"
-                    ><img class="img-fluid image-border zoom image-center" style="width:100%;height: 100%;" src="<%= artipost.image[0]%>"
-                      /></a>
-                  </div>
-                  <p class="date-align">by <%=artipost.author.name%></p>
-
-                  <!--<p><%- artipost.description.substring(0, 200) %>...</p>-->
-                  <div class="cd-timeline__date">
-                    <h2 class="text-center"><%=artipost.name%></h2>
-                    <h1 class="text-center"><%=artipost.year%></h1>
-                  </div>
-
-
-                </div>
-              </div>
-
-        <% }); %>
-      </div>
+        </div>
     </section>
-
-  </div>
-</section>
 </div>
 
 <% include ../partials/footer %>
