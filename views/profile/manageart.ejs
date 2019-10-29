@@ -1,0 +1,100 @@
+<% include ../partials/header %>
+
+
+<section class="profilepage managepage">
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav" style="margin-left:0;">
+                <li class="sidebar-brand">
+                    <a href="#menu-toggle"  id="menu-toggle" style="margin-top:20px;float:right;" >
+                        <i class="fa fa-bars " style="font-size:20px !Important;" aria-hidden="true" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/profile">
+                        <i class="fa fa-id-badge " aria-hidden="true"></i>
+                        <span style="margin-left: 12px">Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/profile/edit">
+                        <i class="fa fa-pen " aria-hidden="true"></i>
+                        <span style="margin-left: 8px">Edit Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/profile/manage">
+                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                        <span style="margin-left: 8px">Manage Artifact</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <div class="heading mt-5">
+                    <h3 class="text-center">Manage your artifacts</h3>
+                </div>
+            </div>
+            <div class="container manage-container">
+                <% artifacts.forEach(function (art) { %>
+                    <div class="row">
+                        <div class="col-4 post">
+                            <a href="../artifactposts/<%= art._id %>" style="min-height: auto; margin: 0">
+                                <img class="img-medium"
+                                     src="<%= art.image[0] %>" alt="<%= art.name %>"/>
+                            </a>
+                        </div>
+                        <div class="col-7">
+                            <a href="../artifactposts/<%= art._id %>">
+                                <h3 class="text-capitalize"><%= art.name %></h3>
+                            </a>
+                            <div class="container art-info">
+                                <p>
+                                    <span>
+                                        <i class="fas fa-clock"></i>
+                                        <%= art.year %>
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <%= art.location %>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span>
+                                        <i class="fas fa-upload"></i>
+                                        <%= art.created.toLocaleString() %>
+                                    </span>
+                                </p>
+                            </div>
+                            <div>
+                                <%= art.description %>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="dropdown text-right d-flex float-right">
+                                <button class="btn bmd-btn-icon dropdown-toggle edit-button" type="button" id="ex1"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex1">
+                                    <a id="edit-link" href="/artifactposts/<%= art._id %>/edit">
+                                        <button class="dropdown-item" type="button">Edit</button>
+                                    </a>
+                                    <form id="delete-form" class="mb-0" action="/artifactposts/<%= art._id %>?_method=DELETE" method="POST">
+                                        <input type='submit' value='Delete' name='delete' form="delete_form" class="dropdown-item" >
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+<% include ../partials/footer %>

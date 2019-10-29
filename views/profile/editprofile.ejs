@@ -1,0 +1,141 @@
+<% include ../partials/header %>
+
+<section class="profilepage">
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav" style="margin-left:0;">
+                <li class="sidebar-brand">
+                    <a href="#menu-toggle"  id="menu-toggle" style="margin-top:20px;float:right;" >
+                        <i class="fa fa-bars " style="font-size:20px !Important;" aria-hidden="true" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/profile">
+                        <i class="fa fa-id-badge " aria-hidden="true"></i>
+                        <span style="margin-left: 12px">Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/profile/edit">
+                        <i class="fa fa-pen " aria-hidden="true"></i>
+                        <span style="margin-left: 8px">Edit Profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/profile/manage">
+                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                        <span style="margin-left: 8px">Manage Artifact</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="container">
+                    <div class="heading mt-5">
+                        <h3 class="text-center">Edit your profile</h3>
+                    </div>
+                </div>
+                <div class="container profile-container" style="box-shadow: 0 0 5px -3px #000;">
+                    <div class="row">
+                        <div class="col-3">
+                            <h3>Avatar</h3>
+                        </div>
+                        <div class="col-8">
+                            <% if (user.photo) { %>
+                                <img class="img-medium"
+                                     src="<%= user.photo %>" alt="<%= user.username %>" />
+                            <% } else { %>
+                                <button class="author-icon" data-toggle="tooltip"
+                                        title="<%= user.name %>"><%= user.name.substring(0, 1) %></button>
+                            <% } %>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-icon" href="#" data-toggle="collapse" data-target="#upload_photo">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="upload_photo" class="container profile-container collapse">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-9">
+                                <form action="/profile/edit/photo" method="POST" enctype="multipart/form-data">
+                                    <div class="fileuploader" style="padding: 0">
+                                        <label class="bmd-label-floating" for="photo">Upload your photo...</label>
+                                        <input type="file" name="photo" class="form-control" accept="image/*" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary" style="margin: 1px">Upload</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-3">
+                            <h3>Name</h3>
+                        </div>
+                        <div class="col-8 pt-1">
+                            <%= user.name %>
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-icon" href="#" data-toggle="collapse" data-target="#change_name">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="change_name" class="container profile-container collapse">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-9">
+                                <form action="/profile/edit/name" method="POST">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating" for="name">Enter your new name...</label>
+                                        <input type="text" name="name" class="form-control mb-3" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary" style="margin: 1px">Done</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row profile-row">
+                        <div class="col-3">
+                            <h3>Password</h3>
+                        </div>
+                        <div class="col-8 pt-1">
+                            ••••••••••
+                        </div>
+                        <div class="col-1">
+                            <a class="btn btn-icon" href="#" data-toggle="collapse" data-target="#change_password">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="change_password" class="container profile-container collapse">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-9">
+                                <form action="/profile/edit/password" method="POST">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating" for="old_pwd">Old Password</label>
+                                        <input type="password" name="old_pwd" class="form-control" required>
+                                    </div>
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating" for="new_pwd">New Password</label>
+                                        <input type="password" name="new_pwd" class="form-control" required>
+                                    </div>
+                                    <div class="form-group bmd-form-group">
+                                        <button type="submit" class="btn btn-outline-primary" style="margin: 1px">Done</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<% include ../partials/footer %>

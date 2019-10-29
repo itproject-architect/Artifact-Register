@@ -36,11 +36,11 @@
                                   id="descArea" name="description"><%= artipost.description %></textarea>
                         <p class="text-right" id="count_message"></p>
                     </div>
-
+                    <!-- Change the privacy-->
                     <div class="form-group">
                         <label for="select-option" class="bmd-label-floating">Post View Privileges</label>
                         <select name="option" class="form-control" id="select-option">
-                            <!-- Change the privacy-->
+
                             <option <%= artipost.option == '1' ? "selected" : ""  %> name="public" value="1">Public</option>
                             <option <%= artipost.option == '2' ? "selected" : ""  %> name="family" value="2">Family</option>
                             <option <%= artipost.option == '3' ? "selected" : ""  %> name="private" value="3">Private</option>
@@ -68,5 +68,3 @@
 </section>
 
 <% include ../partials/footer %>
-
-

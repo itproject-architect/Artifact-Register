@@ -1,36 +1,36 @@
 <!--Moved down due to adding white bar at top of page-->
 <% include partials/header %>
 
-<div class="w3-display-middle">
-  <div class="w3-display-container w3-animate-opacity w3-text-white" style="text-align: center">
-    <h1 class="w3-jumbo w3-animate-top" style="font-family: Tangerine, serif;">"Share Your Memories With The People You Love"</h1>
-    <h5 class="landing">some cool kid</h5>
-    <% if(currentUser){ %>
-      <p class="w3-large w3-center">Hello! <%= currentUser.name %></p>
-    <% } %>
-      <h2 class="w3-center btn--wiggle is-active show-more background-circle-pattern" style="margin-top: 10px;color: white;">How to use this service</h2>
+<div class="container-fluid">
+  <div id="header" class="w3-display-middle w-100">
+    <div class="w3-display-container w3-animate-opacity w3-text-white" style="text-align: center">
+      <h1 class="w3-jumbo w3-animate-top" style="font-family: 'Poiret One', cursive; font-size: 15px;">"Share Your Art Memories<br> With The People You Love"</h1>
+      <h5 class="landing">- Team Internet Architects</h5>
+    </div>
+
+    <div class="btn-bg bg-2">
+      <div class="btn btn-2">
+        <a href="/artifactposts">
+          <button class="btn btn-primary btn-sm" href="/artifactposts">
+            View Artifacts
+          </button>
+        </a>
+      </div>
+    </div>
+
   </div>
-  <div style="overflow: visible;position: absolute;margin-top: 3em; margin-left: 2em">
-      <button class="fake-button btn--shockwave is-active"></button>
-      <ul class="talkbubble a background2">
-          <span class="a">&#128512;</span>
-          <li class="a b">Upload/search artifacts in ARTIFACTS page.</li>
-          <li class="a">View timeline gallery in TIMELINE page.</li>
-          <li class="a">Sign in to edit profile.</li>
-      </ul>
-  </div>
+
+
 </div>
 
 
-<section class="blogpostindexpage">
-  <div class="blogpostindexintro greybackground">
-    <div class="container">
-      <div class="row">
-        <!-- nothing here, yet-->
-      </div>
-      <div class="row"></div>
-    </div>
-  </div>
+
+
+<section id="home" class="landingpage">
+
 </section>
+
+
+
 
 <% include partials/footer %>

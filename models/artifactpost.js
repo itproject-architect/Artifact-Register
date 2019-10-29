@@ -16,12 +16,14 @@ var artifactSchema = new mongoose.Schema({
          type: mongoose.Schema.Types.ObjectId,
          ref: "User"
       },
-      username: String
+      username: String,
+      name: String,
+      photo: String
    },
    comments:[
       {
-         type:mongoose.Schema.Types.ObjectId,
-         ref:"Comment"
+         type: mongoose.Schema.Types.ObjectId,
+         ref: "Comment"
       }
    ]
 });

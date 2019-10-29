@@ -1,15 +1,16 @@
-var express = require("express");
-var router = express.Router();
-var Artifactpost = require("../models/artifactpost");
-var Comment = require("../models/comment");
-var middleware = require("../middleware");
+const express = require("express");
+const router = express.Router();
+const Artifactpost = require("../models/artifactpost");
+const Comment = require("../models/comment");
+const middleware = require("../middleware");
 const asyncHandler = require("express-async-handler");
-const uuidGenerate = require("nodejs-simple-uuid");
+const ObjectID = require("bson-objectid");
+const ensure = require("connect-ensure-login");
 
 //NEW COMMENT ROUTE (form)
 router.get(
     "/artifactposts/:id/comments/new",
-    middleware.isLoggedIn,
+    ensure.ensureLoggedIn('/login'),
     asyncHandler(async (req, res, next) => {
         await Artifactpost.findById(req.params.id, function(err, artipost) {
             if (err) {
@@ -32,19 +33,17 @@ router.post(
             } else {
                 Comment.create(req.body.comment, function(err, comment) {
                     if (err) {
-                        req.flash("error", "Something went wrong. Please Try Again");
+                        req.flash("error", "Something went wrong. Please try again");
                         console.log(err);
                     } else {
-                        console.log();
+                        /* console.log(); */
                         if (req.user) {
                             comment.author.id = req.user._id;
                             comment.author.username = req.user.username;
+                            comment.author.name = req.user.name;
                         } else {
-                            var guid = uuidGenerate();
-                            comment.author.id = guid;
-                            comment.author.username = "Guest";
+                            comment.author.id = ObjectID();
                         }
-
                         comment.save();
                         artipost.comments.push(comment);
                         artipost.save();

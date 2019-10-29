@@ -7,9 +7,7 @@ var config = {
     accessToken: process.env.ACCESSTOKEN,
     mlabconnection: process.env.MLAB_CONNECTION,
     admin: process.env.ADMIN
-
-
-}
+};
 
 module.exports = config;
 

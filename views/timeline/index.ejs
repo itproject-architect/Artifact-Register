@@ -1,91 +1,59 @@
 <!--BLOGPOST INDEX-->
 <% include ../partials/header %>
-<header style="margin-top: -4%"> <!-- this might not be a good way to remove blank space above header-->
-  <div class="display-lower-middle">
-    <div class="w3-display-container w3-animate-opacity w3-text-white">
-        <h1 class="w3-jumbo w3-animate-top">Artifact Time Line</h1>
-        <hr class="w3-border-grey" style="margin:auto;width:40%">
-        <p class="w3-large w3-center">some small words</p>
+<div class="timelinepage">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-12 heading text-center mt-5 w3-animate-opacity w3-text-white">
+                <h3>Artifact TimeLine</h3>
+            </div>
+        </div>
     </div>
-  </div>
-
-</header>
 
 
-<section class="blogpostindexpage">
-  <div class="blogpostindexintro greybackground">
-    <!--<div class="container">
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <h2>Artifacts</h2>
-        </div>
-      </div>
-      <div class="row">
-        <div
-          class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 blogpostintrotext">
-          <h6>
-            This is sample Content
-          </h6>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <p>
-            <a class="btn btn-primary btn-sm" href="/artifactposts/new"
-              >Add New Post</a
-            >
-          </p>
-        </div>
-      </div>
-    </div>-->
+    <section>
+        <div class="container">
+            <section class="cd-timeline js-cd-timeline">
+                <div class="cd-timeline__container">
+                    <% artipost.forEach(function(artipost){ %>
+
+                    <div class="cd-timeline__block js-cd-block">
+                        <div class="cd-timeline__img js-cd-img cd-timeline__img--picture" >
+                            <%if (artipost.author.photo) { %>
+                            <img class="ml-1" src="<%=artipost.author.photo%>"/>
 
 
-  </div>
-  <div class="container">
-    <section class="cd-timeline js-cd-timeline">
-      <div class="cd-timeline__container">
-        <% artipost.sort().reverse().forEach(function(artipost){ %>
-              <div class="cd-timeline__block js-cd-block">
-                <div class="cd-timeline__img cd-timeline__img--picture js-cd-img">
-                  <!--<img src="img/cd-icon-picture.svg" alt="Picture">-->
-                </div> <!-- cd-timeline__img -->
+                            <%} else {%>
+                                <button class="author-icon ml-1" style="height:50px; width:50px;" data-toggle="tooltip"
+                                        title="<%=  artipost.author.name %>"><%= artipost.author.name.substring(0, 1) %></button>
+                            <%}%>
 
-                <div class="cd-timeline__content js-cd-content">
+                        </div>
 
-                  <div>
-                    <div class="image-frame">
-                      <a href="/artifactposts/<%=artipost._id %>"
-                      ><img class="img-fluid image-border" src="<%= artipost.image %>"
-                        /></a>
+                        <div class="cd-timeline__content js-cd-content">
+                            <div class="frame">
+                                <a href="/artifactposts/<%=artipost._id %>"
+                                ><img class="img-fluid image-border zoom image-center" style="width:100%;height: 100%;" src="<%= artipost.image[0]%>"
+                                    /></a>
+                            </div>
+                            <p class="date-align">by <%=artipost.author.name%></p>
+
+
+                            <!-- opposite side of artifact image -->
+                            <div class="cd-timeline__date">
+                                <h2 class="text-center"><%=artipost.name%></h2>
+                                <h1 class="text-center"><%=artipost.year%></h1>
+                            </div>
+
+
+                        </div>
                     </div>
 
-                      <div class="text-frame">
-                        <h2><%=artipost.name%></h2>
-                        <p style="font-size: medium; padding-top: 1.5em;"><%=artipost.year%></p>
-                        <div style="position: absolute; right: 1em; bottom: 0;">
-                          <a class="btn btn-outline-primary" href="/artifactposts/<%=artipost._id %>"
-                          >Read More</a>
-                        </div>
-                      </div>
-                      <!--<p><%- artipost.description.substring(0, 200) %>...</p>-->
-                  </div>
-                  <div class="row">
-                    <hr width="96%" />
-                  </div>
+                    <% }); %>
+                </div>
+            </section>
 
-
-                  <!--<h2>Title of section 1</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-                  <a href="#0" class="cd-timeline__read-more">Read more</a>
-                  <span class="cd-timeline__date">Jan 14</span>-->
-                </div> <!-- cd-timeline__content -->
-              </div> <!-- cd-timeline__block -->
-
-        <% }); %>
-      </div>
-    </section> <!-- cd-timeline -->
-
-  </div>
-</section>
+        </div>
+    </section>
+</div>
 
 <% include ../partials/footer %>

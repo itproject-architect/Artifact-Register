@@ -5,103 +5,185 @@
 <section class="showblogpostpage">
     <div class="container">
         <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <h2><a><%=artipost.name%></a></h2>
+            <div class="mt-5 heading col-12 text-center">
+                <h3 class="d-inline-block"><%=artipost.name%></h3>
+                <p id="paint-year"><strong><%= artipost.year %></strong></p>
                 <hr>
-            </div>
-        </div>
-        <div class="row image-display">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
+
+                <!-- Array of months for reference (getMonth returns index) -->
+                <div class="dateOption">
+                    <p class="text-left">Posted by: <span class="text-uppercase"><%=artipost.author.name%></span> |
+                        <%=artipost.created.toDateString()%></p>
+
+                    <% if(currentUser && artipost.author.id.equals(currentUser._id)){ %>
+                        <div class="dropdown text-right d-flex">
+                            <button class="btn bmd-btn-icon dropdown-toggle edit-button" type="button" id="ex1"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="ex1">
+                                <a id="edit-link" href="/artifactposts/<%= artipost._id %>/edit">
+                                    <button class="dropdown-item" type="button">Edit</button>
+                                </a>
+                                <form id="delete-form" class="mb-0" action="/artifactposts/<%= artipost._id %>?_method=DELETE" method="POST">
+                                    <input type='submit' value='Delete' name='delete' form="delete_form" class="dropdown-item" >
+                                </form>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div id="carouselExampleIndicators" class="img carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
                 <% for (index in artipost.image) { %>
-                    <img class="mx-auto d-block" src ="<%=artipost.image[index]%>">
-                <% } %>
+                <li data-target="#carouselExampleIndicators" data-slide-to= <%index%> class="<% if (index == 0) {%><%= "active" %><% } %>""></li>
+                <%}%>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <% for (index in artipost.image) { %>
+                    <div class="carousel-item <% if (index == 0) {%><%= "active" %><% } %>">
+                        <img class="d-block w-100" src ="<%=artipost.image[index]%>" alt="First slide">
+                    </div>
+                <%}%>
+
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <p><%- artipost.description %></p>
-                <% if(currentUser && artipost.author.id.equals(currentUser._id)){ %>
-                    <a class="btn btn-xs btn-warning" href="/artifactposts/<%= artipost._id%>/edit">Edit</a>
-                    <form class="delete-form" action ="/artifactposts/<%= artipost._id %>?_method=DELETE" method="POST">
-                        <button role="button" class="btn btn-xs btn-danger">Delete</button>
-                    </form>
-                <% } %>
-            </div>
+
+
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
 
-        <form
-                class="newcommentform"
-                action="/artifactposts/<%= artipost._id %>/comments"
-                method="POST"
-        >
 
+        <div class="info card container text-center">
             <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="heading mt-3 col-lg-4">
+                    <i class="far fa-calendar-alt fa-2x mb-3"></i>
+                    <h2>Year</h2>
+                    <p><%= artipost.year %></p>
+                </div>
+
+
+                <div class="heading mt-3 col-lg-4">
+                    <i class="fas fa-paint-brush fa-2x mb-3"></i>
+                    <h2>Painter</h2>
+                    <p><%= artipost.author.name %></p>
+                </div>
+
+
+                <div class="heading mt-3 col-4">
+                    <i class="fas fa-map-marker-alt fa-2x mb-3"></i>
+                    <h2>Location</h2>
+                    <p><%= artipost.location %></p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="info card container text-center">
+            <div class="heading mt-3">
+                <i class="fas fa-info-circle fa-2x mb-3"></i>
+                <h2 class="mb-3">Description</h2>
+                <p><%= artipost.description %></p>
+            </div>
+
+        </div>
+
+        <div class="info card container text-center">
+            <div class="heading mt-3">
+                <i class="fas fa-comment fa-2x mb-3"></i>
+                <h2>Comments</h2>
+            </div>
+        </div>
+    </div>
+
+
+<div class="container comments">
+    <form
+            id="comment-form"
+            class="newcommentform"
+            action="/artifactposts/<%= artipost._id %>/comments"
+            method="POST"
+    >
+        <div class="row">
+            <div class="col-12">
             <textarea
                     rows="5"
                     class="form-control"
                     type="text"
                     name="comment[text]"
+                    style="padding: 30px;background-color: white;border: 2px solid #e5e6e6;"
+                    required
 
             ></textarea>
-                </div>
             </div>
-            <div class="row newcommentbuttons">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <button class="btn btn-md btn-primary">Submit!</button>
-                    <a
-                            class="btn btn-md btn-outline-primary"
-                            href="/artifactposts/<%= artipost._id %>"
-                    >Back</a
-                    >
-                </div>
+        </div>
+
+        <div class="row newcommentbuttons">
+            <div class="col-12 text-center">
+                <button id='submit-comment' class="btn btn-md btn-primary mt-3">Submit</button>
+                <a id="back-button"
+                        class="btn btn-md mt-3"
+                        href="javascript:history.back()"
+                >Back</a
+                >
             </div>
-        </form>
-    </div>
-
-    <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <% artipost.comments.forEach(function(comment){ %>
-                <hr />
-                <p><%= comment.text %></p>
-                <% if(JSON.stringify(comment.author) === '{}') { %>
-                    <span class="commentbuttons"
-                    >Posted by <strong> Guest</strong> on:
-          <strong><%= comment.created.toDateString() %></strong></span
-                    >
-
-                <% } else{ %>
-                    <span class="commentbuttons"
-                    >Posted by <strong> <%= comment.author.username %></strong> on:
-          <strong><%= comment.created.toDateString() %></strong></span
-                    >
-                <% } %>
         </div>
-    </div>
-    <div class="row">
-        <div
-                class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 commentbuttons"
-        >
-            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                <a
-                        class="btn btn-xs btn-warning"
-                        href="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>/edit"
-                >Edit</a
-                >
-                <form
-                        class="delete-form"
-                        action="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>?_method=DELETE"
-                        method="POST   "
-                >
-                    <button role="button" class="btn btn-xs btn-danger" value="Delete">
-                        Delete
-                    </button>
-                </form>
-            <% } %> <% }) %>
+
+    </form>
+
+    <div class="row text-center">
+        <div class="col-12">
+            <% artipost.comments.forEach(function (comment) { %>
+                <div class="comment">
+                    <div class="comment-author">
+                        <% if (comment.author.name) { %>
+                            <%= comment.author.name %>
+                        <% } else { %>
+                            Guest
+                        <% } %>
+                    </div>
+                    <div class="comment-text">
+                        <p>
+                            <%= comment.text %>
+                        </p>
+                        <div class="comment-date">
+                            <strong><%= comment.created.toDateString() %></strong>
+                        </div>
+
+                        <% if (currentUser && (String(comment.author.id) == String(currentUser._id))) { %>
+                            <a class="btn btn-xs btn-warning mt-3"
+                               href="/artifactposts/<%= artipost._id %>/comments/<%= comment._id %>/edit">
+                                Edit
+                            </a>
+                            <form class="delete-form"
+                                  action="/artifactposts/<%= artipost._id%>/comments/<%= comment._id %>?_method=DELETE"
+                                  method="POST">
+                                <button role="button" class="btn btn-xs btn-danger" value="Delete">
+                                    Delete
+                                </button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
         </div>
-    </div>
-    </div>
+    </div> <!-- End of comment container-->
+
+</div>
 </section>
 
 <% include ../partials/footer %>

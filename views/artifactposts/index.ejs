@@ -181,3 +181,194 @@
 </script>
 
 <% include ../partials/footer %>
+=======
+<!--BLOGPOST INDEX-->
+<% include ../partials/header %>
+
+<section class="blogpostindexpage ">
+  <div class="blogpostindexintro">
+    <div class="container">
+      <div class="row mb-2">
+        <div class="col-12 heading text-center mt-5 w3-animate-opacity w3-text-white">
+          <h3>Artifacts</h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-lg-12">
+          <form class="search text-center md-form mt-2" action="/artifactposts/search" method="get">
+            <div class="search-group form-group">
+              <input class="search-input text-center form-control form-control-sm" type="text" name="name" size="50"
+                     placeholder="Enter keywords to search your artifacts..." >
+
+              <button class="search-btn" type="submit" value="Search">
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </button>
+              <button class="advanced-btn" type="button" value="Advanced" data-toggle="collapse" data-target="#search_adv">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+
+            <div class="container collapse" id="search_adv">
+              <label class="bmd-label-floating" for="author">Author</label>
+              <input class="form-control" type="text" name="author" id="author">
+              <label for="date"  class="bmd-label-floating">Date</label>
+              <div class="row">
+                <div class="col-lg-5">
+                  <select name="date_from" id="date_from" class="form-control">
+                    <option value="">FROM</option>
+                  </select>
+                </div>
+                <div class="col-lg-2">
+                  _
+                </div>
+                <div class="col-lg-5">
+                  <select name="date_to" id="date_to" class="form-control">
+                    <option value="">TO</option>
+                  </select>
+                </div>
+
+                <div class="col-lg-12">
+                  <label class="bmd-label-floating" for="location">Location</label>
+                  <input class="form-control justify-content-center" type="text" name="location" id="location">
+                  <label for="order"  class="bmd-label-floating">Sorting</label>
+
+
+                  <div class="radio col-12">
+                    <label>
+                      <input type="radio" name="order" id="order" value="date_desc" checked>Descending date
+                    </label>
+                  </div>
+                  <div class="radio col-12">
+                    <label>
+                      <input type="radio" name="order" id="order" value="date_asc">Ascending date
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+
+
+  <div class="btn-bg bg-2">
+    <div class="btn btn-2">
+      <a href="/artifactposts/new">
+        <button class="btn btn-primary btn-sm" href="/artifactposts/new">
+          <i class="fas fa-2x fa-pen"></i>
+        </button>
+      </a>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <% artipost.forEach(function(artipost){ %>
+
+      <div class="col-md-4 col-sm-6">
+
+        <div class="post">
+          <div class="main-wrapper text-center">
+
+            <button class="author-icon mb-3" data-toggle="tooltip"
+                    title="By: <%=artipost.author.name%>"><%=artipost.author.name.substring(0, 1)%></button>
+
+            <%
+              var toDay = new Date();
+              if (toDay - artipost.created <  60 * 60 * 24 * 1000) {
+            %>
+
+
+
+              <button class="new-icon fas fa-bolt mb-3" data-toggle="tooltip" title='New Post'></button>
+
+            <% } %>
+            
+            <% if(artipost.image.length >= 2){ %>
+              <button class="multi-icon far fa-clone mb-3" data-toggle="tooltip" title='Multiple Images'></button>
+            <% } %>
+            <% if(artipost.option == '2'){ %>
+              <button class="family-icon fas fa-user-friends mb-3" data-toggle="tooltip" title='Family Only'></button>
+            <% } %>
+            <% if(artipost.option == '3'){ %>
+              <button class="private-icon fas fa-lock mb-3" data-toggle="tooltip" title='Private Post'></button>
+            <% } %>
+
+          </div>
+          <a href="/artifactposts/<%=artipost._id %>">
+            <img class="img-fluid" src="<%= artipost.image[0] %>" alt="<% artipost.name%>"/>
+            <h3 class="year text-center mt-3"><%=artipost.year%></h3>
+            <h3 class="post-title text-center"><%=artipost.name%></h3>
+            <p class="text-center"><%- artipost.description.substring(0, 70) %>...</p>
+          </a>
+        </div>
+      </div>
+      <% }); %>  <!--end of artifact post foreach function-->
+
+    </div>
+  </div>
+
+
+  <% if (pages > 1) { %>
+    <% if (path.includes("?")) { %>
+      <% path = path.replace(/&page=\d*/gi, "") %>
+      <% path = path.concat("&page="); %>
+    <% } else { %>
+      <% path = path.concat("?page="); %>
+    <% } %>
+    <nav aria-label="Page navigation">
+      <ul class="pagination pg-blue justify-content-center mt-5">
+        <% if (current == 1) { %>
+          <li class="page-item disabled"><a class="page-link">First</a></li>
+        <% } else { %>
+          <li class="page-item"><a class="page-link" href="<%= path %>1">First</a></li>
+        <% } %>
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+        <!-- check number of current page and if less than 5 output pagination links from 1 to current page + 4-->
+        <% if (i !== 1) { %>
+          <li class="page-item disabled"><a class="page-link">...</a></li>
+          <!-- if value is more than 5 hide prev link (curr step - 5)-->
+        <% } %>
+        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+          <% if (i == current) { %>
+            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+          <% } else { %>
+            <li class="page-item"><a class="page-link" href="<%= path %><%= i %>"><%= i %></a></li>
+          <% } %>
+          <% if (i == Number(current) + 4 && i < pages) { %>
+            <li class="disabled"><a>...</a></li>
+          <% } %>
+        <% } %>
+        <% if (current == pages) { %>
+          <li class="page-item disabled"><a class="page-link">Last</a></li>
+        <% } else { %>
+          <li class="page-item"><a class='page-link' href="<%= path %><%= pages %>">Last</a></li>
+        <% } %>
+      </ul>
+    </nav>
+  <% } %>
+</section>
+
+<script>
+  var date = new Date();
+  for (var i = Number(date.getFullYear()); i >= 1900; i--) {
+    var opt = document.createElement("option");
+    opt.text = i.toString();
+    document.getElementById("date_from").add(opt, null);
+    var opt = document.createElement("option");
+    opt.text = i.toString();
+    document.getElementById("date_to").add(opt, null);
+  }
+</script>
+
+<% include ../partials/footer %>
