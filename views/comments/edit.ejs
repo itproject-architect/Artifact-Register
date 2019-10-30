@@ -5,21 +5,22 @@
 <section class="editcommentpage">
     <div class="container">
         <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <h1>Edit Comment</h1>
+            <div class="col-12 heading mt-5">
+                <h3>Edit Comment</h3>
             </div>
         </div>
         <form class="editcommentform" action="/artifactposts/<%= artipost_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <!--"comment.text needs to be inbetween the <textarea> tags inorder for it to display when editing-->
-                    <textarea rows="10" col="50" class="form-control" type="text" name="comment[text]"><%= comment.text %></textarea>
+
+                    <textarea   style="padding: 30px;background-color: white;border: 2px solid #e5e6e6;"
+                                required rows="10" col="50" class="form-control" type="text" name="comment[text]"><%= comment.text %></textarea>
                 </div>
-            </div>v
+            </div>
             <div class="row commentbuttons">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <button class="btn btn-md btn-primary">Submit!</button>
-                    <a class="btn btn-md btn-outline-primary" href="/artifactpost/<%=artipost_id%>">Back</a>
+                <div class="col-12 text-center mt-3">
+                    <button class="btn btn-md btn-primary">Submit</button>
+                    <a class="btn btn-md" href="/artifactposts/<%=artipost_id%>">Back</a>
                 </div>
             </div>
         </form>

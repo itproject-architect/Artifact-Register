@@ -2,62 +2,72 @@
 
 <% include ../partials/header %>
 
+
+
 <section class="newblogpostpage">
+
+
     <div class="container">
-        <div class="row">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <h1>Create a new artifact post</h1>
-            </div>
+
+        <div class="heading text-center mb-5">
+            <h3>Create New Post</h3>
         </div>
+
         <form action="/artifactposts" method="POST" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input class="form-control" type="text" name="name" placeholder="Artifact post title">
+                <div class="col-12 col-lg-6 col-md-12 col-sm-12">
+                    <div class="form-group">
+                            <label class="bmd-label-floating" for="name">Artifact Post Title</label>
+                            <input class="form-control" type="text" name="name" required />
+                            <span class="bmd-help">Enter the name of the artwork</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="bmd-label-floating" for="year">Year</label>
+                            <input class="form-control" type="number" name="year" min="1850" max="2019"
+                                   step="1" value="2019" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="bmd-label-floating" for="location">Location</label>
+                            <input class="form-control" type="text" name="location" required />
+                            <span class="bmd-help">Enter the name of the location where artwork is stored</span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="descArea" class="bmd-label-floating">Enter Description</label>
+                            <textarea rows="10" cols="50" class="form-control" id="descArea" name="description"></textarea>
+                            <p class="text-right" id="count_message"></p>
+                        </div>
+
+                        <div class="form-group">
+
+                            <label for="select-option" class="bmd-label-floating">Post View Privileges</label>
+                            <select name="option" class="form-control" id="select-option">
+                                <option name="public" value="1">Public</option>
+                                <option name="family" value="2">Family</option>
+                                <option name="private" value="3">Private</option>
+                            </select>
+                            <span class="bmd-help">Only post marked as public will be displayed on timeline if not logged in</span>
+                        </div>
+
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input class="form-control" type="number" name="year", min="1850" max="2019" step="1" value="2019" />
+
+
+                <div class="fileuploader col-12 col-lg-6 col-md-12 col-sm-12">
+                    <label class="bmd-label-floating" for="image">Artworks (Max 5 files)</label>
+                    <input type="file" name="image" accept="image/*" data-max-files="5" data-fileuploader-limit="5" required multiple>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <input type="file" id="image" name="image" accept="image/*" required multiple>
-                </div>
             </div>
 
 
 
             <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <input class="form-control" type="text" name="location" placeholder="Stored in" required/>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <textarea rows="10" col="50" class="form-control" type="text" name="description" placeholder="Enter Description"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <select class="selectpicker" data-style="btn-info" name="option">
-                        <optgroup label="Select Table">
-                            <option name="" value="0">Select Post Options</option>
-                            <option name="public" value="1">Public</option>
-                            <option name="friends" value="2">Family</option>
-                            <option name="private" value="3">Private</option>
-                        </optgroup>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3 newblogpostbuttons">
-                    <button class="btn btn-md btn-primary">Submit!</button>
-                    <a class="btn btn-outline-primary btn-md" href="/artifactposts">Back</a>
+                <div class="text-center mt-5 col-12 col-lg-12 col-md-12 col-sm-12">
+                    <button id="submit-post" class="btn btn-primary btnLoader">Submit</button>
+                    <a id="back-button" class="black-btn btn btnLoader" href="/artifactposts">Back</a>
                 </div>
             </div>
         </form>

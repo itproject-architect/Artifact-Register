@@ -1,31 +1,29 @@
-var express = require("express");
-var router = express.Router();
-var Artifactpost = require("../models/artifactpost");
-var middleware = require("../middleware");
-var config = require("../config.js");
-var asyncHandler = require("express-async-handler");
-var http = require('http');
-var url = require('url');
-var util = require('util');
+const express = require("express");
+const router = express.Router();
+const Artifactpost = require("../models/artifactpost");
+const middleware = require("../middleware");
+const config = require("../config.js");
+const url = require('url');
+const multer = require('multer');
+const ensure = require('connect-ensure-login');
 
 
 //--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
 // adapted from https://github.com/nax3t/image_upload_example/tree/edit-delete --------------------
 
-var multer = require('multer');
 var storage = multer.diskStorage({
     filename: function (req, file, callback) {
-        callback(null, Date.now() + file.originalname);
+        callback(null, Date.now() + '_' + file.originalname);
     }
 });
 var imageFilter = function (req, file, cb) {
     // accept image files only
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+    if (!file.originalname.match(/\.(bmp|jpg|jpeg|png|gif|tif)$/i)) {
         return cb(new Error('Only image files are supported'), false);
     }
     cb(null, true);
 };
-var upload = multer({storage: storage, fileFilter: imageFilter})
+var upload = multer({storage: storage, fileFilter: imageFilter});
 
 var cloudinary = require('cloudinary');
 cloudinary.config({
@@ -34,65 +32,41 @@ cloudinary.config({
     api_secret: '75kzWvbY-siNUFuUWHLVpzmAcDU'
 });
 
+var perPage = 6;    // Maximum number of artifacts per page (6 items are displayed)
+
 //--------------------ROUTES--------------------
-//INDEX ROUTE
+
+//index routes
 router.get(
-    "/artifactposts",
-    asyncHandler(async (req, res, next) => {
+    "/artifactposts", function (req, res) {
+        var reqURL = url.parse(req.url, true);
+        var page = reqURL.query.page || 1;    //current page number
+        var path = reqURL.pathname;
         var admin = config.admin;
-        await Artifactpost.find({}, function(err, allArtiposts) {
-            if (err) {
-                console.log(err);
-            } else {
-                let newposts;
-                if (req.user) {
-                    newposts = getPrivatePosts(allArtiposts, req.user.username);
-                } else {
-                    newposts = getPublicPosts(allArtiposts);
-                }
-                res.render("artifactposts/index", {
-                    artipost: newposts,
-                    admin: admin
+        var query = (req.user) ? {$or: [{option: '1'}, {option: '2'}, {"author.id": req.user._id}]} : {option: '1'};
+        //ternary query if logged in, check for post marked as public(1), friends only(2) and private( user id matches author id)
+
+        Artifactpost.find(query)
+            .sort({created: -1}) //display most recently created post to be on top
+            .skip((perPage * page) - perPage) // skip and limit for indexing  (used for pagination)
+            .limit(perPage)
+            .exec(function (err, allArtiposts) {
+                Artifactpost.countDocuments(query).exec(function (err, count) { //count the number of query documents
+                    if (err) console.log(err);
+                    res.render("artifactposts/index", {
+                        artipost: allArtiposts,
+                        admin: admin,
+                        current: page,
+                        pages: Math.ceil(count / perPage),
+                        path: path
+                    })
                 });
-            }
-        });
-    })
-);
+            });
+    });
 
-function getPrivatePosts(allArtiposts, email) {
-    let newPosts = [];
-    console.log("iteration ", email);
-
-    for (var prop in allArtiposts) {
-        let post = allArtiposts[prop];
-        console.log("iteration author ", post.author.username);
-        console.log("iteration name ", post.name);
-
-        if (post.option == "1" || post.option == "2") {
-            console.log("post name public family ", post.name);
-            newPosts.push(post);
-        } else if (post.option == "3" && post.author.username == email) {
-            console.log("post name private ", post.name);
-
-            newPosts.push(post);
-        }
-    }
-    return newPosts;
-}
-
-function getPublicPosts(allArtiposts) {
-    let newPosts = [];
-    for (var prop in allArtiposts) {
-        let post = allArtiposts[prop];
-        if (post.option == "1") {
-            newPosts.push(post);
-        }
-    }
-    return newPosts;
-}
 
 //CREATE ARTIFACT POST ROUTE
-router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), function (req, res) {
+router.post("/artifactposts", ensure.ensureLoggedIn('/login'), upload.array('image', 5), function (req, res) {
     let files = req.files;
     // Files contains an array of "images" {destination, fieldname, filename, path, size ...}
 
@@ -107,17 +81,19 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
 
 
     Promise.all(uploadPromises).then( (result) => {
-        let images = result.map(value => value.secure_url)
-        let imageIds = result.map(value => value.public_id)
+        let images = result.map(value => value.secure_url);
+        let imageIds = result.map(value => value.public_id);
         var name = req.body.name;
         var year = req.body.year;
         var location = req.body.location;
         var desc = req.body.description;
-        var option = req.body.option
+        var option = req.body.option;
         var author = {
             id: req.user._id,
-            username: req.user.username
-        }
+            username: req.user.username,
+            name: req.user.name,
+            photo: req.user.photo
+        };
         var newArtipost = {
             name: name,
             year: year,
@@ -136,26 +112,70 @@ router.post("/artifactposts", middleware.isLoggedIn, upload.array('image', 5), f
             }
         });
     }).catch( (error) => {
-        console.log("error", error)
+        console.log("Error: ", error)
     })
 
 });
 
 //NEW ARTIFACT POST ROUTE (displays form)
-router.get("/artifactposts/new", middleware.isLoggedIn, function (req, res) {
+router.get("/artifactposts/new", ensure.ensureLoggedIn('/login'), function (req, res) {
     res.render("artifactposts/new");
 });
 
-// Search artifact by name
-router.get ("/artifactposts/search", function (req, res) {
-    var params = url.parse(req.url, true).query;
-    Artifactpost.find({
-        "name" : {$regex : params.name, $options : "$i"}    // RegExp matching, ignores case
-    }).populate("comments").exec(function (err, results) {
-        results.forEach(function (item) {
-            console.log(item.imageId + "\t" + item.name)
-        });
-        res.render("artifactposts/search", {results : results});
+// Search artifact by name, don't need to log in
+router.get("/artifactposts/search", function (req, res) {
+    var reqURL = url.parse(req.url, true);
+    var path = reqURL.path;
+    var params = reqURL.query;
+    var page = params.page || 1;    //current page number
+    var query = {
+        "name" : {$regex : params.name.replace(/\s/g, "|"), $options : "$i"}, // RegExp matching, case insensitive
+        "author.name" : {$regex : params.author, $options : "$i"},
+        "location" : {$regex : params.location.replace(/\s/g, "|"), $options : "$i"},
+        "year": {}
+    };
+    /* Filter by privilege */
+    if (req.user) {
+        query.$or = [{option: '1'}, {option: '2'}, {"author.id": req.user._id}];
+    } else {
+        query.option = '1';
+    }
+    /* Filter by a range of date */
+    if (params.date_from !== "") {
+        query.year.$gte = Number(params.date_from);
+    }
+    if (params.date_to !== "") {
+        query.year.$lte = Number(params.date_to);
+    }
+    /* Prevent CastError when date is not specified */
+    if (Object.keys(query.year).length === 0 && query.year.constructor === Object) {
+        delete query.year;
+    }
+    console.log(query);
+    Artifactpost.find(query)
+        .sort({year: params.order === "date_asc" ? 1 : -1})
+        .skip(perPage * (page - 1))
+        .limit(perPage)
+        .exec(function (err, results) {
+        if (err) {
+            console.log(err);
+        } else {
+            Artifactpost.countDocuments(query, function (err, count) {
+                var pages = Math.ceil(count / perPage);
+                /*
+                results.forEach(function (item) {
+                    console.log(item.id + "\t" + item.name)
+                });
+                 */
+                res.render("artifactposts/index", {
+                    artipost : results,
+                    admin : config.admin,
+                    current: page,
+                    pages: pages,
+                    path: path
+                });
+            })
+        }
     });
 });
 
@@ -163,31 +183,29 @@ router.get ("/artifactposts/search", function (req, res) {
 router.get("/artifactposts/:id", function (req, res) {
     Artifactpost.findById(req.params.id).populate("comments").exec(function (err, foundArtipost) {
         if (err || !foundArtipost) {
-            req.flash("error", "Artifact not found.");
+            req.flash("error", "Sorry, artifact not found.");
             res.redirect("back");
         } else {
             res.render("artifactposts/show", {artipost: foundArtipost});
         }
     });
-
-})
+});
 
 //EDIT ARTIFACT POST ROUTE
 router.get("/artifactposts/:id/edit", middleware.checkBlogpostOwnership, function (req, res) {
     Artifactpost.findById(req.params.id, function (err, foundArtipost) {
         if (err) {
+            res.flash("error", "Sorry, artifact not found.");
             res.redirect("/artifactposts");
-
         } else {
             res.render("artifactposts/edit", {artipost: foundArtipost});
-
         }
     });
 });
 
 //UPDATE ARTIFACT POST
 router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array('image', 5), function (req, res) {
-
+    console.log(req.body);
     Artifactpost.findById(req.params.id, async function (err, updatedArtipost) {
         if (err) {
             req.flash("error", err.message);
@@ -196,7 +214,7 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
             if (req.files.length > 0) {
                 let {files} = req;
                 let {image, imageId} = updatedArtipost;
-                let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value))
+                let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value));
                 let uploadPromises = files.map((value) => cloudinary.uploader.upload(value.path));
 
                 try {
@@ -216,11 +234,12 @@ router.put("/artifactposts/:id", middleware.checkBlogpostOwnership, upload.array
 
             updatedArtipost.name = req.body.name;
             updatedArtipost.year = req.body.year;
+            updatedArtipost.location = req.body.location;
             updatedArtipost.option = req.body.option;
             updatedArtipost.description = req.body.description;
             updatedArtipost.save();
 
-            req.flash('success', "successfuly updated")
+            req.flash('success', "Successfully updated.");
             res.redirect("/artifactposts/" + req.params.id);
 
         }
@@ -236,13 +255,13 @@ router.delete("/artifactposts/:id", middleware.checkBlogpostOwnership, function 
         }
 
         let {imageId} = post;
-        let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value))
+        let destroyPromises = imageId.map( (value) => cloudinary.v2.uploader.destroy(value));
 
         try {
 
             await Promise.all(destroyPromises);
             post.remove();
-            req.flash('success', 'Successfuly deleted')
+            req.flash('success', 'Successfully deleted.');
             res.redirect('/artifactposts');
         } catch (err) {
             if (err) {

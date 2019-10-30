@@ -1,5 +1,5 @@
 //----------------REQUIRE PACKAGES--------------------
-var express = require("express"),
+const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
@@ -7,20 +7,15 @@ var express = require("express"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
-    Blogpost = require("./models/artifactpost"),
-    Comment = require("./models/comment"),
-    User = require("./models/user"),
-
-    //Contact form for invitation
-    nodemailer = require("nodemailer"),
-    config = require("./config.js");
+    User = require("./models/user");
 
 //----------------REQUIRE ROUTES--------------------
 
-var commentRoutes = require("./routes/comments"),
+const commentRoutes = require("./routes/comments"),
     blogpostRoutes = require("./routes/artifactposts"),
     indexRoutes = require("./routes/index"),
-    timelineRoutes = require("./routes/timeline");
+    timelineRoutes = require("./routes/timeline"),
+    landingRoutes = require("./routes/landing");
 
 //----------------DATABASE CONNECTION-------------------
 
@@ -83,6 +78,8 @@ app.use(indexRoutes);
 app.use(blogpostRoutes);
 app.use(commentRoutes);
 app.use(timelineRoutes);
+app.use(landingRoutes);
+
 
 //--------------------LISTENER--------------------
 const PORT = process.env.PORT || 3000;

@@ -1,36 +1,147 @@
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
-var User = require("../models/user");
-var UserInvite = require("../models/userinvite");
+const express = require("express");
+const router = express.Router();
+const passport = require("passport");
+const Artifactpost = require("../models/artifactpost");
+const User = require("../models/user");
+const UserInvite = require("../models/userinvite");
 const uuidGenerate = require("nodejs-simple-uuid");
-var middleware = require("../middleware");
+const multer = require('multer');
+const ensure = require('connect-ensure-login');
 
 //Contact form
-var nodemailer = require("nodemailer");
-//API key storage
-var config = require("../config.js");
+const nodemailer = require("nodemailer");
 
 var serverdomain = "https://it-project.herokuapp.com";
 
-//".router" is used isntead of "app." as our routes are now in a seperate file that links back to the "app.js" file
 
-//ROOT ROUTE
-router.get("/", function(req, res) {
-  res.render("landing");
+//--------------------CONFIGURING MULTER and CLOUDINARY FOR IMAGE UPLOAD
+// adapted from https://github.com/nax3t/image_upload_example/tree/edit-delete --------------------
+
+var storage = multer.diskStorage({
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + '_' + file.originalname);
+  }
+});
+var imageFilter = function (req, file, cb) {
+  // accept image files only
+  if (!file.originalname.match(/\.(bmp|jpg|jpeg|png|gif|tif)$/i)) {
+    return cb(new Error('Only image files are supported'), false);
+  }
+  cb(null, true);
+};
+var upload = multer({storage: storage, fileFilter: imageFilter});
+
+var cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: 'dvwezxakw',
+  api_key: '862182883151951',
+  api_secret: '75kzWvbY-siNUFuUWHLVpzmAcDU'
 });
 
 
+//".router" is used instead of "app." as our routes are now in a separate file that links back to the "app.js" file
+
+
+
 //invite family member ROUTE
-router.get("/invitefamily", function(req, res) {
+router.get("/invitefamily", ensure.ensureLoggedIn('/login'), function(req, res) {
   res.render("invitefamily");
+  /* res.redirect('back'); */
+});
+
+// user profile page
+router.get("/profile", ensure.ensureLoggedIn("/login"), function(req, res) {
+  Artifactpost.find({"author.id" : req.user._id}, function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+
+        let artifacts = new Map();
+        results.forEach(function (art) {
+          if (artifacts.has(art.year)) {
+            artifacts.set(art.year, artifacts.get(art.year).concat([art]));
+          } else {
+            artifacts.set(art.year, [art]);
+          }
+        });
+      Artifactpost.countDocuments({"author.id" : req.user._id}, function (err, count) {
+        res.render("profile/profile", {
+          user: req.user,
+          artifacts: artifacts, // show the latest uploaded 9 artifacts (3*3)
+          counting:count
+        });
+      });
+      }
+  });
+
+});
+
+// edit profile
+router.get("/profile/edit", ensure.ensureLoggedIn('/login'), function(req, res) {
+  res.render("profile/editprofile", {user: req.user});
+});
+
+// manage artifacts
+router.get("/profile/manage", ensure.ensureLoggedIn('/login'), function(req, res) {
+  Artifactpost.find({"author.id" : req.user._id}, function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("profile/manageart", {user: req.user, artifacts: results.reverse()});
+    }
+  });
+});
+
+// upload photo
+router.post("/profile/edit/photo", ensure.ensureLoggedIn('/login'), upload.single("photo"), function (req, res) {
+  cloudinary.uploader.upload(req.file.path, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      User.updateOne({username : req.user.username}, {photo : result.secure_url}, function (err, raw) {
+        if (err) {
+          console.log(err);
+          req.flash("error", "Sorry, an error has occurred.");
+          res.redirect("back");
+        } else {
+          req.flash("success", "Success! Your photo has been updated.");
+          res.redirect("back");
+        }
+      });
+    }
+  });
+});
+
+// change name
+router.post("/profile/edit/name", ensure.ensureLoggedIn('/login'), function(req, res) {
+  User.updateOne({username : req.user.username}, {name : req.body.name}, function (err, raw) {
+    if (err) {
+      console.log(err);
+      req.flash("error", "Sorry, an error has occurred.");
+      res.redirect("back");
+    } else {
+      req.flash("success", "Success! Your new name is " + req.body.name + ".");
+      res.redirect("back");
+    }
+  });
+});
+
+// change password
+router.post("/profile/edit/password", ensure.ensureLoggedIn('/login'), function(req, res) {
+  req.user.changePassword(req.body.old_pwd, req.body.new_pwd, function (err, result) {
+    if (err) {
+      console.log(err);
+      req.flash("error", `Error: ${err.message}.`);
+      res.redirect("back");
+    } else {
+      req.flash("success", "Success! Your password has be changed.");
+      res.redirect("back");
+    }
+  })
 });
 
 //--------------------REGISTER----------------------------------------
 //REGISTER ROUTE (form)
-router.get("/register", function(req, res) {
-  res.render("register");
-});
 router.get("/register", function(req, res) {
   res.render("register");
 });
@@ -70,6 +181,7 @@ router.post("/register", function(req, res) {
     });
   });
 });
+
 //UPDATE artifactposts
 router.put("/inviteregister", function(req, res) {
   console.log("register ", req.body);
@@ -85,6 +197,7 @@ router.put("/inviteregister", function(req, res) {
     });
   });
 });
+
 router.post("/inviteregister", function(req, res) {
   var newUser = new User({ username: req.body.username });
   User.register(newUser, req.body.password, function(err, user) {
@@ -108,7 +221,7 @@ router.get("/login", function(req, res) {
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/artifactposts",
+    successReturnToOrRedirect: '/artifactposts',
     successFlash: "Welcome, you have successfully logged in.",
     failureRedirect: "/login",
     failureFlash: "Invalid username or password."
@@ -122,7 +235,7 @@ router.post(
 router.get("/logout", function(req, res) {
   req.logout();
   req.flash("success", "Logout successful.");
-  res.redirect("back");
+  res.redirect("/");
 });
 
 
@@ -187,11 +300,13 @@ router.post("/send", function(req, res) {
     } else {
       console.log("Message sent: %s", info.messageId);
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
       var newUserInvite = {
         name: contactname,
         username: email,
         guid: guid
       };
+
       UserInvite.create(newUserInvite, function(err, newlyCreated) {
         if (err) {
           console.log(err);
@@ -203,6 +318,11 @@ router.post("/send", function(req, res) {
       res.redirect("invitefamily");
     }
   });
+});
+
+// debug
+router.get("/debug", function (req, res) {
+  /* null */
 });
 
 //--------------------EXPORT----------------------------------------
